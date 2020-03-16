@@ -1,0 +1,60 @@
+// Allows 1rem == 10px (62.5% of 16px is 10px)
+// https://medium.com/code-better/css-units-for-font-size-px-em-rem-79f7e592bb97
+$rootFontSize: 62.5%;
+
+// 0.063em at body { font-size: 16px; } is 1px
+// https://bernadettecodes.wordpress.com/2018/01/11/px-to-em-conversion/
+$singlePx: 0.063em;
+
+// -------
+// Dimensions
+$max-width: 1440px !default;
+
+// Colors
+$gold: #BF9121;
+
+// -------
+// Breakpoints
+
+// Widths
+$xs: 20em !default;                 // 320px;
+$sm: 30em !default;                 // 480px;
+$md: 48em !default;               // 600px;
+$lg: 64em !default;                 // 1024px;
+$xl: 90em !default;                 // 1440px;
+
+$not-mobile: 46.875em !default;     // 750px;
+$tablet: 48em !default;             // 768px;
+
+// Width Map
+$width-breakpoints: (
+  xs: (0, $sm - $singlePx),         // 0 -> 480
+  sm: ($sm, $md - $singlePx),       // 480 -> 600
+  md: ($md, $lg - $singlePx),       // 600 -> 1024
+  lg: ($lg, $xl - $singlePx),       // 1024 -> 1440
+  xl: ($xl, null),                  // 1440+
+  
+  not-mobile:
+    ($not-mobile, $lg - $singlePx)  // 750 -> 1024
+);
+
+// Heights
+$xshort: 25em !default;             // 400px;
+$short: 37.5em !default;            // 600px;
+$medium: 50em !default;             // 800px;
+$tall: 62.5em !default;             // 1000px;
+$xtall: 75em !default;              // 1200px;
+
+// Height Map
+$height-breakpoints: (
+  xshort: (0, $short - $singlePx),  
+  short: ($short, $medium - $singlePx),
+  medium: ($medium, $tall - $singlePx),
+  tall: ($tall, $xtall - $singlePx),
+  xtall: ($xtall, null)
+);
+
+$fontBody: 'Roboto Mono', monospace;
+$fontHeadline: 'titling-gothic-fb-wide', sans-serif;
+$fontAccent: 'titling-gothic-fb-compressed', sans-serif;
+

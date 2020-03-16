@@ -1,0 +1,176 @@
+@import './_variables';
+// TODO: import language files as necessary
+
+// Stickersheet breakpoint helper mixin
+@mixin breakpoint($mq01: 0, $mq2: false, $maxmin: max-width) {
+  @if $mq2 == false {
+    @media ($maxmin: $mq01) {
+      @content;
+    }
+  }
+  @else {
+    @media (min-width: $mq01) and (max-width: $mq2) {
+      @content;
+    }
+  }
+}
+
+// Stickersheet mixin
+@mixin sticker-sheet-map($sticker-sheet-map) {
+  @each $breakpoint, $map in $sticker-sheet-map {
+    @if $breakpoint == null {
+      @each $prop, $value in $map {
+        #{$prop}: $value;
+      }
+    } @else {
+      @include breakpoint($breakpoint, false, min-width) {
+        @each $prop, $value in $map {
+          #{$prop}: $value;
+        }
+      }
+    }
+  }
+}
+
+// Step 1: Define indivudal breakpoint settings for each entity. Mobile first!
+// TODO: Define your project Figma file/lead creative's settings for each entity here.
+
+// Typography
+$h1-small-map: (
+  font-size: 2.0rem,
+  line-height: 2.8rem,
+);
+$h1-small-medium-map: (
+  font-size: 4.5rem,
+  line-height: 4.6rem
+);
+
+$h1-map: (
+  font-size: 5.6rem,
+  line-height: 6.6rem,
+  letter-spacing: -0.5px
+);
+
+$display-large-map: (
+  font-size: 72px,
+  line-height: 84px,
+  letter-spacing: -1px,
+  font-weight: normal
+);
+
+$display-small-map: (
+  font-size: 3.2rem,
+  line-height: 4.0rem,
+);
+
+$h2-small-map: (
+  font-size: 2.4rem,
+  line-height: 3.2rem,
+);
+
+$h2-map: (
+  font-size: 4.0rem,
+  line-height: 5.0rem
+);
+
+$h3-small-map: (
+  font-size: 2rem,
+  line-height: 2.8rem
+);
+
+$h3-map: (
+  font-size: 2.4rem,
+  line-height: 3.2rem
+);
+
+$h4-map: (
+  font-size: 1.4rem,
+  line-height: 1.8rem,
+  letter-spacing: 1.5px,
+  font-weight: 500,
+);
+
+$body-small-map: (
+  font-size: 1.4rem,
+  line-height: 2.4rem,
+);
+
+$body-map: (
+  font-size: 1.6rem,
+  line-height: 2.6rem,
+  font-weight: normal
+);
+
+$source-map: (
+  font-size: 12px,
+  line-height: 18px,
+  letter-spacing: 0.35px,
+);
+
+$h1-sticker-sheet: (
+  null: $h1-small-map,
+  $sm: $h1-small-medium-map,
+  $md: $h1-map,
+);
+$display-two-sticker-sheet: (
+  null: $display-small-map,
+  $md: $h1-map,
+);
+$takeaway-sticker-sheet: (
+  null: $h2-small-map,
+  $md: $display-small-map,
+);
+$display-sticker-sheet: (
+  null: $display-small-map,
+  $md: $h1-map,
+  $lg: $display-large-map,
+);
+$h2-sticker-sheet: (
+  null: $h2-small-map,
+  $md: $h2-map,
+);
+$h3-sticker-sheet: (
+  null: $h3-small-map,
+  $md: $h3-map,
+);
+$h4-sticker-sheet: (
+  null: $h4-map,
+);
+$body-sticker-sheet: (
+  null: $body-small-map,
+  $md: $body-map,
+);
+$source-map: (
+  null: $source-map,
+);
+
+// Step 3: Import sticker sheet maps to their appropriate rules.
+body {
+  h1, h2, h3 {
+    font-family: $fontHeadline;
+    font-weight: normal;
+  }
+  h1 {
+    @include sticker-sheet-map($h1-sticker-sheet);
+  }
+  
+  h2 {
+    @include sticker-sheet-map($h2-sticker-sheet);
+  }
+  h3 {
+    @include sticker-sheet-map($h3-sticker-sheet);
+  }
+  h4 {
+    @include sticker-sheet-map($h4-sticker-sheet);
+  }
+  button {
+    font-family: $fontAccent
+  }
+  p, a, input, select {
+    @include sticker-sheet-map($body-sticker-sheet);
+    font-family: $fontBody;
+    &.source {
+      @include sticker-sheet-map($source-map);
+    }
+  }
+}

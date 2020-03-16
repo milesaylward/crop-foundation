@@ -1,0 +1,324 @@
+@import './_variables';
+
+// General usage breakpoint mixins - these should be used within components
+// as needed. Mobile First!
+
+// Extra Small - sticker sheet reference: <= $xs (320px/20em)
+@mixin bpXSmall() {
+  @include from-width($xs) {
+    @content;
+  }
+}
+
+// Small - sticker sheet reference: < $md (600px/37.5em)
+@mixin bpSmall() {
+  @include from-width($sm) {
+    @content;
+  }
+}
+
+// Medium - sticker sheet reference: < $breakpointL (1024px/64em)
+@mixin bpMedium() {
+  @include from-width($md) {
+    @content;
+  }
+}
+
+// Large - sticker sheet reference: < $breakpointXL (1440px/90em)
+@mixin bpLarge() {
+  @include from-width($lg) {
+    @content;
+  }
+}
+
+// Wide - sticker sheet reference: > $breakpointXL (1440px/90em)
+@mixin bpXLarge() {
+  @include from-width($xl) {
+    @content;
+  }
+}
+
+// Mobile only - Defined as 750px/46.875em and below - somewhat halfway point of bpMedium
+@mixin mobileOnly() {
+  @include upto-width($not-mobile) {
+    @content;
+  }
+}
+
+// Not mobile - Defined as 750px/46.875em and above - somewhat halfway point of bpMedium
+@mixin notMobile() {
+  @include from-width($not-mobile) {
+    @content;
+  }
+}
+
+@mixin mobileLandscape() {
+  @media (max-width: $not-mobile) and (max-height: $short) {
+    @content;
+  }
+}
+
+// Pass in a $width-breakpoints map value to target that breakpoint and up.
+@mixin from-width($bp: xs) {
+  @if ($bp == 'xs') {
+    @content;
+  } @else {
+    @if map-has-key($width-breakpoints, $bp) {
+      $list: map-get($width-breakpoints, $bp);
+      $bp: nth($list, 1);
+    }
+
+    @media screen and (min-width: #{$bp}) {
+      @content;
+    }
+  }
+}
+
+// Pass in a $width-breakpoints map value to target below that breakpoint.
+@mixin upto-width($bp: xs) {
+  @if ($bp == 'xs') {
+    @content;
+  } @else {
+    @if map-has-key($width-breakpoints, $bp) {
+      $list: map-get($width-breakpoints, $bp);
+      $bp: nth($list, 1);
+    }
+
+    @media screen and (max-width: #{$bp - 0.063em}) {
+      @content;
+    }
+  }
+}
+
+@mixin on-hover {
+  body:not(.touch) &:hover {
+    @content;
+  }
+}
+
+// Pass in a $width-breakpoints map value to target that breakpoint only.
+@mixin at-width($bp) {
+  $min: null;
+  $max: null;
+
+  @if ($bp == 'xs') {
+    $list: map-get($width-breakpoints, sm);
+    $max: nth($list, 1) - 1;
+  } @else {
+    $list: map-get($width-breakpoints, $bp);
+    $min: nth($list, 1);
+    $max: nth($list, length($list));
+  }
+
+  @if ($min == null) {
+    @media screen and (max-width: #{$max}) {
+      @content;
+    }
+  } @else if ($max == null) {
+    @media screen and (min-width: #{$min}) {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: #{$min}) and (max-width: #{$max}) {
+      @content;
+    }
+  }
+}
+
+// Pass in a $height-breakpoints map value to target that breakpoint and up.
+@mixin from-height($bp: xshort) {
+  @if ($bp == 'xshort') {
+    @content;
+  } @else {
+    @if map-has-key($height-breakpoints, $bp) {
+      $list: map-get($height-breakpoints, $bp);
+      $bp: nth($list, 1);
+    }
+
+    @media screen and (min-width: $md) and (min-height: #{$bp}) {
+      @content;
+    }
+  }
+}
+
+// Pass in a $height-breakpoints map value to target below that breakpoint.
+@mixin upto-height($bp: xshort) {
+  @if ($bp == 'xshort') {
+    @content;
+  } @else {
+    @if map-has-key($height-breakpoints, $bp) {
+      $list: map-get($height-breakpoints, $bp);
+      $bp: nth($list, 1);
+    }
+
+    @media screen and (min-width: $md) and (max-height: #{$bp}) {
+      @content;
+    }
+  }
+}
+
+// Pass in a $height-breakpoints map value to target that breakpoint only.
+@mixin at-height($bp) {
+  $min: null;
+  $max: null;
+
+  @if ($bp == 'xshort') {
+    $list: map-get($height-breakpoints, short);
+    $max: nth($list, 1);
+  } @else {
+    $list: map-get($height-breakpoints, $bp);
+    $min: nth($list, 1);
+    $max: nth($list, length($list));
+  }
+
+  @if ($min == null) {
+    @if ($bp == 'xshort') {
+      @media screen and (min-width: $md) and (max-height: $xshort) {
+        @content;
+      }
+    } @else {
+      @media screen and (min-width: $md) and (max-height: #{$max}) {
+        @content;
+      }
+    }
+  } @else if ($max == null) {
+    @media screen and (min-width: $md) and (min-height: #{$min}) {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: $md) and (min-height: #{$min}) and (max-height: #{$max}) {
+      @content;
+    }
+  }
+}
+
+@mixin notLast {
+  &:not(:last-child) {
+    @content;
+  }
+}
+
+@mixin notNthChild($child) {
+  &:not(:nth-child(#{$child})) {
+    @content;
+  }
+}
+
+@mixin absoluteCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+}
+
+@mixin scalable-property($property, $value) {
+  #{$property}: $value;
+  @media screen and (max-width: $desktopMediumBreakpoint) {
+    #{$property}: $value * $desktopMediumScale;
+  }
+}
+
+@mixin scalable-enclosed-property($property, $closure, $value) {
+  #{$property}: #{$closure}(#{$value});
+  @media (max-width: $desktopMediumBreakpoint) {
+    #{$property}: #{$closure}(#{($value * $desktopMediumScale)});
+  }
+}
+
+@mixin notTouch {
+  body:not(.is-touch-centric) & {
+    @content;
+  }
+}
+
+@function fact($number) {
+  $value: 1;
+  @if $number > 0 {
+    @for $i from 1 through $number {
+      $value: $value * $i;
+    }
+  }
+  @return $value;
+}
+
+@function pow($number, $exp) {
+  $value: 1;
+  @if $exp > 0 {
+    @for $i from 1 through $exp {
+      $value: $value * $number;
+    }
+  }
+  @else if $exp < 0 {
+    @for $i from 1 through -$exp {
+      $value: $value / $number;
+    }
+  }
+  @return $value;
+}
+
+@function pi() {
+  @return 3.14159265359;
+}
+
+@function rad($angle) {
+  $unit: unit($angle);
+  $unitless: $angle / ($angle * 0 + 1);
+  // If the angle has 'deg' as unit, convert to radians.
+  @if $unit == deg {
+    $unitless: $unitless / 180 * pi();
+  }
+  @return $unitless;
+}
+
+@function sin($angle) {
+  $sin: 0;
+  $angle: rad($angle);
+  // Iterate a bunch of times.
+  @for $i from 0 through 10 {
+    $sin: $sin + pow(-1, $i) * pow($angle, (2 * $i + 1)) / fact(2 * $i + 1);
+  }
+  @return $sin;
+}
+
+@function cos($angle) {
+  $cos: 0;
+  $angle: rad($angle);
+  // Iterate a bunch of times.
+  @for $i from 0 through 10 {
+    $cos: $cos + pow(-1, $i) * pow($angle, 2 * $i) / fact(2 * $i);
+  }
+  @return $cos;
+}
+
+@function tan($angle) {
+  @return sin($angle) / cos($angle);
+}
+
+/// Remove the unit of a length
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}
+
+/// Convert px to em
+@function em($pixels, $context) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+  @return $pixels / $context * 1em;
+}
