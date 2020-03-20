@@ -14,7 +14,9 @@
     "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.9.5",
     "@nuxtjs/svg": "^0.1.6",
+    "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "nuxt": "^2.0.0",
     "sass-loader": "^8.0.2"

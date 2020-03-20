@@ -5,7 +5,7 @@
       <img class="sidebar__content__logo" :src="logo" alt="crop logo" />
       <div class="sidebar__content__bottom">
         <p class="source">copyright 2020 • the crop foundation</p>
-        <CropButton filled copy="donate" link="" />
+        <CropButton filled copy="donate" small link="" />
         <div class="social-buttons">
           <a href="">
             <facebook class="facebook" />
@@ -42,6 +42,7 @@ export default {
   width: 200px;
   height: 100vh;
   position: fixed;
+  z-index: 1000;
   &__background {
     display: block;
     position: absolute;
@@ -73,7 +74,7 @@ export default {
         white-space: nowrap;
         position: absolute;
         top: 0px;
-        left: -128%;
+        left: -118%;
         transform: rotate(-90deg) translate(65%);
         color: $gold;
       }

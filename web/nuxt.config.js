@@ -46,7 +46,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/svg', '@nuxtjs/style-resources'],
+  modules: ['@nuxtjs/svg', '@nuxtjs/style-resources', '@nuxtjs/axios'],
   /*
    ** Build configuration
    */

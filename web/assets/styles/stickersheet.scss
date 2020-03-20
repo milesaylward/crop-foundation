@@ -37,104 +37,71 @@
 
 // Typography
 $h1-small-map: (
-  font-size: 2.0rem,
-  line-height: 2.8rem,
-);
-$h1-small-medium-map: (
-  font-size: 4.5rem,
-  line-height: 4.6rem
+  font-size: 24px,
+  line-height: 29px,
 );
 
 $h1-map: (
-  font-size: 5.6rem,
-  line-height: 6.6rem,
-  letter-spacing: -0.5px
-);
-
-$display-large-map: (
-  font-size: 72px,
-  line-height: 84px,
-  letter-spacing: -1px,
-  font-weight: normal
-);
-
-$display-small-map: (
-  font-size: 3.2rem,
-  line-height: 4.0rem,
+  font-size: 41px,
+  line-height: 49px,
 );
 
 $h2-small-map: (
-  font-size: 2.4rem,
-  line-height: 3.2rem,
+  font-size: 18px,
+  line-height: 25px,
 );
 
 $h2-map: (
-  font-size: 4.0rem,
-  line-height: 5.0rem
-);
-
-$h3-small-map: (
-  font-size: 2rem,
-  line-height: 2.8rem
+  font-size: 40px,
+  line-height: 48px,
 );
 
 $h3-map: (
-  font-size: 2.4rem,
-  line-height: 3.2rem
+  font-size: 18px,
+  line-height: 22px,
+);
+
+$h4-small-map: (
+  font-size: 16px,
+  line-height: 19px,
 );
 
 $h4-map: (
-  font-size: 1.4rem,
-  line-height: 1.8rem,
-  letter-spacing: 1.5px,
-  font-weight: 500,
+  font-size: 20px,
+  line-height: 24px,
+  text-transform: uppercase,
+  letter-spacing: 1px,
 );
 
 $body-small-map: (
-  font-size: 1.4rem,
-  line-height: 2.4rem,
+  font-size: 14px,
+  line-height: 25px,
 );
 
 $body-map: (
-  font-size: 1.6rem,
-  line-height: 2.6rem,
-  font-weight: normal
+  font-size: 16px,
+  line-height: 29px
 );
 
 $source-map: (
   font-size: 12px,
-  line-height: 18px,
-  letter-spacing: 0.35px,
+  line-height: 22px
 );
 
 $h1-sticker-sheet: (
   null: $h1-small-map,
-  $sm: $h1-small-medium-map,
   $md: $h1-map,
-);
-$display-two-sticker-sheet: (
-  null: $display-small-map,
-  $md: $h1-map,
-);
-$takeaway-sticker-sheet: (
-  null: $h2-small-map,
-  $md: $display-small-map,
-);
-$display-sticker-sheet: (
-  null: $display-small-map,
-  $md: $h1-map,
-  $lg: $display-large-map,
 );
 $h2-sticker-sheet: (
   null: $h2-small-map,
   $md: $h2-map,
 );
 $h3-sticker-sheet: (
-  null: $h3-small-map,
-  $md: $h3-map,
+  null: $h3-map,
 );
 $h4-sticker-sheet: (
-  null: $h4-map,
+  null: $h4-small-map,
+  $md: $h4-map,
 );
 $body-sticker-sheet: (
   null: $body-small-map,
@@ -161,10 +128,13 @@ body {
     @include sticker-sheet-map($h3-sticker-sheet);
   }
   h4 {
+    font-family: $fontAccent;
     @include sticker-sheet-map($h4-sticker-sheet);
   }
   button {
-    font-family: $fontAccent
+    font-family: $fontAccent;
+    letter-spacing: 1px;
+    cursor: pointer;
   }
   p, a, input, select {
     @include sticker-sheet-map($body-sticker-sheet);
