@@ -1,19 +1,28 @@
 <template>
   <button class="crop-button" :class="buttonClasses">
     {{ copy }}
-    <slot></slot>
+    <ArrowFilled v-if="arrow" />
   </button>
 </template>
 
 <script>
+import ArrowFilled from '@/assets/svg/arrow-filled.svg?inline'
+
 export default {
   name: 'CropButton',
+  components: {
+    ArrowFilled
+  },
   props: {
     color: {
       type: String,
       default: 'gold'
     },
     filled: {
+      type: Boolean,
+      default: false
+    },
+    arrow: {
       type: Boolean,
       default: false
     },
@@ -62,6 +71,25 @@ export default {
   &--small {
     padding: 8px 20px;
   }
+  &--dark-grey {
+    border-color: $darkGrey;
+    color: $darkGrey;
+    background: rgba(82, 79, 76, 0);
+    svg {
+      path {
+        fill: $darkGrey;
+      }
+    }
+    &:hover {
+      background: $darkGrey;
+      color: white;
+      svg {
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
   &--white {
     border-color: $halfWhite;
     background: $noWhite;
@@ -76,10 +104,18 @@ export default {
     }
   }
   &--gold {
-    border-color: $gold;
+    border-color: $lightGrey;
+    color: $gold;
+    svg {
+      path {
+        fill: $gold;
+      }
+    }
     &.crop-button {
       &--filled {
+        border-color: $gold;
         background: $gold;
+        color: white;
         &:hover {
           background: darken($gold, 10);
         }

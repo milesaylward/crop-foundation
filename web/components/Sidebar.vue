@@ -2,7 +2,9 @@
   <div class="sidebar">
     <img class="sidebar__background" :src="sidebarBg" alt="background" />
     <div class="sidebar__content">
-      <img class="sidebar__content__logo" :src="logo" alt="crop logo" />
+      <nuxt-link to="/">
+        <img class="sidebar__content__logo" :src="logo" alt="crop logo" />
+      </nuxt-link>
       <div class="sidebar__content__bottom">
         <p class="source">copyright 2020 • the crop foundation</p>
         <CropButton filled copy="donate" small link="" />
@@ -50,6 +52,7 @@ export default {
     width: 100%;
     height: 100%;
     z-index: 1;
+    pointer-events: none;
   }
   &__content {
     position: absolute;

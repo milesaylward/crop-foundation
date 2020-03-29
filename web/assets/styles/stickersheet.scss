@@ -70,7 +70,7 @@ $h4-map: (
   font-size: 20px,
   line-height: 24px,
   text-transform: uppercase,
-  letter-spacing: 1px,
+  letter-spacing: 1.5px,
 );
 
 $body-small-map: (
@@ -115,7 +115,7 @@ $source-map: (
 body {
   h1, h2, h3 {
     font-family: $fontHeadline;
-    font-weight: normal;
+    font-weight: 200;
   }
   h1 {
     @include sticker-sheet-map($h1-sticker-sheet);
@@ -123,6 +123,7 @@ body {
   
   h2 {
     @include sticker-sheet-map($h2-sticker-sheet);
+    &.light { color: $offWhite; }
   }
   h3 {
     @include sticker-sheet-map($h3-sticker-sheet);
@@ -130,15 +131,23 @@ body {
   h4 {
     font-family: $fontAccent;
     @include sticker-sheet-map($h4-sticker-sheet);
+    color: $gold;
+    font-weight: 300;
   }
   button {
     font-family: $fontAccent;
     letter-spacing: 1px;
     cursor: pointer;
   }
+  a {
+    transition: color 300ms $easeOutMaterial;
+    text-decoration: none;
+  }
   p, a, input, select {
     @include sticker-sheet-map($body-sticker-sheet);
     font-family: $fontBody;
+    color: $darkGrey;
+    &.light { color: $offWhite; }
     &.source {
       @include sticker-sheet-map($source-map);
     }

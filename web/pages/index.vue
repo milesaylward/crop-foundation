@@ -1,26 +1,45 @@
 <template>
   <div class="page">
     <HeroCarousel :items="content.hero_carousel_items" />
+    <SectionOne :content="content.section.one" />
+    <SectionTwo :content="content.section.two" />
+    <SectionThree :content="content.section.three" />
+    <SectionImages :images="content.section.three.images" />
+    <SectionEvents :content="content.events" />
+    <SectionSubscribe :content="content.subscribe" />
   </div>
 </template>
 
 <script>
-import getCopy from '@/core/utils'
-import HeroCarousel from '@/components/HeroCarousel'
+import { getCopy } from '@/core/utils'
+import HeroCarousel from '@/components/Home/HeroCarousel'
+import SectionOne from '@/components/Home/HomeSectionOne'
+import SectionTwo from '@/components/Home/HomeSectionTwo'
+import SectionThree from '@/components/Home/HomeSectionThree'
+import SectionImages from '@/components/Home/HomeSectionImages'
+import SectionEvents from '@/components/Home/HomeSectionEvents'
+import SectionSubscribe from '@/components/Home/HomeSectionSubscribe'
 
 export default {
   components: {
-    HeroCarousel
+    HeroCarousel,
+    SectionOne,
+    SectionTwo,
+    SectionThree,
+    SectionImages,
+    SectionEvents,
+    SectionSubscribe
+  },
+  async fetch({ store }) {
+    await store.dispatch('getEvents')
+    await store.dispatch('getGlobal')
   },
   async asyncData({ $axios }) {
     const content = await $axios.$get(
-      'http://localhost:9000/wp-json/wp/v2/pages/21'
+      'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-home.json'
     )
-    const copy = getCopy(content.acf)
-    return { content: JSON.parse(JSON.stringify(copy)) }
-  },
-  mounted() {
-    // console.log(this.content)
+    const copy = JSON.parse(JSON.stringify(getCopy(content[0])))
+    return { content: copy }
   }
 }
 </script>
