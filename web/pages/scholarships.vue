@@ -8,7 +8,7 @@
       </div>
       <CropButton :copy="content.button" color="dark-grey" arrow />
     </div>
-    <div class="scholarship__photo-winners">
+    <div class="scholarship__photo-winners content">
       <PeelerAccent class="accent accent__peeler" />
       <img class="accent accent__halftone" :src="halftoneAccent" alt="accent" />
       <div
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div class="scholarship__other-winners">
+    <div class="scholarship__other-winners content">
       <h4>Other past winners (Not pictured)</h4>
       <p
         v-for="student in content.other_winners"
@@ -173,8 +173,10 @@ export default {
     }
   }
   &__other-winners {
-    padding: 0 40px;
-    margin: -100px auto 100px auto;
+    margin: {
+      top: -100px;
+      bottom: 100px;
+    }
   }
 }
 </style>

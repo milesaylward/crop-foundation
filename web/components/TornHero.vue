@@ -38,7 +38,7 @@ export default {
 .torn-hero {
   width: 100%;
   max-height: 500px;
-  min-height: 487px;
+  min-height: 500px;
   overflow: hidden;
   position: relative;
   &.no-bg {
@@ -50,7 +50,7 @@ export default {
   }
   &__border {
     position: absolute;
-    bottom: -3px;
+    bottom: -5px;
     width: 100%;
   }
 }

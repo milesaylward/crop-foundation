@@ -13,7 +13,7 @@
     </div>
     <div class="event-hero__content">
       <div class="headline">
-        <h4>upcoming event</h4>
+        <h4 v-if="!detailPage">upcoming event</h4>
         <h1>{{ event.title }}</h1>
       </div>
       <div class="event-hero__content__copy">
@@ -27,9 +27,9 @@
         </p>
         <div class="info">
           <component
+            :is="i === 0 ? 'h3' : 'h4'"
             v-for="(line, i) in event.location"
             :key="line.location_line"
-            :is="i === 0 ? 'h3' : 'h4'"
           >
             {{ line.location_line }}
           </component>
@@ -40,7 +40,18 @@
               {{ chef.name }} - {{ chef.affiliation }}
             </p>
           </div>
-          <CropButton copy="BUY TICKETS NOW" color="dark-grey" arrow />
+          <CropButton
+            v-if="!detailPage"
+            copy="BUY TICKETS NOW"
+            color="dark-grey"
+            arrow
+          />
+          <button v-else class="gallery-button">
+            <span class="arrow">
+              <DownArrow />
+            </span>
+            Scroll for gallery
+          </button>
         </div>
       </div>
     </div>
@@ -50,13 +61,21 @@
 <script>
 import { getDayOfWeek, getMonthDate } from '@/core/utils'
 import eventHeroAccent from '@/assets/images/event-hero-accent.png'
+import DownArrow from '@/assets/svg/double-down-arrow.svg?inline'
 
 export default {
   name: 'EventHero',
+  components: {
+    DownArrow
+  },
   props: {
     event: {
       type: Object,
       required: true
+    },
+    detailPage: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
@@ -140,7 +159,6 @@ export default {
         font-size: 14px;
         flex-shrink: 0;
         line-height: 1.5;
-        width: 10%;
         &__day {
           font-weight: bold;
           text-transform: uppercase;
@@ -165,8 +183,39 @@ export default {
             margin-top: 30px;
           }
         }
-        .crop-button {
+        .crop-button,
+        .gallery-button {
           margin-top: 30px;
+        }
+        .gallery-button {
+          background: none;
+          border: none;
+          display: flex;
+          align-items: center;
+          font-style: normal;
+          font-weight: 300;
+          font-size: 12px;
+          line-height: 14px;
+          color: $gold;
+          font-family: $fontHeadline;
+          padding: 0;
+          &:focus {
+            outline: none;
+          }
+          &:hover {
+            svg {
+              transform: translateY(3px);
+            }
+          }
+          span {
+            display: block;
+            padding: 3px 15px 3px 0px;
+            margin-right: 15px;
+            border-right: 1px solid #a5a4a2;
+            svg {
+              transition: transform 250ms $easeOutMaterial;
+            }
+          }
         }
       }
     }

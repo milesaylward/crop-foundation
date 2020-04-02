@@ -2,21 +2,22 @@
   <div class="home-section-two">
     <div class="home-section-two__images">
       <div
-        v-for="image in content.images"
+        v-for="(image, i) in content.images"
         class="home-section-two__images__image"
         :key="image.image"
       >
         <img :src="image.image" alt="cooking image" />
+        <img
+          class="accent circle"
+          :src="circleAccent"
+          alt="background accent"
+          v-if="i === 2"
+        />
       </div>
     </div>
     <img
       class="home-section-two__accent halftone"
       :src="halftoneTwo"
-      alt="background accent"
-    />
-    <img
-      class="home-section-two__accent circle"
-      :src="circleAccent"
       alt="background accent"
     />
     <img
@@ -62,6 +63,7 @@ export default {
       display: flex;
       justify-content: flex-end;
       margin-top: -100px;
+      position: relative;
       &:nth-child(even) {
         justify-content: flex-start;
       }
@@ -70,7 +72,8 @@ export default {
       }
     }
   }
-  &__accent {
+  &__accent,
+  .accent {
     position: absolute;
     z-index: -1;
     &.halftone {
@@ -83,9 +86,11 @@ export default {
       left: 13%;
     }
     &.circle {
+      width: auto;
       right: 0;
-      top: 50%;
+      top: 0;
       z-index: 3;
+      transform: translateY(-50%);
     }
   }
 }

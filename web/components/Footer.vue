@@ -1,27 +1,29 @@
 <template>
   <div class="footer">
-    <div class="footer__nav-links">
-      <a
-        v-for="link in globalData.nav_items"
-        :key="link.slug"
-        class="footer__nav-links__link"
-        :href="link.slug"
-      >
-        {{ link.label }}
-      </a>
-    </div>
-    <div class="footer__addresses">
-      <div
-        v-for="address in globalData.addresses"
-        :key="address.title"
-        class="footer__addresses__address"
-      >
-        <h3>{{ address.title }}</h3>
-        <div class="break" />
-        <p v-for="line in address.address_lines" :key="line.copy">
-          {{ line.copy }}
-        </p>
-        <a :href="getLink(address.contact)">{{ address.contact }}</a>
+    <div class="footer__content content">
+      <div class="footer__nav-links">
+        <a
+          v-for="link in globalData.nav_items"
+          :key="link.slug"
+          class="footer__nav-links__link"
+          :href="link.slug"
+        >
+          {{ link.label }}
+        </a>
+      </div>
+      <div class="footer__addresses">
+        <div
+          v-for="address in globalData.addresses"
+          :key="address.title"
+          class="footer__addresses__address"
+        >
+          <h3>{{ address.title }}</h3>
+          <div class="break" />
+          <p v-for="line in address.address_lines" :key="line.copy">
+            {{ line.copy }}
+          </p>
+          <a :href="getLink(address.contact)">{{ address.contact }}</a>
+        </div>
       </div>
     </div>
   </div>
@@ -51,9 +53,11 @@ export default {
   position: relative;
   z-index: 3;
   background: $greige;
-  padding: 60px 30px;
-  padding-left: 180px;
-  display: flex;
+  padding: 60px 0;
+  padding-left: 120px;
+  &__content {
+    display: flex;
+  }
   &__nav-links {
     display: flex;
     flex-direction: column;

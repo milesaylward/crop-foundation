@@ -27,6 +27,18 @@
     </div>
     <div class="events__footer">
       <img class="accent" :src="eventsFooterBorder" alt="border accent" />
+      <div class="events__footer__content content">
+        <div class="copy">
+          <h3>{{ content.footer.left.headline }}</h3>
+          <p>{{ content.footer.left.copy }}</p>
+          <CropButton arrow :copy="content.footer.left.button" color="white" />
+        </div>
+        <div class="copy">
+          <h3>{{ content.footer.right.headline }}</h3>
+          <p>{{ content.footer.right.copy }}</p>
+          <CropButton arrow :copy="content.footer.right.button" color="white" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -115,7 +127,8 @@ export default {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-
+        max-width: 1250px;
+        margin: 0 auto;
         .past-event {
           transition: opacity 400ms $easeOutQuad;
           @for $i from 1 through 6 {
@@ -138,12 +151,30 @@ export default {
     position: relative;
     padding: 60px;
     background: $darkGrey;
+    margin-top: 200px;
     .accent {
       position: absolute;
       width: 100%;
       top: 0;
       left: 0;
       transform: translateY(-99%);
+    }
+    &__content {
+      display: flex;
+      justify-content: space-between;
+      .copy {
+        color: white;
+        width: 50%;
+        max-width: 545px;
+        padding-right: 20px;
+        h3 {
+          margin-bottom: 20px;
+        }
+        p {
+          color: white;
+          margin-bottom: 20px;
+        }
+      }
     }
   }
 }

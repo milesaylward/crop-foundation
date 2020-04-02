@@ -41,7 +41,7 @@ export default {
       const eventURL = encodeURIComponent(
         this.event.title.replace(/ /g, '-')
       ).toLowerCase()
-      console.log(eventURL)
+      this.$router.push(`/events/${eventURL}`)
     }
   }
 }
