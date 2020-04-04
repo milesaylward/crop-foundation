@@ -3,15 +3,15 @@
     <div class="home-section-two__images">
       <div
         v-for="(image, i) in content.images"
-        class="home-section-two__images__image"
         :key="image.image"
+        class="home-section-two__images__image"
       >
         <img :src="image.image" alt="cooking image" />
         <img
+          v-if="i === 2"
           class="accent circle"
           :src="circleAccent"
           alt="background accent"
-          v-if="i === 2"
         />
       </div>
     </div>

@@ -5,7 +5,7 @@
     <div class="events__content">
       <h2>Past Events</h2>
       <div class="events__content__past-events">
-        <transition name="fade" mode="out-in" @after-enter="animEventsIn">
+        <transition name="fade-event" mode="out-in" @after-enter="animEventsIn">
           <div
             :key="activeIndex"
             ref="eventContainer"
@@ -25,73 +25,45 @@
         />
       </div>
     </div>
-    <div class="events__footer">
-      <img class="accent" :src="eventsFooterBorder" alt="border accent" />
-      <div class="events__footer__content content">
-        <div class="copy">
-          <h3>{{ content.footer.left.headline }}</h3>
-          <p>{{ content.footer.left.copy }}</p>
-          <CropButton arrow :copy="content.footer.left.button" color="white" />
-        </div>
-        <div class="copy">
-          <h3>{{ content.footer.right.headline }}</h3>
-          <p>{{ content.footer.right.copy }}</p>
-          <CropButton arrow :copy="content.footer.right.button" color="white" />
-        </div>
-      </div>
-    </div>
+    <EventsFooter :content="content.footer" />
   </div>
 </template>
 
 <script>
 import moment from 'moment'
-import { getCopy } from '@/core/utils'
+import { getEventsData, checkGlobalData, chunkItems } from '@/core/utils'
 import TornHero from '@/components/TornHero'
 import EventHero from '@/components/Events/EventHero'
 import PastEvent from '@/components/Events/PastEvent'
-import Paginate from '@/components/Events/Paginate'
-import eventsFooterBorder from '@/assets/images/events-border.png'
+import Paginate from '@/components/Paginate'
+import EventsFooter from '@/components/Events/EventsFooter'
 
 export default {
   components: {
     TornHero,
     EventHero,
     PastEvent,
-    Paginate
+    Paginate,
+    EventsFooter
   },
-  async fetch({ store }) {
-    await store.dispatch('getGlobal')
-  },
-  async asyncData({ $axios }) {
-    const content = await $axios.$get(
-      'http://crop-new-bucket.s3.amazonaws.com/app-data/staging-events.json'
-    )
-    const copy = JSON.parse(JSON.stringify(getCopy(content[0])))
-    return { content: copy }
+  async asyncData({ $axios, store }) {
+    await checkGlobalData(store)
+    const eventsData = await getEventsData($axios, store)
+    return { content: eventsData }
   },
   data: () => ({
     activeIndex: 0,
-    itemsPerPage: 6,
-    eventsFooterBorder
+    itemsPerPage: 6
   }),
   computed: {
     pastEvents() {
       const pastEvents = this.content.events.filter((event) => {
-        return moment(event.date).isBefore(moment())
+        return moment(event.date).isBefore(moment()) && event.event_gallery
       })
       return pastEvents
     },
     chunkedEvents() {
-      return Array.from(
-        {
-          length: Math.ceil(this.pastEvents.length / this.itemsPerPage)
-        },
-        (v, i) =>
-          this.pastEvents.slice(
-            i * this.itemsPerPage,
-            i * this.itemsPerPage + this.itemsPerPage
-          )
-      )
+      return chunkItems(this.pastEvents, this.itemsPerPage)
     },
     activeEvents() {
       return this.chunkedEvents[this.activeIndex]
@@ -142,37 +114,6 @@ export default {
           .past-event {
             opacity: 1;
           }
-        }
-      }
-    }
-  }
-  &__footer {
-    width: 100%;
-    position: relative;
-    padding: 60px;
-    background: $darkGrey;
-    margin-top: 200px;
-    .accent {
-      position: absolute;
-      width: 100%;
-      top: 0;
-      left: 0;
-      transform: translateY(-99%);
-    }
-    &__content {
-      display: flex;
-      justify-content: space-between;
-      .copy {
-        color: white;
-        width: 50%;
-        max-width: 545px;
-        padding-right: 20px;
-        h3 {
-          margin-bottom: 20px;
-        }
-        p {
-          color: white;
-          margin-bottom: 20px;
         }
       }
     }

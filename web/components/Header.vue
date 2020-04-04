@@ -24,9 +24,6 @@ export default {
   },
   computed: {
     ...mapState(['globalData'])
-  },
-  mounted() {
-    console.log('globaData', this.globalData)
   }
 }
 </script>

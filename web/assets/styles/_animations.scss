@@ -1,5 +1,17 @@
-.fade-enter-active {
+.fade-event-enter-active {
   transition: opacity 50ms $easeOutQuad;
+}
+.fade-event-leave-active {
+  transition: opacity 300ms $easeOutQuad;
+}
+
+.fade-event-enter,
+.fade-event-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: opacity 300ms $easeOutQuad;
 }
 .fade-leave-active {
   transition: opacity 300ms $easeOutQuad;
@@ -8,4 +20,29 @@
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+.fade-left-enter-active,
+.fade-left-leave-active,
+.fade-right-enter-active,
+.fade-right-leave-active {
+  transition: opacity 300ms $easeOutQuad, transform 300ms $easeOutQuad;
+}
+
+.fade-right-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.fade-right-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-left-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.fade-left-enter {
+  opacity: 0;
+  transform: translateX(30px);
 }

@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     homeEvents() {
-      return this.events.slice(0, 2)
+      return this.events.events.slice(0, 2)
     },
     ...mapState(['events'])
   },

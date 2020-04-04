@@ -1,5 +1,11 @@
 <template>
-  <div class="torn-hero" :class="{ 'no-bg': !background }">
+  <div
+    class="torn-hero"
+    :class="{
+      'no-bg': !background,
+      'half-size': halfSize
+    }"
+  >
     <component
       :is="tagForBackground"
       :src="background"
@@ -8,12 +14,13 @@
       loop
       playsinline
     />
-    <img class="torn-hero__border" :src="tornBorder" alt="torn border" />
+    <img class="torn-hero__border" :src="heroBorder" alt="torn border" />
   </div>
 </template>
 
 <script>
 import tornBorder from '@/assets/images/torn-hero-border.png'
+import halfTornBorder from '@/assets/images/half-torn-border.png'
 
 export default {
   name: 'TornHero',
@@ -21,14 +28,22 @@ export default {
     background: {
       type: String,
       default: ''
+    },
+    halfSize: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
-    tornBorder
+    tornBorder,
+    halfTornBorder
   }),
   computed: {
     tagForBackground() {
       return this.background.includes('.mp4') ? 'video' : 'img'
+    },
+    heroBorder() {
+      return !this.halfSize ? this.tornBorder : this.halfTornBorder
     }
   }
 }
@@ -41,6 +56,9 @@ export default {
   min-height: 500px;
   overflow: hidden;
   position: relative;
+  &.half-size {
+    min-height: 0;
+  }
   &.no-bg {
     background: $darkGrey;
   }

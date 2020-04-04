@@ -5,14 +5,16 @@
       :class="{ inactive: activeIndex === 0 }"
       @click="setIndex('prev')"
     >
+      <h4>{{ copy.prev }}</h4>
       <Arrow />
     </button>
     <div class="paginate__indicators">
       <button
-        v-for="page in pages"
+        v-for="(page, i) in pages"
         :key="page"
         class="paginate__indicators__indicator"
         :class="{ active: activeIndex === page }"
+        @click="setIndex(null, i)"
       />
     </div>
     <button
@@ -20,6 +22,7 @@
       :class="{ inactive: activeIndex === pages.length - 1 }"
       @click="setIndex('next')"
     >
+      <h4>{{ copy.next }}</h4>
       <Arrow />
     </button>
   </div>
@@ -38,6 +41,10 @@ export default {
       type: Array,
       required: true
     },
+    copy: {
+      type: Object,
+      default: () => ({})
+    },
     activeIndex: {
       type: Number,
       required: true
@@ -50,23 +57,19 @@ export default {
   computed: {
     pages() {
       const indicatorArray = []
-      const totalPages = Math.floor(this.items.length / this.visibleItems)
+      const totalPages = Math.ceil(this.items.length / this.visibleItems)
       for (let index = 0; index <= totalPages; index++) {
         indicatorArray.push(index)
       }
       return indicatorArray
     }
   },
-  mounted() {
-    console.log(this.pages)
-  },
   methods: {
     setIndex(dir, idx) {
       let newIndex
-      if (!idx)
+      if (isNaN(idx))
         newIndex = dir === 'prev' ? this.activeIndex - 1 : this.activeIndex + 1
       else newIndex = idx
-      console.log(this.activeIndex, dir, newIndex, idx)
       this.$emit('upateIndex', newIndex)
     }
   }
@@ -111,9 +114,16 @@ export default {
     svg {
       transition: transform 250ms $easeOutMaterial;
     }
+    h4 {
+      margin-top: 1px;
+      margin-right: 10px;
+    }
     &.inactive {
       cursor: default;
       pointer-events: none;
+      h4 {
+        color: $lightGrey;
+      }
       svg {
         path {
           stroke: $lightGrey;
@@ -129,6 +139,10 @@ export default {
     }
     &--next {
       transform: rotate(180deg);
+      h4 {
+        transform: rotate(-180deg);
+        margin-top: -1px;
+      }
     }
   }
 }

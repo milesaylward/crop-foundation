@@ -19,7 +19,7 @@ export const actions = {
         'http://crop-new-bucket.s3.amazonaws.com/app-data/staging-events.json'
       )
       .then((res) => {
-        commit('setEvents', res[0].events)
+        commit('setEvents', res[0])
       })
   },
   async getGlobal({ commit }) {

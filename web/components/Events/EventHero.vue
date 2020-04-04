@@ -121,6 +121,7 @@ export default {
   &__content {
     position: relative;
     width: 50%;
+    max-height: 600px;
     &__img {
       position: relative;
       z-index: 3;

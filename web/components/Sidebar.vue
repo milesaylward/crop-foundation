@@ -44,7 +44,7 @@ export default {
   width: 200px;
   height: 100vh;
   position: fixed;
-  z-index: 1000;
+  z-index: 100;
   &__background {
     display: block;
     position: absolute;

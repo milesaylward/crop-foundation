@@ -4,6 +4,7 @@
     <div class="scholarship__content">
       <div class="flex-copy">
         <p>{{ content.copy.one }}</p>
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <p v-html="parseCopy(content.copy.two)" />
       </div>
       <CropButton :copy="content.button" color="dark-grey" arrow />
@@ -55,9 +56,6 @@ export default {
     TornHero,
     PeelerAccent
   },
-  data: () => ({
-    halftoneAccent
-  }),
   async fetch({ store }) {
     await store.dispatch('getEvents')
     await store.dispatch('getGlobal')
@@ -69,6 +67,9 @@ export default {
     const copy = JSON.parse(JSON.stringify(getCopy(content[0])))
     return { content: copy }
   },
+  data: () => ({
+    halftoneAccent
+  }),
   computed: {
     computedWinners() {
       return this.content.scholarship_winners.slice(0, 2)
@@ -79,9 +80,6 @@ export default {
       const innerCopy = copy.replace('{{email-kip}}', KIP_LINK)
       return innerCopy.replace('{{email-gaby}}', GABY_LINK)
     }
-  },
-  mounted() {
-    console.log(this.content)
   }
 }
 </script>

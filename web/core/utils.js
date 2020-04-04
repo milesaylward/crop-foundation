@@ -25,14 +25,28 @@ export async function getEventsData(axios, store) {
     content = await axios.$get(
       'http://crop-new-bucket.s3.amazonaws.com/app-data/staging-events.json'
     )
+    content = JSON.parse(JSON.stringify(getCopy(content[0])))
   } else {
-    content = await (() => store.state.events)
+    content = store.state
   }
-  return JSON.parse(JSON.stringify(getCopy(content[0])))
+  return content
 }
 
 export async function checkGlobalData(store) {
   if (!Object.keys(store.state.globalData).length) {
     await store.dispatch('getGlobal')
   }
+}
+
+export const preventFocus = (e) => {
+  e.preventDefault()
+}
+
+export const chunkItems = (items, itemsPer) => {
+  return Array.from(
+    {
+      length: Math.ceil(items.length / itemsPer)
+    },
+    (v, i) => items.slice(i * itemsPer, i * itemsPer + itemsPer)
+  )
 }

@@ -1,8 +1,18 @@
 <template>
-  <button class="crop-button" :class="buttonClasses">
+  <button v-if="!link" class="crop-button" :class="buttonClasses">
     {{ copy }}
     <ArrowFilled v-if="arrow" />
   </button>
+  <a
+    v-else
+    :href="link"
+    target="_blank"
+    class="crop-button"
+    :class="buttonClasses"
+  >
+    {{ copy }}
+    <ArrowFilled v-if="arrow" />
+  </a>
 </template>
 
 <script>
@@ -17,6 +27,10 @@ export default {
     color: {
       type: String,
       default: 'gold'
+    },
+    link: {
+      type: String,
+      default: ''
     },
     filled: {
       type: Boolean,
@@ -55,12 +69,16 @@ export default {
   background: none;
   border: 1px solid;
   border-radius: 34px;
+  font-family: $fontAccent;
+  letter-spacing: 1px;
+  cursor: pointer;
   font-size: 16px;
   line-height: 17px;
   font-weight: 200;
   text-transform: uppercase;
   color: white;
   transition: background 300ms $easeOutMaterial, color 300ms $easeOutMaterial;
+
   svg {
     margin-left: 10px;
     margin-top: -2px;
