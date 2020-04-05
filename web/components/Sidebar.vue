@@ -9,10 +9,10 @@
         <p class="source">copyright 2020 • the crop foundation</p>
         <CropButton filled copy="donate" small link="" />
         <div class="social-buttons">
-          <a href="">
+          <a href="https://www.facebook.com/thecropfoundation" target="_blank">
             <facebook class="facebook" />
           </a>
-          <a href="">
+          <a href="https://www.instagram.com/thecropfoundation/">
             <instagram class="instagram" />
           </a>
         </div>
@@ -44,7 +44,7 @@ export default {
   width: 200px;
   height: 100vh;
   position: fixed;
-  z-index: 100;
+  z-index: 101;
   &__background {
     display: block;
     position: absolute;
@@ -88,14 +88,26 @@ export default {
         a {
           display: block;
           width: 45%;
-
+          &:hover {
+            .facebook,
+            .instagram {
+              path {
+                fill: white;
+                &:first-child {
+                  stroke: $gold;
+                  fill: $gold;
+                }
+              }
+            }
+          }
           .facebook,
           .instagram {
             path {
-              fill: #bf9121;
+              fill: $gold;
+              transition: stroke 300ms $easeOutQuad, fill 300ms $easeOutQuad;
               &:first-child {
-                stroke: #c7b59a;
-                fill: none;
+                stroke: $beige;
+                fill: rgba($gold, 0);
               }
             }
           }

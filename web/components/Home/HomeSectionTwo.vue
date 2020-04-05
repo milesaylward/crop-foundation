@@ -53,6 +53,7 @@ export default {
 .home-section-two {
   position: relative;
   padding-top: 200px;
+  z-index: 2;
   &__images {
     display: flex;
     flex-wrap: wrap;

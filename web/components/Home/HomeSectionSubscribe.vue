@@ -4,7 +4,12 @@
       <h4>{{ content.eyebrow }}</h4>
       <h2>{{ content.headline }}</h2>
       <form class="home-section-subscribe__content__form">
-        <input v-model="input" type="text" placeholder="Enter your email" />
+        <input
+          v-model="input"
+          type="text"
+          name="email"
+          placeholder="Enter your email"
+        />
         <button>
           Subscribe
           <arrowFilled />
@@ -69,12 +74,17 @@ export default {
         font-size: 18px;
         line-height: 22px;
         padding: 10px 20px;
+        transition: border-color 300ms $easeOutMaterial;
         &::placeholder {
           color: $lightGrey;
           font-weight: 200;
         }
         &:focus {
           outline: none;
+          border-color: $darkGrey;
+          & ~ button {
+            border-color: $darkGrey;
+          }
         }
       }
       button {
@@ -93,6 +103,7 @@ export default {
         align-items: center;
         border-top: 1px solid $lightGrey;
         border-bottom: 1px solid $lightGrey;
+        transition: border-color 300ms $easeOutMaterial;
         svg {
           margin-left: 8px;
           margin-top: -1px;

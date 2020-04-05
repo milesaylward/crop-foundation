@@ -31,9 +31,12 @@
           </a>
         </div>
       </div>
-      <CropButton copy="SEE ALL OUR EVENTS" link="">
-        <arrowFilled />
-      </CropButton>
+      <CropButton
+        copy="SEE ALL OUR EVENTS"
+        link="/events"
+        use-nuxt-link
+        arrow
+      />
     </div>
   </div>
 </template>

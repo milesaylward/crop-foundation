@@ -58,7 +58,7 @@ export default {
     pages() {
       const indicatorArray = []
       const totalPages = Math.ceil(this.items.length / this.visibleItems)
-      for (let index = 0; index <= totalPages; index++) {
+      for (let index = 0; index < totalPages; index++) {
         indicatorArray.push(index)
       }
       return indicatorArray

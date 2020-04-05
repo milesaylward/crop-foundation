@@ -110,8 +110,23 @@ export default {
         width: 50%;
         a {
           color: $gold;
+          position: relative;
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            background: $gold;
+            width: 100%;
+            height: 1px;
+            transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+            transform-origin: center center;
+            transform: scaleX(0);
+          }
           &:hover {
-            color: darken($gold, 5);
+            &::after {
+              transform: scaleX(1);
+            }
           }
         }
         &:first-child {

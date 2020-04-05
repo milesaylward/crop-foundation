@@ -91,9 +91,17 @@ export default {
     text-align: center;
 
     &__past-events {
+      position: relative;
+      min-height: 875px;
       margin: {
         top: 20px;
         bottom: 50px;
+      }
+      .paginate {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
       }
       &__events {
         display: flex;

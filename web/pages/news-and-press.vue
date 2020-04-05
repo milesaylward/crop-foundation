@@ -22,6 +22,7 @@
           prev: 'Later',
           next: 'Earlier'
         }"
+        :visible-items="4"
         @upateIndex="handleUpdate"
       />
     </div>

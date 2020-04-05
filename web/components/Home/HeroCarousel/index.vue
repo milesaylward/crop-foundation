@@ -1,12 +1,22 @@
 <template>
-  <div class="hero-carousel">
-    <Slide v-for="slide in items" :key="slide.image" :slide="slide" />
+  <div class="hero-carousel" :class="{ animate: showControls }">
+    <transition name="fade" mode="out-in">
+      <Slide :key="activeSlide.image" :slide="activeSlide" />
+    </transition>
     <div class="hero-carousel__controls">
       <div class="hero-carousel__controls__buttons">
-        <button class="prev">
+        <button
+          class="prev"
+          @mousedown="preventFocus"
+          @click="handleSlideChange('prev')"
+        >
           <arrowFilled />
         </button>
-        <button class="next">
+        <button
+          class="next"
+          @mousedown="preventFocus"
+          @click="handleSlideChange('next')"
+        >
           <arrowFilled />
         </button>
       </div>
@@ -24,6 +34,8 @@
 <script>
 import Slide from './Slide'
 import arrowFilled from '@/assets/svg/arrow-filled.svg?inline'
+import eventBus from '@/core/eventBus'
+import { preventFocus } from '@/core/utils'
 
 export default {
   components: {
@@ -37,14 +49,39 @@ export default {
     }
   },
   data: () => ({
-    activeIndex: 0
+    activeIndex: 0,
+    showControls: false,
+    preventFocus
   }),
   computed: {
     displayIndex() {
       return this.activeIndex + 1
     },
+    activeSlide() {
+      return this.items[this.activeIndex]
+    },
     totalSlides() {
       return this.items.length
+    }
+  },
+  mounted() {
+    eventBus.$on('animateSlideControls', () => {
+      this.showControls = true
+    })
+  },
+  methods: {
+    handleSlideChange(dir) {
+      if (dir === 'prev') {
+        if (this.activeIndex === 0) {
+          this.activeIndex = this.items.length - 1
+        } else {
+          this.activeIndex -= 1
+        }
+      } else if (this.activeIndex === this.items.length - 1) {
+        this.activeIndex = 0
+      } else {
+        this.activeIndex += 1
+      }
     }
   }
 }
@@ -81,8 +118,10 @@ export default {
     &__buttons {
       display: flex;
       margin-bottom: 20px;
+      opacity: 0;
+      transition: opacity 500ms $easeOutMaterial;
       button {
-        background: none;
+        background: $noWhite;
         width: 40px;
         height: 40px;
         border: 1px solid $halfWhite;
@@ -90,12 +129,40 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        transition: background 300ms $easeOutQuad;
+        svg {
+          path {
+            transition: fill 300ms $easeOutQuad, stroke 300ms $easeOutQuad;
+          }
+        }
+        &:hover {
+          background: white;
+          svg {
+            path {
+              fill: $halfBlack;
+              stroke: $halfBlack;
+            }
+          }
+        }
         &.prev {
           margin-right: 10px;
           svg {
             transform: rotate(180deg);
           }
         }
+      }
+    }
+    &__copy {
+      opacity: 0;
+      transition: opacity 500ms $easeOutMaterial 85ms;
+    }
+  }
+
+  &.animate {
+    .hero-carousel__controls {
+      &__buttons,
+      &__copy {
+        opacity: 1;
       }
     }
   }

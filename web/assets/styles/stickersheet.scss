@@ -143,7 +143,7 @@ body {
     transition: color 300ms $easeOutMaterial;
     text-decoration: none;
   }
-  p, a, input, select {
+  p, a, input, select, textarea {
     @include sticker-sheet-map($body-sticker-sheet);
     font-family: $fontBody;
     color: $darkGrey;
@@ -151,5 +151,17 @@ body {
     &.source {
       @include sticker-sheet-map($source-map);
     }
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px $offWhite inset;
+    transition: background-color 50000s ease-in-out 0s;
   }
 }

@@ -14,6 +14,7 @@
       loop
       playsinline
     />
+    <h1>{{ copy }}</h1>
     <img class="torn-hero__border" :src="heroBorder" alt="torn border" />
   </div>
 </template>
@@ -32,6 +33,10 @@ export default {
     halfSize: {
       type: Boolean,
       default: false
+    },
+    copy: {
+      type: String,
+      default: ''
     }
   },
   data: () => ({
@@ -56,6 +61,19 @@ export default {
   min-height: 500px;
   overflow: hidden;
   position: relative;
+  h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 49px;
+    line-height: 57px;
+    transform: translate(-50%, -50%);
+    color: $offWhite;
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    font-weight: 100;
+  }
   &.half-size {
     min-height: 0;
   }

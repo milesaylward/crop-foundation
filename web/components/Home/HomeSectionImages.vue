@@ -29,6 +29,8 @@ export default {
   justify-content: center;
   overflow: hidden;
   bottom: 0;
+  position: relative;
+  z-index: 2;
   &__image {
     display: block;
     width: 44%;

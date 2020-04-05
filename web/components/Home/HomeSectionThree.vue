@@ -17,9 +17,13 @@
         <p class="light">{{ content.copy.one }}</p>
         <p class="light">{{ content.copy.two }}</p>
       </div>
-      <CropButton :copy="content.button" color="white" link="">
-        <arrowFilled />
-      </CropButton>
+      <CropButton
+        :copy="content.button"
+        color="white"
+        link="/scholarships"
+        arrow
+        use-nuxt-link
+      />
     </div>
   </div>
 </template>
@@ -27,13 +31,9 @@
 <script>
 import SectionThreeBorderTop from '@/assets/images/section-3-border-top.png'
 import SectionThreeBorderBottom from '@/assets/images/section-3-border-bottom.png'
-import arrowFilled from '@/assets/svg/arrow-filled.svg?inline'
 
 export default {
   name: 'HomeSectionThree',
-  components: {
-    arrowFilled
-  },
   props: {
     content: {
       type: Object,
@@ -53,6 +53,7 @@ export default {
   background: $darkGrey;
   flex-direction: column;
   padding: 10rem 0;
+  z-index: 1;
   &__border-top,
   &__border-bottom {
     position: absolute;

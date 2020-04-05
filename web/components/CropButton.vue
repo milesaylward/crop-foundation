@@ -3,16 +3,18 @@
     {{ copy }}
     <ArrowFilled v-if="arrow" />
   </button>
-  <a
+  <component
+    :is="tagForLink"
     v-else
     :href="link"
-    target="_blank"
+    :to="link"
+    :target="useNuxtLink ? '' : '_blank'"
     class="crop-button"
     :class="buttonClasses"
   >
     {{ copy }}
     <ArrowFilled v-if="arrow" />
-  </a>
+  </component>
 </template>
 
 <script>
@@ -47,6 +49,10 @@ export default {
     copy: {
       type: String,
       required: true
+    },
+    useNuxtLink: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -55,6 +61,9 @@ export default {
       if (this.filled) classes += ' crop-button--filled'
       if (this.small) classes += ' crop-button--small'
       return classes
+    },
+    tagForLink() {
+      return this.useNuxtLink ? 'nuxt-link' : 'a'
     }
   }
 }
@@ -62,7 +71,7 @@ export default {
 
 <style lang="scss">
 .crop-button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 16px 40px;
@@ -96,6 +105,25 @@ export default {
     svg {
       path {
         fill: $darkGrey;
+      }
+    }
+    &:hover {
+      background: $darkGrey;
+      color: white;
+      svg {
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
+  &--light-grey {
+    border-color: $lightGrey;
+    color: white;
+    background: $lightGrey;
+    svg {
+      path {
+        fill: white;
       }
     }
     &:hover {
