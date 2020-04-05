@@ -8,4 +8,7 @@
   max-width: 1250px;
   margin: 0 auto;
   padding: 0 20px;
+  @include bpMedium {
+    padding: 0 40px;
+  }
 }

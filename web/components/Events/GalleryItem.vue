@@ -28,10 +28,18 @@ export default {
 <style lang="scss">
 .gallery-item {
   overflow: hidden;
-  width: 25%;
+  width: 30%;
   max-width: 264px;
-  max-height: 188px;
-  margin: 20px;
+  max-height: 20vw;
+  margin: 5px;
+  @include bpMedium {
+    width: 25%;
+    max-width: 264px;
+    max-height: 188px;
+  }
+  @include bpLarge {
+    margin: 20px;
+  }
   cursor: pointer;
   &:hover {
     img {

@@ -54,9 +54,15 @@ export default {
   z-index: 3;
   background: $greige;
   padding: 60px 0;
-  padding-left: 120px;
+  @include bpMedium {
+    padding-left: 150px;
+  }
   &__content {
     display: flex;
+    flex-wrap: wrap;
+    @include bpMedium {
+      flex-wrap: nowrap;
+    }
   }
   &__nav-links {
     display: flex;
@@ -75,11 +81,18 @@ export default {
   &__addresses {
     display: flex;
     width: 100%;
-    margin-top: 15px;
+    flex-wrap: wrap;
+    @include bpMedium {
+      flex-wrap: nowrap;
+    }
     &__address {
       color: white;
-      width: 50%;
-      max-width: 285px;
+      width: 100%;
+      margin-top: 15px;
+      @include bpMedium {
+        width: 50%;
+        max-width: 285px;
+      }
       &:first-child {
         margin-right: 10%;
       }

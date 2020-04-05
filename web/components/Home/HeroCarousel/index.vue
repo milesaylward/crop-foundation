@@ -28,6 +28,7 @@
         </h4>
       </div>
     </div>
+    <img :src="carouselBorder" alt="carousel border" class="accent" />
   </div>
 </template>
 
@@ -36,6 +37,7 @@ import Slide from './Slide'
 import arrowFilled from '@/assets/svg/arrow-filled.svg?inline'
 import eventBus from '@/core/eventBus'
 import { preventFocus } from '@/core/utils'
+import carouselBorder from '@/assets/images/hero_border.png'
 
 export default {
   components: {
@@ -51,7 +53,8 @@ export default {
   data: () => ({
     activeIndex: 0,
     showControls: false,
-    preventFocus
+    preventFocus,
+    carouselBorder
   }),
   computed: {
     displayIndex() {
@@ -94,22 +97,30 @@ export default {
   overflow: hidden;
   z-index: 1;
   color: white;
-  &::after {
-    content: '';
+  min-height: 600px;
+  .accent {
     position: absolute;
-    background: url('~@/assets/images/hero_border.png');
-    width: 100%;
-    height: 13%;
-    background-size: cover;
+    left: 0;
     bottom: 0;
+    transform: translateY(50%);
+    width: 100%;
   }
   &__controls {
     position: absolute;
-    left: 75px;
-    top: 36%;
     transform: translateY(-50%);
+    left: 20px;
+    top: 25%;
+    @include bpMedium {
+      left: 75px;
+      top: 32%;
+    }
     h4 {
       font-weight: 200;
+      color: white;
+      text-transform: uppercase;
+      @include bpMedium {
+        color: $gold;
+      }
       span {
         display: inline-block;
         margin: 0 5px;

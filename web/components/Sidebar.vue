@@ -45,6 +45,10 @@ export default {
   height: 100vh;
   position: fixed;
   z-index: 101;
+  display: none;
+  @include bpMedium {
+    display: block;
+  }
   &__background {
     display: block;
     position: absolute;

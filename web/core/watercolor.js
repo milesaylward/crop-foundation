@@ -8,6 +8,8 @@ import eventBus from '@/core/eventBus'
  * Robin if you ever see this, Thanks!
  */
 
+const MIN_WIDTH = 994
+
 class WatercolorSlide {
   constructor(opts = {}) {
     this.lastUpdate = null
@@ -17,13 +19,14 @@ class WatercolorSlide {
     this.renderer = null
     this.uniforms = null
     this.material = null
-    this.width = opts.width || window.innerWidth
+    this.width = opts.width < 600 ? MIN_WIDTH : opts.width
     this.height = opts.height || window.innerHeight
     this.container = opts.container
     this.animate = this.animate.bind(this)
     this.destroy = this.destroy.bind(this)
     this.onAnimate = this.onAnimate.bind(this)
     this.showContent = this.showContent.bind(this)
+    this.handleResize = this.handleResize.bind(this)
     this.image = opts.image
     this.showControls = opts.showControls
   }
@@ -81,18 +84,21 @@ class WatercolorSlide {
     this.renderer.setSize(this.width, this.height)
     this.container.appendChild(this.renderer.domElement)
 
-    // event listeners
-    this.onWindowResize()
-    window.addEventListener('resize', this.onWindowResize, false)
     setTimeout(() => {
       this.renderer.render(this.scene, this.camera)
       eventBus.$emit('slideReady')
     }, 200)
   }
 
-  onWindowResize(evt) {
-    // console.log('resize event')
-    // this.renderer.setSize(window.innerthis.width * 0.6, window.innerthis.width * 0.33)
+  handleResize({ width, height }) {
+    let innerWidth = width < 767 ? MIN_WIDTH : width
+    if (height === this.height && innerWidth < this.width) {
+      innerWidth = this.width
+    } else {
+      this.width = innerWidth
+    }
+    this.height = height
+    this.renderer.setSize(innerWidth, height)
   }
 
   showContent() {

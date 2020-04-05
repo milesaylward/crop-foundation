@@ -24,11 +24,11 @@
             <span class="event__info__location">
               {{ event.location[0].location_line }}
             </span>
+            <a class="event__link" href="">
+              view more info
+              <arrowFilled />
+            </a>
           </p>
-          <a class="event__link" href="">
-            view more info
-            <arrowFilled />
-          </a>
         </div>
       </div>
       <CropButton
@@ -88,9 +88,12 @@ export default {
 .home-section-events {
   padding: 5rem 0;
   &__content {
-    text-align: center;
     width: 100%;
     max-width: 900px;
+    padding: 0 20px;
+    @include bpMedium {
+      text-align: center;
+    }
     h2 {
       max-width: 577px;
       margin: 2rem auto 4rem;
@@ -118,7 +121,6 @@ export default {
         }
         &__date,
         &__info {
-          position: relative;
           display: flex;
           flex-direction: column;
         }
@@ -131,6 +133,7 @@ export default {
           font-size: 14px;
           flex-shrink: 0;
           width: 10%;
+          min-width: 85px;
           &__day {
             font-weight: bold;
             text-transform: uppercase;
@@ -153,7 +156,8 @@ export default {
         }
         &__info {
           text-align: left;
-          margin-left: 20px;
+          margin: 20px 0 20px 20px;
+          width: 70%;
           &__title {
             font-family: $fontHeadline;
             font-weight: 200;
@@ -165,7 +169,6 @@ export default {
           }
         }
         &__link {
-          margin-left: auto;
           display: flex;
           align-items: center;
           color: $greige;
@@ -173,6 +176,13 @@ export default {
           white-space: nowrap;
           line-height: 1;
           font-size: 16px;
+          margin-top: 10px;
+          @include bpMedium {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+          }
           &:hover {
             svg {
               transform: translateX(5px);

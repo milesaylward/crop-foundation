@@ -32,8 +32,12 @@ ul {
 }
 
 .page {
-  padding-left: 120px;
   width: 100%;
   overflow: hidden;
   background: #F2F1EF;
+  padding-top: 70px;
+  @include bpMedium {
+    padding-left: 120px;
+    padding-top: 0;
+  }
 }

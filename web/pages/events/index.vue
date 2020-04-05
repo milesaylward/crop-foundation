@@ -2,6 +2,10 @@
   <div class="events page">
     <TornHero />
     <EventHero :event="content.events[0]" />
+    <div class="events__hero-copy">
+      <div class="spacer" />
+      <EventHeroCopy :event="content.events[0]" />
+    </div>
     <div class="events__content">
       <h2>Past Events</h2>
       <div class="events__content__past-events">
@@ -34,6 +38,7 @@ import moment from 'moment'
 import { getEventsData, checkGlobalData, chunkItems } from '@/core/utils'
 import TornHero from '@/components/TornHero'
 import EventHero from '@/components/Events/EventHero'
+import EventHeroCopy from '@/components/Events/EventHeroCopy'
 import PastEvent from '@/components/Events/PastEvent'
 import Paginate from '@/components/Paginate'
 import EventsFooter from '@/components/Events/EventsFooter'
@@ -44,7 +49,8 @@ export default {
     EventHero,
     PastEvent,
     Paginate,
-    EventsFooter
+    EventsFooter,
+    EventHeroCopy
   },
   async asyncData({ $axios, store }) {
     await checkGlobalData(store)
@@ -85,9 +91,21 @@ export default {
 
 <style lang="scss">
 .events {
+  position: relative;
+  &__hero-copy {
+    display: flex;
+    justify-content: flex-end;
+    .spacer {
+      width: 50%;
+      display: none;
+      @include bpLarge {
+        display: block;
+      }
+    }
+  }
   &__content {
-    margin-top: 180px;
-    padding: 0 80px;
+    margin-top: 80px;
+    padding: 0;
     text-align: center;
 
     &__past-events {

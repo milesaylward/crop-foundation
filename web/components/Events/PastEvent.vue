@@ -49,11 +49,18 @@ export default {
 
 <style lang="scss">
 .past-event {
-  max-width: 369px;
-  margin: 30px 20px;
+  width: 100%;
   text-align: left;
   border-top: 4px solid $gold;
   opacity: 0;
+  margin: 15px 10px;
+  @include bpLarge {
+    margin: 30px 20px;
+  }
+  @include bpMedium {
+    width: 33%;
+    max-width: 369px;
+  }
   cursor: pointer;
   &:hover {
     img {

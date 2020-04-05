@@ -13,22 +13,24 @@
         <img :src="image.url" alt="event image" />
       </div>
     </transition>
-    <button
-      class="lightbox__button lightbox__button--prev"
-      :class="{ disabled: disable.prev }"
-      @mousedown="preventFocus"
-      @click="handleClick('prev')"
-    >
-      <Arrow />
-    </button>
-    <button
-      class="lightbox__button lightbox__button--next"
-      :class="{ disabled: disable.next }"
-      @mousedown="preventFocus"
-      @click="handleClick('next')"
-    >
-      <Arrow />
-    </button>
+    <div class="lightbox__buttons">
+      <button
+        class="lightbox__button lightbox__button--prev"
+        :class="{ disabled: disable.prev }"
+        @mousedown="preventFocus"
+        @click="handleClick('prev')"
+      >
+        <Arrow />
+      </button>
+      <button
+        class="lightbox__button lightbox__button--next"
+        :class="{ disabled: disable.next }"
+        @mousedown="preventFocus"
+        @click="handleClick('next')"
+      >
+        <Arrow />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -77,12 +79,11 @@ export default {
   z-index: 200;
   &__image {
     max-width: 75%;
-    max-height: 90vh;
+    max-height: 80vh;
     img {
       height: 100%;
-      width: auto;
-      max-height: 90vh;
-      object-fit: cover;
+      width: 100%;
+      max-height: 80vh;
     }
   }
   &__overlay {
@@ -91,6 +92,20 @@ export default {
     height: 100%;
     z-index: -1;
     background: $halfBlack;
+  }
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: auto;
+    bottom: 1%;
+    width: 100%;
+    @include bpMedium {
+      top: 50%;
+      bottom: auto;
+      justify-content: space-between;
+    }
   }
   &__button {
     background: $noWhite;
@@ -101,11 +116,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 100px;
     transform: translateY(-50%);
     transition: background 250ms $easeOutQuad;
+    margin: 0 10px;
+    @include bpLarge {
+      left: 60px;
+    }
+    @include bpXLarge {
+      left: 100px;
+    }
     &:hover {
       background: white;
       svg {
@@ -126,7 +145,13 @@ export default {
     &--next {
       transform: rotate(180deg) translateY(50%);
       left: auto;
-      right: 100px;
+      right: 1%;
+      @include bpLarge {
+        right: 60px;
+      }
+      @include bpXLarge {
+        right: 100px;
+      }
     }
     &.disabled {
       pointer-events: none;
@@ -140,8 +165,12 @@ export default {
   }
   &__close {
     position: absolute;
-    top: 70px;
-    right: 70px;
+    top: 50px;
+    right: 50px;
+    @include bpLarge {
+      top: 70px;
+      right: 70px;
+    }
     &__outer {
       position: relative;
       margin: auto;

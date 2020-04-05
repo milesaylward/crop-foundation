@@ -47,8 +47,8 @@ $h1-map: (
 );
 
 $h2-small-map: (
-  font-size: 18px,
-  line-height: 25px,
+  font-size: 24px,
+  line-height: 29px,
 );
 
 $h2-map: (
@@ -69,7 +69,6 @@ $h4-small-map: (
 $h4-map: (
   font-size: 20px,
   line-height: 24px,
-  text-transform: uppercase,
   letter-spacing: 1.5px,
 );
 
@@ -130,6 +129,7 @@ body {
   }
   h4 {
     font-family: $fontAccent;
+    text-transform: uppercase;
     @include sticker-sheet-map($h4-sticker-sheet);
     color: $gold;
     font-weight: 300;

@@ -34,7 +34,11 @@ export default {
   &__image {
     display: block;
     width: 44%;
+    min-width: 298px;
     margin: 0 10px;
+    @include bpMedium {
+      min-width: 44%;
+    }
   }
 }
 </style>

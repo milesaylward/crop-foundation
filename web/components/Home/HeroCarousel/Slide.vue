@@ -1,6 +1,6 @@
 <template>
   <div ref="slide" class="slide">
-    <div ref="canvasContainer" :class="{ animate }" />
+    <div ref="canvasContainer" class="canvas-container" :class="{ animate }" />
     <img :src="slide.image" alt="alt text" />
     <div
       class="content"
@@ -45,7 +45,7 @@ export default {
     animateContent: false
   }),
   mounted() {
-    this.$nextTick(() => {
+    this.timeout = setTimeout(() => {
       const rect = this.$refs.slide.getBoundingClientRect()
       this.waterColor = new WatercolorSlide({
         container: this.$refs.canvasContainer,
@@ -55,19 +55,29 @@ export default {
         showControls: this.isFirstSlide
       })
       this.waterColor.init()
-    })
+    }, 250)
     eventBus.$on('slideReady', () => {
       this.$nextTick(() => {
         this.animate = true
         this.waterColor.onAnimate()
       })
     })
+    window.addEventListener('resize', this.handleResize)
     eventBus.$on('animateSlideContent', () => {
       this.animateContent = true
     })
   },
   beforeDestroy() {
     this.waterColor.destroy()
+    window.removeEventListener('resize', this.handleResize)
+    if (this.timeout) clearTimeout(this.timeout)
+  },
+  methods: {
+    handleResize() {
+      if (!this.waterColor) return
+      const rect = this.$refs.slide.getBoundingClientRect()
+      this.waterColor.handleResize(rect)
+    }
   }
 }
 </script>
@@ -75,10 +85,16 @@ export default {
 <style lang="scss">
 .slide {
   position: relative;
-  max-height: 100vh;
+  max-height: 600px;
+  @include bpMedium {
+    max-height: 100vh;
+  }
   img {
-    width: 100%;
+    height: 100%;
+    width: auto;
+    object-fit: cover;
     opacity: 0;
+    pointer-events: none;
   }
   canvas {
     opacity: 0;
@@ -88,13 +104,20 @@ export default {
       opacity: 1;
     }
   }
+  .canvas-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .content {
     position: absolute;
     top: 55%;
     transform: translateY(-50%);
     left: 0;
-    padding-left: 70px;
     max-width: 900px;
+    @include bpMedium {
+      padding-left: 70px;
+    }
     &.animate {
       h1,
       .button {

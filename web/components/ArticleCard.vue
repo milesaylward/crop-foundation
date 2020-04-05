@@ -41,10 +41,16 @@ export default {
   display: flex;
   width: 100%;
   margin: 30px 0;
+  flex-wrap: wrap;
   &__image {
-    width: 35%;
-    max-width: 369px;
-    max-height: 246px;
+    width: 100%;
+    @include bpMedium {
+      width: 35%;
+    }
+    @include bpXLarge {
+      max-width: 369px;
+      max-height: 246px;
+    }
     overflow: hidden;
     border-top: 4px solid $gold;
     img {
@@ -54,17 +60,22 @@ export default {
     }
   }
   &__content {
-    width: 60%;
-    margin-left: 5%;
+    margin-top: 20px;
+    width: 100%;
     position: relative;
+    @include bpMedium {
+      margin-left: 5%;
+      width: 60%;
+    }
     .divider {
-      margin: 10px 0;
+      margin: 20px 0;
     }
 
     p {
       margin-top: 10px;
       font-size: 12px;
       line-height: 180%;
+      margin-bottom: 40px;
     }
 
     .crop-button {

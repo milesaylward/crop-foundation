@@ -1,6 +1,6 @@
 <template>
   <div class="page scholarship">
-    <TornHero :background="content.hero_background" />
+    <TornHero :background="content.hero_background" :copy="content.headline" />
     <div class="scholarship__content">
       <div class="flex-copy">
         <p>{{ content.copy.one }}</p>
@@ -89,6 +89,10 @@ export default {
   position: relative;
   .accent {
     position: absolute;
+    display: none;
+    @include bpMedium {
+      display: block;
+    }
     &__peeler {
       right: 5%;
       top: -10%;
@@ -103,11 +107,21 @@ export default {
   &__content {
     max-width: 900px;
     margin: 0 auto;
-    padding-top: 80px;
+    padding: 30px 20px 0;
+    @include bpMedium {
+      padding-top: 80px;
+    }
     .flex-copy {
       display: flex;
+      flex-wrap: wrap;
+      @include bpMedium {
+        flex-wrap: nowrap;
+      }
       p {
-        width: 50%;
+        width: 100%;
+        @include bpMedium {
+          width: 50%;
+        }
         a {
           color: $gold;
           position: relative;
@@ -135,7 +149,10 @@ export default {
       }
     }
     .crop-button {
-      margin: 60px auto;
+      margin: 30px auto;
+      @include bpMedium {
+        margin: 60px auto;
+      }
     }
   }
   h4 {
@@ -158,21 +175,36 @@ export default {
     position: relative;
     display: flex;
     justify-content: center;
-    margin-top: 150px;
+    flex-wrap: wrap;
+    padding: 0;
+    margin-top: 50px;
+    @include bpMedium {
+      flex-wrap: nowrap;
+      margin-top: 150px;
+    }
     &__winner {
-      width: 50%;
-      &:nth-child(odd) {
-        margin-right: 20px;
-      }
+      width: 100%;
       &:nth-child(even) {
-        margin-top: 15%;
-        margin-left: 20px;
+        margin-top: 60px;
+      }
+      @include bpMedium {
+        width: 50%;
+        &:nth-child(odd) {
+          margin-right: 20px;
+        }
+        &:nth-child(even) {
+          margin-top: 15%;
+          margin-left: 20px;
+        }
       }
       img {
         width: 100%;
-        height: 628px;
+        min-height: 296px;
         object-fit: cover;
         display: block;
+        @include bpMedium {
+          height: 628px;
+        }
       }
       &__info {
         background: $darkGrey;
@@ -187,8 +219,14 @@ export default {
   }
   &__other-winners {
     margin: {
-      top: -100px;
+      top: 100px;
       bottom: 100px;
+    }
+    @include bpMedium {
+      margin: {
+        top: -100px;
+        bottom: 100px;
+      }
     }
   }
 }

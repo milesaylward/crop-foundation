@@ -4,6 +4,7 @@
     <Header />
     <nuxt />
     <Footer />
+    <div class="noise"></div>
   </div>
 </template>
 
@@ -25,7 +26,35 @@ export default {
 @import '~@/assets/styles/normalize';
 @import '~@/assets/styles/scaffold';
 .main {
-  position: relative;
+  // position: relative;
   z-index: 1;
+  .noise {
+    z-index: 10000;
+    opacity: 0.85;
+    position: fixed;
+    pointer-events: none;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    &:after {
+      content: '';
+      pointer-events: none;
+      will-change: transform;
+      animation: noiseAnimation 1s steps(4) infinite;
+      opacity: 0.8;
+      background-image: url('~@/assets/images/noise.png');
+      width: 200%;
+      height: 200%;
+      display: block;
+      position: absolute;
+      top: -50%;
+      left: -50%;
+    }
+  }
 }
 </style>

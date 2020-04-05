@@ -8,6 +8,18 @@
       >
         <img :src="image.image" alt="cooking image" />
         <img
+          v-if="i === 0"
+          class="home-section-two__accent peeler"
+          :src="peelerAccent"
+          alt="background accent"
+        />
+        <img
+          v-if="i === 1"
+          class="home-section-two__accent halftone"
+          :src="halftoneTwo"
+          alt="background accent"
+        />
+        <img
           v-if="i === 2"
           class="accent circle"
           :src="circleAccent"
@@ -15,16 +27,6 @@
         />
       </div>
     </div>
-    <img
-      class="home-section-two__accent halftone"
-      :src="halftoneTwo"
-      alt="background accent"
-    />
-    <img
-      class="home-section-two__accent peeler"
-      :src="peelerAccent"
-      alt="background accent"
-    />
   </div>
 </template>
 
@@ -52,7 +54,9 @@ export default {
 <style lang="scss">
 .home-section-two {
   position: relative;
-  padding-top: 200px;
+  @include bpMedium {
+    padding-top: 200px;
+  }
   z-index: 2;
   &__images {
     display: flex;
@@ -63,13 +67,24 @@ export default {
       width: 100%;
       display: flex;
       justify-content: flex-end;
-      margin-top: -100px;
+      margin-top: 50px;
       position: relative;
+      min-height: 233px;
+      &:first-child {
+        margin-top: 0;
+      }
+      @include bpMedium {
+        margin-top: -100px;
+      }
       &:nth-child(even) {
         justify-content: flex-start;
       }
       img {
-        width: 48%;
+        width: 65%;
+        object-fit: cover;
+        @include bpMedium {
+          width: 48%;
+        }
       }
     }
   }
@@ -78,13 +93,25 @@ export default {
     position: absolute;
     z-index: -1;
     &.halftone {
-      width: 70%;
-      top: 18%;
+      width: 85%;
+      top: -70%;
+      transform: translateY(50%);
+      @include bpMedium {
+        width: 60%;
+        top: 0;
+        transform: translateY(0%);
+      }
     }
     &.peeler {
-      width: 386px;
-      top: 17.5%;
-      left: 13%;
+      width: 40%;
+      max-width: 386px;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      @include bpMedium {
+        left: 10%;
+        top: 40%;
+      }
     }
     &.circle {
       width: auto;
@@ -92,6 +119,10 @@ export default {
       top: 0;
       z-index: 3;
       transform: translateY(-50%);
+      display: none;
+      @include bpMedium {
+        display: block;
+      }
     }
   }
 }

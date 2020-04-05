@@ -1,11 +1,17 @@
 <template>
   <div class="home-section-one container">
-    <div class="home-section-one__content">
+    <div class="home-section-one__content content">
       <h4>{{ content.eyebrow }}</h4>
       <h2>{{ content.headline }}</h2>
       <div class="home-section-one__content__flex-copy">
         <p>{{ content.copy.one }}</p>
         <p>{{ content.copy.two }}</p>
+      </div>
+      <div class="home-section-one__content__copy">
+        <p>
+          {{ content.copy.one }}
+          {{ content.copy.two }}
+        </p>
       </div>
       <div class="home-section-one__accents">
         <img
@@ -46,10 +52,19 @@ export default {
 .home-section-one {
   position: relative;
   padding-top: 3rem;
+  overflow: hidden;
+  @include bpMedium {
+    overflow: visible;
+  }
   &__content {
     max-width: 900px;
-    text-align: center;
-    padding: 12.5rem 0;
+    padding: {
+      top: 12.5rem;
+      bottom: 12.5rem;
+    }
+    @include bpMedium {
+      text-align: center;
+    }
     h4 {
       color: $gold;
       margin-bottom: 20px;
@@ -62,9 +77,12 @@ export default {
     }
     &__flex-copy {
       width: 100%;
-      display: flex;
       text-align: left;
       justify-content: center;
+      display: none;
+      @include bpMedium {
+        display: flex;
+      }
       p {
         max-width: 417px;
         &:first-child {
@@ -72,11 +90,13 @@ export default {
         }
       }
     }
+    &__copy {
+      @include bpMedium {
+        display: none;
+      }
+    }
   }
   &__accents {
-    position: absolute;
-    right: 0;
-    top: 0;
     &__grater,
     &__halftone {
       position: absolute;
@@ -85,12 +105,21 @@ export default {
       z-index: 1;
     }
     &__grater {
-      width: 300px;
+      width: 150px;
       z-index: 2;
+      @include bpMedium {
+        width: 300px;
+      }
     }
     &__halftone {
-      width: 120px;
-      top: 130px;
+      width: 40%;
+      bottom: 0;
+      transform: translateY(60%);
+      top: initial;
+      @include bpMedium {
+        width: 120px;
+        top: 130px;
+      }
     }
   }
 }

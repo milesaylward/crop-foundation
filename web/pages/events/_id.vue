@@ -3,7 +3,7 @@
     <TornHero />
     <EventHero :event="content" detail-page />
     <div class="event-detail__content content">
-      <h2>Events Gallery</h2>
+      <h2>Gallery</h2>
       <div class="event-detail__content__gallery">
         <div class="event-detail__content__gallery__items">
           <GalleryItem
@@ -140,9 +140,28 @@ export default {
 
 <style lang="scss">
 .event-detail {
+  position: relative;
+  .event-hero {
+    width: 100%;
+    @include bpMedium {
+      width: calc(100% - 120px);
+    }
+    @include bpLarge {
+      transform: translateY(30%);
+    }
+    &__img {
+      width: 100%;
+      min-width: 50%;
+      max-height: 500px;
+    }
+  }
   &__content {
+    margin-top: 30%;
     padding: 100px 0;
     text-align: center;
+    @include bpMedium {
+      margin-top: 200px;
+    }
     &__gallery {
       &__items {
         height: auto;
@@ -152,6 +171,9 @@ export default {
         justify-content: center;
       }
     }
+  }
+  .events-footer {
+    margin-top: 50px;
   }
 }
 </style>

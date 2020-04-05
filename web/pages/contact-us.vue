@@ -77,6 +77,7 @@ export default {
   &__content {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     padding: {
       top: 40px;
       bottom: 80px;
@@ -86,7 +87,10 @@ export default {
     }
     &__info,
     &__form {
-      width: 50%;
+      width: 100%;
+      @include bpMedium {
+        width: 50%;
+      }
     }
     &__info {
       max-width: 500px;
@@ -121,7 +125,11 @@ export default {
       }
     }
     &__form {
-      padding-left: 20px;
+      margin-top: 50px;
+      @include bpMedium {
+        padding-left: 20px;
+        margin-top: 0px;
+      }
       form {
         height: 100%;
         display: flex;

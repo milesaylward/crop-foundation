@@ -46,17 +46,28 @@ export default {
 .home-section-subscribe {
   position: relative;
   margin-top: 30px;
-  min-height: 506px;
+  padding-bottom: 30px;
+  @include bpMedium {
+    min-height: 506px;
+    padding-bottom: 0px;
+  }
   .accent {
     position: absolute;
     left: 0;
     top: 0;
     height: 102%;
+    display: none;
+    @include bpMedium {
+      display: block;
+    }
   }
   &__content {
-    text-align: center;
     max-width: 577px;
     margin: 0 auto;
+    padding: 0 20px;
+    @include bpMedium {
+      text-align: center;
+    }
     h4 {
       margin-bottom: 20px;
     }

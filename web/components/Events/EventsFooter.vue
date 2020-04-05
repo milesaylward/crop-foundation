@@ -7,6 +7,10 @@
         <p>{{ content.left.copy }}</p>
         <CropButton arrow :copy="content.left.button" color="white" />
       </div>
+      <div class="divider">
+        <verticalBorder class="vertical" />
+        <horizontalBorder class="horizontal" />
+      </div>
       <div class="copy">
         <h3>{{ content.right.headline }}</h3>
         <p>{{ content.right.copy }}</p>
@@ -18,8 +22,15 @@
 
 <script>
 import eventsFooterBorder from '@/assets/images/events-border.png'
+import verticalBorder from '@/assets/svg/events-footer-vertical.svg?inline'
+import horizontalBorder from '@/assets/svg/events-footer-horizontal.svg?inline'
+
 export default {
   name: 'EventsFooter',
+  components: {
+    verticalBorder,
+    horizontalBorder
+  },
   props: {
     content: {
       type: Object,
@@ -36,9 +47,12 @@ export default {
 .events-footer {
   width: 100%;
   position: relative;
-  padding: 60px;
+  padding: 60px 0;
   background: $darkGrey;
   margin-top: 200px;
+  @include bpMedium {
+    padding: 60px;
+  }
   .accent {
     position: absolute;
     width: 100%;
@@ -46,14 +60,46 @@ export default {
     left: 0;
     transform: translateY(-99%);
   }
+  .divider {
+    width: 100%;
+    margin: 20px 0;
+    @include bpMedium {
+      margin: 0 20px;
+      width: auto;
+    }
+    .vertical {
+      opacity: 0.5;
+      display: none;
+      width: 100%;
+      height: 100%;
+      max-width: 2px;
+      @include bpMedium {
+        display: block;
+      }
+    }
+    .horizontal {
+      opacity: 0.5;
+      display: block;
+      width: 100%;
+      @include bpMedium {
+        display: none;
+      }
+    }
+  }
   &__content {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    @include bpMedium {
+      flex-wrap: nowrap;
+    }
     .copy {
       color: white;
-      width: 50%;
-      max-width: 545px;
-      padding-right: 20px;
+      width: 100%;
+      @include bpMedium {
+        max-width: 545px;
+        width: 50%;
+      }
       h3 {
         margin-bottom: 20px;
       }

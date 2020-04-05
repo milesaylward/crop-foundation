@@ -1,7 +1,11 @@
 <template>
   <div class="news-and-press page">
-    <TornHero half-size :background="content.hero_background" />
-    <div class="news-and-press__content content" :style="computedMaxHeight">
+    <TornHero
+      half-size
+      :background="content.hero_background"
+      :copy="content.headline"
+    />
+    <div class="news-and-press__content content">
       <transition name="fade-event" mode="out-in" @after-enter="animCardsIn">
         <div
           :key="activeIndex"
@@ -57,11 +61,6 @@ export default {
     chunkedCards() {
       return chunkItems(this.content.articles, this.itemsPerPage)
     },
-    computedMaxHeight() {
-      return {
-        maxHeight: `${this.activeCards.length * 306 + 20}px`
-      }
-    },
     activeCards() {
       return this.chunkedCards[this.activeIndex]
     }
@@ -88,8 +87,6 @@ export default {
       top: 50px;
       bottom: 100px;
     }
-    height: 10000px;
-    transition: max-height 500ms $easeOutQuad;
     &__cards {
       display: flex;
       flex-direction: column;

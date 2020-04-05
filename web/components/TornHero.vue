@@ -8,7 +8,9 @@
   >
     <component
       :is="tagForBackground"
+      v-if="background"
       :src="background"
+      class="background"
       autoplay
       muted
       loop
@@ -58,36 +60,60 @@ export default {
 .torn-hero {
   width: 100%;
   max-height: 500px;
-  min-height: 500px;
   overflow: hidden;
   position: relative;
+  @include bpMedium {
+    // min-height: 500px;
+  }
   h1 {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 49px;
-    line-height: 57px;
+    font-size: 30px;
+    line-height: 35px;
     transform: translate(-50%, -50%);
     color: $offWhite;
     width: 80%;
     max-width: 600px;
     text-align: center;
     font-weight: 100;
+    @include bpMedium {
+      font-size: 49px;
+      line-height: 57px;
+    }
   }
   &.half-size {
-    min-height: 0;
+    min-height: 250px;
+    .background {
+      min-height: 250px;
+    }
   }
   &.no-bg {
     background: $darkGrey;
+    min-height: 300px;
+    @media screen and (min-width: 500px) {
+      min-height: 400px;
+    }
+    @include bpMedium {
+      min-height: 500px;
+    }
+    .torn-hero__border {
+      bottom: -5px;
+    }
   }
-  video,
-  img {
+  .background {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   &__border {
     position: absolute;
-    bottom: -5px;
+    bottom: 0px;
+    height: auto;
     width: 100%;
+    @media screen and (min-width: 1000px) {
+      bottom: -5px;
+    }
   }
 }
 </style>

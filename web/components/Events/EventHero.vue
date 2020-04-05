@@ -16,58 +16,15 @@
         <h4 v-if="!detailPage">upcoming event</h4>
         <h1>{{ event.title }}</h1>
       </div>
-      <div class="event-hero__content__copy">
-        <p class="date">
-          <span class="date__day">
-            {{ dayOfWeek }}
-          </span>
-          <span class="date__date">
-            {{ monthDate }}
-          </span>
-        </p>
-        <div class="info">
-          <component
-            :is="i === 0 ? 'h3' : 'h4'"
-            v-for="(line, i) in event.location"
-            :key="line.location_line"
-          >
-            {{ line.location_line }}
-          </component>
-          <p class="description">{{ event.description }}</p>
-          <div v-if="event.guest_chefs">
-            <p>Guest chefs include:</p>
-            <p v-for="chef in event.guest_chefs" :key="chef.name">
-              {{ chef.name }} - {{ chef.affiliation }}
-            </p>
-          </div>
-          <CropButton
-            v-if="!detailPage"
-            copy="BUY TICKETS NOW"
-            color="dark-grey"
-            arrow
-          />
-          <button v-else class="gallery-button">
-            <span class="arrow">
-              <DownArrow />
-            </span>
-            Scroll for gallery
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getDayOfWeek, getMonthDate } from '@/core/utils'
 import eventHeroAccent from '@/assets/images/event-hero-accent.png'
-import DownArrow from '@/assets/svg/double-down-arrow.svg?inline'
 
 export default {
   name: 'EventHero',
-  components: {
-    DownArrow
-  },
   props: {
     event: {
       type: Object,
@@ -80,25 +37,32 @@ export default {
   },
   data: () => ({
     eventHeroAccent
-  }),
-  computed: {
-    dayOfWeek() {
-      return getDayOfWeek(this.event.date)
-    },
-    monthDate() {
-      return getMonthDate(this.event.date)
-    }
-  }
+  })
 }
 </script>
 
 <style lang="scss">
 .event-hero {
-  margin-top: -22%;
-  position: relative;
+  position: absolute;
+  top: 300px;
   z-index: 5;
   display: flex;
   margin-bottom: 100px;
+  flex-wrap: wrap-reverse;
+  padding: 0 20px;
+  transform: translateY(-60%);
+  @media screen and (min-width: 500px) {
+    top: 400px;
+  }
+  @include bpMedium {
+    top: 500px;
+  }
+  @include bpLarge {
+    transform: translateY(60%);
+    flex-wrap: nowrap;
+    top: 0;
+    padding: 0;
+  }
   .accent {
     position: absolute;
     &__block {
@@ -111,7 +75,8 @@ export default {
       opacity: 0.5;
     }
     &__background {
-      width: 85%;
+      left: -10%;
+      width: 90%;
       height: 100%;
       bottom: -10%;
       z-index: 1;
@@ -120,105 +85,48 @@ export default {
   &__img,
   &__content {
     position: relative;
-    width: 50%;
+    width: 100%;
     max-height: 600px;
+    @include bpLarge {
+      width: 50%;
+    }
     &__img {
       position: relative;
       z-index: 3;
+      display: flex;
+      align-items: center;
       overflow-x: hidden;
       height: 100%;
+      max-height: 400px;
+      @include bpLarge {
+        max-height: 100%;
+      }
       img {
         height: 100%;
+        width: 100%;
         object-fit: cover;
+        @include bpXLarge {
+          width: auto;
+        }
       }
     }
   }
   &__content {
-    margin-left: 50px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding-right: 30px;
+    @include bpLarge {
+      margin-left: 30px;
+    }
     h4,
     h1 {
       color: $offWhite;
+      margin-bottom: 10px;
     }
     h1 {
       font-weight: 200;
-    }
-
-    &__copy {
-      display: flex;
       margin-bottom: 30px;
-      margin-top: 250px;
-      .date {
-        display: flex;
-        flex-direction: column;
-        padding-right: 20px;
-        color: $gold;
-        text-align: right;
-        font-family: $fontHeadline;
-        font-size: 14px;
-        flex-shrink: 0;
-        line-height: 1.5;
-        &__day {
-          font-weight: bold;
-          text-transform: uppercase;
-        }
-        &__date {
-          font-weight: 200;
-          letter-spacing: -1px;
-        }
-      }
-      .info {
-        color: $darkGrey;
-        padding-right: 80px;
-        h4 {
-          color: $lightGrey;
-          letter-spacing: 1px;
-          font-size: 16px;
-        }
-        p {
-          font-size: 13px;
-          line-height: 21px;
-          &.description {
-            margin-top: 30px;
-          }
-        }
-        .crop-button,
-        .gallery-button {
-          margin-top: 30px;
-        }
-        .gallery-button {
-          background: none;
-          border: none;
-          display: flex;
-          align-items: center;
-          font-style: normal;
-          font-weight: 300;
-          font-size: 12px;
-          line-height: 14px;
-          color: $gold;
-          font-family: $fontHeadline;
-          padding: 0;
-          &:focus {
-            outline: none;
-          }
-          &:hover {
-            svg {
-              transform: translateY(3px);
-            }
-          }
-          span {
-            display: block;
-            padding: 3px 15px 3px 0px;
-            margin-right: 15px;
-            border-right: 1px solid #a5a4a2;
-            svg {
-              transition: transform 250ms $easeOutMaterial;
-            }
-          }
-        }
-      }
     }
   }
 }
