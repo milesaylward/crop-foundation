@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { getCopy } from '@/core/utils'
+import { checkGlobalData, getCopy } from '@/core/utils'
 import HeroCarousel from '@/components/Home/HeroCarousel'
 import SectionOne from '@/components/Home/HomeSectionOne'
 import SectionTwo from '@/components/Home/HomeSectionTwo'
@@ -32,9 +32,9 @@ export default {
   },
   async fetch({ store }) {
     await store.dispatch('getEvents')
-    await store.dispatch('getGlobal')
   },
-  async asyncData({ $axios }) {
+  async asyncData({ $axios, store }) {
+    await checkGlobalData(store)
     const content = await $axios.$get(
       'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-home.json'
     )

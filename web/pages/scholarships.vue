@@ -45,7 +45,7 @@
 
 <script>
 import TornHero from '@/components/TornHero'
-import { getCopy } from '@/core/utils'
+import { getCopy, checkGlobalData } from '@/core/utils'
 import { KIP_LINK, GABY_LINK } from '@/core/constants'
 import PeelerAccent from '@/assets/svg/peeler.svg?inline'
 import halftoneAccent from '@/assets/images/accent-scholarship.png'
@@ -56,13 +56,10 @@ export default {
     TornHero,
     PeelerAccent
   },
-  async fetch({ store }) {
-    await store.dispatch('getEvents')
-    await store.dispatch('getGlobal')
-  },
-  async asyncData({ $axios }) {
+  async asyncData({ $axios, store }) {
+    await checkGlobalData(store)
     const content = await $axios.$get(
-      'http://crop-new-bucket.s3.amazonaws.com/app-data/staging-scholarship.json'
+      'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-scholarship.json'
     )
     const copy = JSON.parse(JSON.stringify(getCopy(content[0])))
     return { content: copy }

@@ -49,7 +49,7 @@ export default {
   async asyncData({ $axios, store }) {
     await checkGlobalData(store)
     const content = await $axios.$get(
-      'http://crop-new-bucket.s3.amazonaws.com/app-data/staging-news.json'
+      'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-news.json'
     )
     return { content: JSON.parse(JSON.stringify(getCopy(content[0]))).news }
   },
