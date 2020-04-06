@@ -23,7 +23,7 @@ export async function getEventsData(axios, store) {
   let content
   if (!store.state.events.length) {
     content = await axios.$get(
-      'http://crop-new-bucket.s3.amazonaws.com/app-data/staging-events.json'
+      'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-events.json'
     )
     content = JSON.parse(JSON.stringify(getCopy(content[0])))
   } else {

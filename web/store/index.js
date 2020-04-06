@@ -16,7 +16,7 @@ export const actions = {
   async getEvents({ commit }) {
     await this.$axios
       .$get(
-        'http://crop-new-bucket.s3.amazonaws.com/app-data/staging-events.json'
+        'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-events.json'
       )
       .then((res) => {
         commit('setEvents', res[0])
@@ -25,7 +25,7 @@ export const actions = {
   async getGlobal({ commit }) {
     await this.$axios
       .$get(
-        'http://crop-new-bucket.s3.amazonaws.com/app-data/staging-global.json'
+        'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-global.json'
       )
       .then((res) => {
         commit('setGlobal', res[0])
