@@ -31,6 +31,16 @@ class WatercolorSlide {
     this.showControls = opts.showControls
   }
 
+  readyImage() {
+    const image = new Image()
+    image.src = this.image
+    image.crossOrigin = 'anonymous'
+    image.onload = () => {
+      this.init()
+    }
+    this.image = image
+  }
+
   init() {
     this.camera = new THREE.OrthographicCamera(
       this.width / -2,
@@ -46,7 +56,7 @@ class WatercolorSlide {
     const geometry = new THREE.PlaneBufferGeometry(this.width, this.height)
     const textureLoader = new THREE.TextureLoader()
     textureLoader.crossOrigin = ''
-    const _texture = textureLoader.load(this.image)
+    const _texture = textureLoader.load(this.image.src)
     _texture.minFilter = THREE.LinearFilter
 
     const _drop = textureLoader.load(drop)

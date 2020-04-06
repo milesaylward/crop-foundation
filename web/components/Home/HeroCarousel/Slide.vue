@@ -54,7 +54,7 @@ export default {
         height: rect.height,
         showControls: this.isFirstSlide
       })
-      this.waterColor.init()
+      this.waterColor.readyImage()
     }, 250)
     eventBus.$on('slideReady', () => {
       this.$nextTick(() => {
