@@ -55,7 +55,7 @@ export default {
         showControls: this.isFirstSlide
       })
       this.waterColor.readyImage()
-    }, 250)
+    }, 100)
     eventBus.$on('slideReady', () => {
       this.$nextTick(() => {
         this.animate = true

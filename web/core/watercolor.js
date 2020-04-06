@@ -33,7 +33,7 @@ class WatercolorSlide {
 
   readyImage() {
     const image = new Image()
-    image.src = this.image
+    image.src = `${this.image}?cache="${Math.random()}"`
     image.crossOrigin = 'anonymous'
     image.onload = () => {
       this.init()
@@ -97,7 +97,7 @@ class WatercolorSlide {
     setTimeout(() => {
       this.renderer.render(this.scene, this.camera)
       eventBus.$emit('slideReady')
-    }, 200)
+    }, 250)
   }
 
   handleResize({ width, height }) {
@@ -112,28 +112,28 @@ class WatercolorSlide {
   }
 
   showContent() {
-    gsap.to(this.material.uniforms.dispFactor, 1, {
+    gsap.to(this.material.uniforms.dispFactor, 0.5, {
       value: 2.0,
       ease: 'linear'
     })
-    gsap.to(this.material.uniforms.dispFactor5, 1, {
+    gsap.to(this.material.uniforms.dispFactor5, 0.5, {
+      value: 2.0,
+      delay: 0.1,
+      ease: 'linear'
+    })
+    gsap.to(this.material.uniforms.dispFactor2, 0.5, {
       value: 2.0,
       delay: 0.2,
       ease: 'linear'
     })
-    gsap.to(this.material.uniforms.dispFactor2, 1, {
+    gsap.to(this.material.uniforms.dispFactor4, 0.5, {
+      value: 2.0,
+      delay: 0.3,
+      ease: 'linear'
+    })
+    gsap.to(this.material.uniforms.dispFactor3, 0.5, {
       value: 2.0,
       delay: 0.4,
-      ease: 'linear'
-    })
-    gsap.to(this.material.uniforms.dispFactor4, 1, {
-      value: 2.0,
-      delay: 0.6,
-      ease: 'linear'
-    })
-    gsap.to(this.material.uniforms.dispFactor3, 1, {
-      value: 2.0,
-      delay: 0.8,
       ease: 'linear',
       onComplete: () => {
         this.destroy()
@@ -149,7 +149,7 @@ class WatercolorSlide {
     this.animate()
     setTimeout(() => {
       this.showContent()
-    }, 50)
+    }, 150)
   }
 
   animate() {
