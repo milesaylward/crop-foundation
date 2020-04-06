@@ -98,6 +98,9 @@ export default {
   z-index: 1;
   color: white;
   min-height: 600px;
+  @include bpMedium {
+    min-height: 100vh;
+  }
   .accent {
     position: absolute;
     left: 0;
