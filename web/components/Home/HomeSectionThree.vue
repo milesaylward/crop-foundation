@@ -84,8 +84,8 @@ export default {
     top: 0;
     left: 20px;
     @include bpMedium {
-      width: 20%;
-      left: 10%;
+      width: 25%;
+      left: 7%;
     }
   }
   &__border-bottom {

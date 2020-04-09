@@ -78,12 +78,22 @@ export default {
   justify-content: center;
   z-index: 200;
   &__image {
-    max-width: 75%;
-    max-height: 80vh;
+    width: 100%;
+    height: 100%;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    justify-content: center;
+    @include bpMedium {
+      max-width: 80%;
+      max-height: 80%;
+    }
     img {
-      height: 100%;
       width: 100%;
-      max-height: 80vh;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
   }
   &__overlay {
