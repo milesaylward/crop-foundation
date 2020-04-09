@@ -12,7 +12,10 @@
           <a href="https://www.facebook.com/thecropfoundation" target="_blank">
             <facebook class="facebook" />
           </a>
-          <a href="https://www.instagram.com/thecropfoundation/">
+          <a
+            href="https://www.instagram.com/thecropfoundation/"
+            target="_blank"
+          >
             <instagram class="instagram" />
           </a>
         </div>

@@ -35,9 +35,11 @@ export default {
     display: block;
     width: 44%;
     min-width: 298px;
+    max-height: 217px;
     margin: 0 10px;
     @include bpMedium {
       min-width: 44%;
+      max-height: none;
     }
   }
 }

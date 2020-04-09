@@ -1,6 +1,8 @@
 <template>
   <div ref="slide" class="slide">
-    <div ref="canvasContainer" class="canvas-container" :class="{ animate }" />
+    <div ref="canvasContainer" class="canvas-container" :class="{ animate }">
+      <div v-if="slide.needs_overlay" class="slide__overlay" />
+    </div>
     <img :src="slide.image" alt="alt text" />
     <div
       class="content"
@@ -54,7 +56,7 @@ export default {
         height: rect.height,
         showControls: this.isFirstSlide
       })
-      this.waterColor.readyImage()
+      // this.waterColor.readyImage()
     }, 100)
     eventBus.$on('slideReady', () => {
       this.$nextTick(() => {
@@ -88,6 +90,17 @@ export default {
   max-height: 600px;
   @include bpMedium {
     max-height: 100vh;
+    min-height: 1000px;
+  }
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 500ms $easeOutQuad 100ms;
   }
   img {
     height: 100%;
@@ -101,6 +114,9 @@ export default {
   }
   .animate {
     canvas {
+      opacity: 1;
+    }
+    .slide__overlay {
       opacity: 1;
     }
   }

@@ -99,7 +99,8 @@ export default {
   color: white;
   min-height: 600px;
   @include bpMedium {
-    min-height: 100vh;
+    min-height: 900px;
+    height: 100vh;
   }
   .accent {
     position: absolute;
