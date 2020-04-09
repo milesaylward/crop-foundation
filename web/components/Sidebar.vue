@@ -44,7 +44,7 @@ export default {
 
 <style lang="scss">
 .sidebar {
-  width: 200px;
+  width: 130px;
   height: 100vh;
   position: fixed;
   z-index: 101;
@@ -56,7 +56,7 @@ export default {
     display: block;
     position: absolute;
     left: 0;
-    width: 100%;
+    width: 200px;
     height: 100%;
     z-index: 1;
     pointer-events: none;
@@ -64,7 +64,7 @@ export default {
   &__content {
     position: absolute;
     box-sizing: border-box;
-    width: 63%;
+    width: 100%;
     height: 100%;
     padding: 20px;
     z-index: 2;

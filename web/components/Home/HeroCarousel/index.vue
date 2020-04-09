@@ -28,6 +28,12 @@
         </h4>
       </div>
     </div>
+    <button class="hero-carousel__scroll-button">
+      <span class="arrow">
+        <DownArrow />
+      </span>
+      Scroll to learn more
+    </button>
     <img :src="carouselBorder" alt="carousel border" class="accent" />
   </div>
 </template>
@@ -35,6 +41,7 @@
 <script>
 import Slide from './Slide'
 import arrowFilled from '@/assets/svg/arrow-filled.svg?inline'
+import DownArrow from '@/assets/svg/double-down-arrow.svg?inline'
 import eventBus from '@/core/eventBus'
 import { preventFocus } from '@/core/utils'
 import carouselBorder from '@/assets/images/hero_border.png'
@@ -42,7 +49,8 @@ import carouselBorder from '@/assets/images/hero_border.png'
 export default {
   components: {
     Slide,
-    arrowFilled
+    arrowFilled,
+    DownArrow
   },
   props: {
     items: {
@@ -108,6 +116,37 @@ export default {
     bottom: 0;
     transform: translateY(50%);
     width: 100%;
+  }
+  &__scroll-button {
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    z-index: 105;
+    font-family: $fontHeadline;
+    background: none;
+    border: none;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 200;
+    color: $gold;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      svg {
+        transform: translateY(3px);
+      }
+    }
+    svg {
+      width: 35px;
+      height: 25px;
+      padding: 3px 10px;
+      margin-right: 10px;
+      border-right: 1px solid rgba($lightGrey, 0.5);
+      transition: transform 250ms $easeOutQuad;
+    }
   }
   &__controls {
     position: absolute;

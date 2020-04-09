@@ -50,9 +50,10 @@ export default {
   margin-bottom: 100px;
   flex-wrap: wrap-reverse;
   padding: 0 20px;
-  transform: translateY(-60%);
+  transform: translateY(-45%);
   @media screen and (min-width: 500px) {
     top: 400px;
+    transform: translateY(-60%);
   }
   @include bpMedium {
     top: 500px;
