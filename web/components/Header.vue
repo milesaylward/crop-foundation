@@ -5,7 +5,7 @@
         v-for="link in globalData.nav_items"
         :key="link.slug"
         class="link"
-        :to="`/${link.slug}`"
+        :to="`/${link.slug !== '/' ? link.slug : ''}`"
       >
         {{ link.label }}
         <navBorder class="nav-border" />
@@ -43,7 +43,7 @@
             v-for="link in globalData.nav_items"
             :key="link.slug"
             class="link"
-            :to="`/${link.slug}`"
+            :to="`/${link.slug !== '/' ? link.slug : ''}`"
             @click.native="handleMenuClick"
           >
             {{ link.label }}
@@ -166,6 +166,8 @@ export default {
       .menu-button {
         display: flex;
         align-items: center;
+        background: none;
+        border: none;
         color: $gold;
         text-transform: uppercase;
         font-size: 16px;
@@ -219,7 +221,7 @@ export default {
   .link {
     position: relative;
     font-family: $fontAccent;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 28px;
     color: $offWhite;
     font-weight: 200;
@@ -232,7 +234,7 @@ export default {
         opacity: 1;
       }
     }
-    &.nuxt-link-active {
+    &.nuxt-link-exact-active {
       .nav-border {
         opacity: 1;
       }
