@@ -4,7 +4,7 @@
       <h4>{{ content.eyebrow }}</h4>
       <h2>{{ content.headline }}</h2>
       <div class="home-section-events__content__events">
-        <div v-for="(event, i) in homeEvents" :key="event.title" class="event">
+        <div v-for="(event, i) in events" :key="event.title" class="event">
           <eventBorderTop v-if="i === 0" class="border border--top" />
           <eventBorderInner v-if="i === 0" class="border " />
           <eventBorderBottom v-if="i === 1" class="border" />
@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import moment from 'moment'
 import eventDateBorder from '@/assets/svg/event-date-border.svg?inline'
 import eventBorderTop from '@/assets/svg/event-border-top.svg?inline'
@@ -63,13 +62,11 @@ export default {
     content: {
       type: Object,
       required: true
-    }
-  },
-  computed: {
-    homeEvents() {
-      return this.events.events.slice(0, 2)
     },
-    ...mapState(['events'])
+    events: {
+      type: Array,
+      required: true
+    }
   },
   methods: {
     getDayOfWeek(date) {

@@ -69,7 +69,7 @@ export default {
   }),
   computed: {
     computedWinners() {
-      return this.content.scholarship_winners.slice(0, 2)
+      return this.content.scholarship_winners
     }
   },
   methods: {
@@ -146,6 +146,7 @@ export default {
       }
     }
     .crop-button {
+      display: block;
       margin: 30px auto;
       @include bpMedium {
         margin: 60px auto;
@@ -161,8 +162,9 @@ export default {
   .winner-copy {
     font-family: $fontHeadline;
     font-weight: 100;
+    max-width: 450px;
     font-size: 18px;
-    line-height: 1;
+    line-height: 1.5;
     margin: 15px 0;
     span {
       color: $gold;
@@ -176,7 +178,6 @@ export default {
     padding: 0;
     margin-top: 50px;
     @include bpMedium {
-      flex-wrap: nowrap;
       margin-top: 150px;
     }
     &__winner {
@@ -185,7 +186,7 @@ export default {
         margin-top: 60px;
       }
       @include bpMedium {
-        width: 50%;
+        width: 48%;
         &:nth-child(odd) {
           margin-right: 20px;
         }
