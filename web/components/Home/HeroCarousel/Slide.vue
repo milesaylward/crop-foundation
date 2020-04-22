@@ -8,7 +8,16 @@
       class="content"
       :class="{ animate: animateContent, first: isFirstSlide }"
     >
-      <h1>{{ slide.headline }}</h1>
+      <h1 v-if="!slide.quotes.length">{{ slide.headline }}</h1>
+      <div v-else class="hero__quotes">
+        <h3
+          v-for="quote in trimmedQuotes"
+          :key="quote.copy"
+          class="hero__quotes__quote"
+        >
+          {{ quote.copy }}
+        </h3>
+      </div>
       <div class="button">
         <CropButton
           :copy="slide.button"
@@ -46,6 +55,11 @@ export default {
     animate: false,
     animateContent: false
   }),
+  computed: {
+    trimmedQuotes() {
+      return this.slide.quotes.slice(0, 2)
+    }
+  },
   mounted() {
     this.timeout = setTimeout(() => {
       const rect = this.$refs.slide.getBoundingClientRect()
@@ -130,7 +144,7 @@ export default {
     top: 55%;
     transform: translateY(-50%);
     left: 0;
-    max-width: 900px;
+    max-width: 1000px;
     @include bpMedium {
       padding-left: 70px;
     }
@@ -140,7 +154,18 @@ export default {
         opacity: 1;
       }
     }
+    h3 {
+      color: white;
+      margin-bottom: 20px;
+      font-size: 16px;
+      line-height: 18px;
+      @include bpMedium {
+        font-size: 24px;
+        line-height: 34px;
+      }
+    }
     h1 {
+      max-width: 900px;
       opacity: 0;
       transition: opacity 500ms $easeOutMaterial 170ms;
       color: white;
