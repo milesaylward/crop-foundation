@@ -1,16 +1,22 @@
 <template>
-  <div class="home-section-images">
-    <img
-      v-for="image in images"
-      :key="image.image"
-      class="home-section-images__image"
-      :src="image.image"
-      alt="CROP image"
-    />
+  <div class="glide">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        <img
+          v-for="image in images"
+          :key="image.image"
+          class="glide__slide"
+          :src="image.image"
+          alt="CROP image"
+        />
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
+import Glide from '@glidejs/glide'
+
 export default {
   name: 'HomeSectionImages',
   props: {
@@ -18,29 +24,23 @@ export default {
       type: Array,
       required: true
     }
+  },
+  mounted() {
+    this.glide = new Glide('.glide', {
+      type: 'carousel',
+      perView: 2,
+      focusAt: 'center',
+      autoplay: 4000
+    }).mount()
   }
 }
 </script>
 
 <style lang="scss">
-.home-section-images {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  bottom: 0;
+.glide {
   position: relative;
   z-index: 2;
-  &__image {
-    display: block;
-    width: 44%;
-    min-width: 298px;
-    max-height: 217px;
-    margin: 0 10px;
-    @include bpMedium {
-      min-width: 44%;
-      max-height: none;
-    }
-  }
+  cursor: -webkit-grab;
+  @import 'node_modules/@glidejs/glide/src/assets/sass/glide.core';
 }
 </style>
