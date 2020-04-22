@@ -1,7 +1,7 @@
 <template>
   <div class="events page">
     <TornHero />
-    <EventHero :event="content.events[0]" />
+    <EventHero :event="featuredEvent" :is-upcoming-event="isUpcomingEvent" />
     <div class="events__hero-copy">
       <div class="spacer" />
       <EventHeroCopy :event="content.events[0]" />
@@ -63,13 +63,32 @@ export default {
   }),
   computed: {
     pastEvents() {
-      const pastEvents = this.content.events.filter((event) => {
-        return moment(event.date).isBefore(moment()) && event.event_gallery
-      })
+      const pastEvents = this.content.events
+        .filter((event) => {
+          return moment(event.date).isBefore(moment()) && event.event_gallery
+        })
+        .sort((a, b) => moment(b.date).diff(moment(a.date)))
       return pastEvents
     },
+    nextEvent() {
+      const events = this.content.events.filter((event) => {
+        return !moment(event.date).isBefore(moment()) && event.event_gallery
+      })
+      const sorted = events.sort((a, b) => moment(a.date).diff(moment(b.date)))
+      return sorted[0]
+    },
+    isUpcomingEvent() {
+      return !!this.nextEvent
+    },
+    featuredEvent() {
+      if (this.nextEvent) return this.nextEvent
+      return this.pastEvents[0]
+    },
     chunkedEvents() {
-      return chunkItems(this.pastEvents, this.itemsPerPage)
+      const events = this.pastEvents.filter(
+        (event) => event.title !== this.featuredEvent.title
+      )
+      return chunkItems(events, this.itemsPerPage)
     },
     activeEvents() {
       return this.chunkedEvents[this.activeIndex]

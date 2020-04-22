@@ -6,6 +6,7 @@
       </span>
       <span class="date__date">
         {{ monthDate }}
+        <span v-if="yearDate" class="date__year">, {{ yearDate }}</span>
       </span>
     </p>
     <div class="info">
@@ -25,7 +26,9 @@
       </div>
       <CropButton
         v-if="!detailPage"
-        copy="BUY TICKETS NOW"
+        :copy="buttonCopy"
+        :link="eventLink"
+        :use-nuxt-link="!isUpcomingEvent"
         color="dark-grey"
         arrow
       />
@@ -41,7 +44,7 @@
 
 <script>
 import DownArrow from '@/assets/svg/double-down-arrow.svg?inline'
-import { getDayOfWeek, getMonthDate } from '@/core/utils'
+import { getDayOfWeek, getMonthDate, getYearDate } from '@/core/utils'
 
 export default {
   name: 'EventHeroCopy',
@@ -56,6 +59,10 @@ export default {
     detailPage: {
       type: Boolean,
       default: false
+    },
+    isUpcomingEvent: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -64,6 +71,19 @@ export default {
     },
     monthDate() {
       return getMonthDate(this.event.date)
+    },
+    yearDate() {
+      return this.isUpcomingEvent ? '' : getYearDate(this.event.date)
+    },
+    buttonCopy() {
+      return this.isUpcomingEvent ? 'buy tickets now' : 'view event gallery'
+    },
+    eventLink() {
+      const eventURL = encodeURIComponent(
+        this.event.title.replace(/ /g, '-')
+      ).toLowerCase()
+      const url = `/events/${eventURL}`
+      return this.isUpcomingEvent ? '' : url
     }
   }
 }
@@ -98,9 +118,13 @@ export default {
     font-size: 14px;
     flex-shrink: 0;
     line-height: 1.5;
-    width: 64px;
+    min-width: 64px;
+    width: auto;
     @include bpLarge {
       position: static;
+    }
+    &__year {
+      margin-left: -3px;
     }
     &__day {
       font-weight: bold;

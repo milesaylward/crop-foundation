@@ -13,7 +13,7 @@
     </div>
     <div class="event-hero__content">
       <div class="headline">
-        <h4 v-if="!detailPage">upcoming event</h4>
+        <h4 v-if="!detailPage">{{ headerCopy }}</h4>
         <h1>{{ event.title }}</h1>
       </div>
     </div>
@@ -33,11 +33,20 @@ export default {
     detailPage: {
       type: Boolean,
       default: false
+    },
+    isUpdcomingEvent: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
     eventHeroAccent
-  })
+  }),
+  computed: {
+    headerCopy() {
+      return this.isUpdcomingEvent ? 'upcoming event' : 'recent event'
+    }
+  }
 }
 </script>
 

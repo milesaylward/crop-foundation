@@ -19,6 +19,11 @@ export const getMonthDate = (date) => {
   return momentDate.format('MMM DD')
 }
 
+export const getYearDate = (date) => {
+  const momentDate = moment(date)
+  return momentDate.format('YYYY')
+}
+
 export async function getEventsData(axios, store) {
   let content
   if (!store.state.events.length) {
