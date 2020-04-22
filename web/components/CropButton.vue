@@ -1,5 +1,10 @@
 <template>
-  <button v-if="!link" class="crop-button" :class="buttonClasses">
+  <button
+    v-if="!link"
+    class="crop-button"
+    :class="buttonClasses"
+    @click="$emit('click')"
+  >
     {{ copy }}
     <ArrowFilled v-if="arrow" />
   </button>
@@ -7,8 +12,9 @@
     :is="tagForLink"
     v-else
     :href="link"
+    download
     :to="link"
-    :target="useNuxtLink ? '' : '_blank'"
+    :target="useNuxtLink || download ? '' : '_blank'"
     class="crop-button"
     :class="buttonClasses"
   >
@@ -51,6 +57,10 @@ export default {
       required: true
     },
     useNuxtLink: {
+      type: Boolean,
+      default: false
+    },
+    download: {
       type: Boolean,
       default: false
     }

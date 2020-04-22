@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { checkGlobalData, getCopy, chunkItems } from '@/core/utils'
 import TornHero from '@/components/TornHero'
 import ArticleCard from '@/components/ArticleCard'
@@ -58,8 +59,12 @@ export default {
     itemsPerPage: 4
   }),
   computed: {
+    sortedArticles() {
+      const articles = this.content.articles
+      return articles.sort((a, b) => moment(b.date).diff(moment(a.date)))
+    },
     chunkedCards() {
-      return chunkItems(this.content.articles, this.itemsPerPage)
+      return chunkItems(this.sortedArticles, this.itemsPerPage)
     },
     activeCards() {
       return this.chunkedCards[this.activeIndex]

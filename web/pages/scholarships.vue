@@ -7,14 +7,19 @@
         <!-- eslint-disable-next-line vue/no-v-html -->
         <p v-html="parseCopy(content.copy.two)" />
       </div>
-      <CropButton :copy="content.button" color="dark-grey" arrow />
+      <CropButton
+        :copy="content.button"
+        color="dark-grey"
+        arrow
+        @click="downloadPDF"
+      />
     </div>
     <div class="scholarship__photo-winners content">
       <PeelerAccent class="accent accent__peeler" />
       <img class="accent accent__halftone" :src="halftoneAccent" alt="accent" />
       <div
-        v-for="winner in computedWinners"
-        :key="winner.year"
+        v-for="(winner, i) in computedWinners"
+        :key="`${winner.year}-${i}`"
         class="scholarship__photo-winners__winner"
       >
         <img :src="winner.image" alt="scholarship winner" />
@@ -44,6 +49,7 @@
 </template>
 
 <script>
+import FileSaver from 'file-saver'
 import TornHero from '@/components/TornHero'
 import { getCopy, checkGlobalData } from '@/core/utils'
 import { KIP_LINK, GABY_LINK } from '@/core/constants'
@@ -76,6 +82,13 @@ export default {
     parseCopy(copy) {
       const innerCopy = copy.replace('{{email-kip}}', KIP_LINK)
       return innerCopy.replace('{{email-gaby}}', GABY_LINK)
+    },
+    downloadPDF() {
+      fetch(this.content.scholarship_pdf).then((response) =>
+        response.blob().then((blob) => {
+          FileSaver.saveAs(blob, 'Crop Scholarship Application.pdf')
+        })
+      )
     }
   }
 }
@@ -105,6 +118,9 @@ export default {
     max-width: 900px;
     margin: 0 auto;
     padding: 30px 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     @include bpMedium {
       padding-top: 80px;
     }
@@ -146,7 +162,6 @@ export default {
       }
     }
     .crop-button {
-      display: block;
       margin: 30px auto;
       @include bpMedium {
         margin: 60px auto;
@@ -173,7 +188,7 @@ export default {
   &__photo-winners {
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
     padding: 0;
     margin-top: 50px;
@@ -208,7 +223,6 @@ export default {
         background: $darkGrey;
         display: inline-block;
         padding: 30px;
-        margin-top: -50px;
         p {
           color: $offWhite;
         }
@@ -222,7 +236,7 @@ export default {
     }
     @include bpMedium {
       margin: {
-        top: -100px;
+        // top: -100px;
         bottom: 100px;
       }
     }
