@@ -6,24 +6,30 @@
       'half-size': halfSize
     }"
   >
-    <component
-      :is="tagForBackground"
-      v-if="background"
+    <video
+      v-if="background && isVideo"
       :src="background"
       class="background"
       autoplay
       muted
       loop
       playsinline
+      @loadeddata="handleVideoLoaded"
     />
+    <div v-else-if="background" ref="canvasContainer" class="background">
+      <img ref="image" :src="background" />
+    </div>
     <h1>{{ copy }}</h1>
     <img class="torn-hero__border" :src="heroBorder" alt="torn border" />
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import tornBorder from '@/assets/images/torn-hero-border.png'
 import halfTornBorder from '@/assets/images/half-torn-border.png'
+import WatercolorSlide from '@/core/watercolor'
+import eventBus from '@/core/eventBus'
 
 export default {
   name: 'TornHero',
@@ -46,12 +52,42 @@ export default {
     halfTornBorder
   }),
   computed: {
-    tagForBackground() {
-      return this.background.includes('.mp4') ? 'video' : 'img'
+    isVideo() {
+      return this.background.includes('.mp4')
     },
     heroBorder() {
       return !this.halfSize ? this.tornBorder : this.halfTornBorder
     }
+  },
+  mounted() {
+    if (this.background && !this.isVideo) this.initWaterColor()
+  },
+  methods: {
+    initWaterColor() {
+      this.timeout = setTimeout(() => {
+        const rect = this.$refs.image.getBoundingClientRect()
+        this.waterColor = new WatercolorSlide({
+          container: this.$refs.canvasContainer,
+          image: this.background,
+          width: rect.width,
+          height: rect.height,
+          showControls: this.isFirstSlide
+        })
+        this.waterColor.readyImage()
+      }, 100)
+      eventBus.$on('slideReady', () => {
+        this.setShowLoader(false)
+      })
+      eventBus.$on('loaderDismissed', () => {
+        if (this.waterColor) {
+          this.waterColor.onAnimate()
+        }
+      })
+    },
+    handleVideoLoaded() {
+      this.setShowLoader(false)
+    },
+    ...mapActions(['setShowLoader'])
   }
 }
 </script>
@@ -102,9 +138,22 @@ export default {
     }
   }
   .background {
+    position: relative;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    img {
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
   &__border {
     position: absolute;

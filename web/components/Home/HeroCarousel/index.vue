@@ -1,7 +1,12 @@
 <template>
   <div class="hero-carousel" :class="{ animate: showControls }">
     <transition name="fade" mode="out-in">
-      <Slide :key="activeSlide.image" :slide="activeSlide" />
+      <Slide
+        :key="activeSlide.image"
+        :slide="activeSlide"
+        :is-first-mount="isFirstMount"
+        @firstMountDone="isFirstMount = false"
+      />
     </transition>
     <div class="hero-carousel__controls">
       <div class="hero-carousel__controls__buttons">
@@ -28,7 +33,7 @@
         </h4>
       </div>
     </div>
-    <button class="hero-carousel__scroll-button">
+    <button class="hero-carousel__scroll-button" @click="handleScrollToClick">
       <span class="arrow">
         <DownArrow />
       </span>
@@ -61,6 +66,7 @@ export default {
   data: () => ({
     activeIndex: 0,
     showControls: false,
+    isFirstMount: true,
     preventFocus,
     carouselBorder
   }),
@@ -93,6 +99,15 @@ export default {
       } else {
         this.activeIndex += 1
       }
+    },
+    handleScrollToClick() {
+      const rect = document
+        .querySelector('.home-section-one')
+        .getBoundingClientRect()
+      window.scrollTo({
+        top: rect.top + window.scrollY,
+        behavior: 'smooth'
+      })
     }
   }
 }
@@ -119,7 +134,7 @@ export default {
   }
   &__scroll-button {
     position: absolute;
-    bottom: 50px;
+    bottom: 3%;
     left: 10px;
     display: flex;
     align-items: center;
@@ -152,7 +167,7 @@ export default {
     position: absolute;
     transform: translateY(-50%);
     left: 20px;
-    top: 25%;
+    top: 18%;
     @include bpMedium {
       left: 75px;
       top: 32%;

@@ -3,9 +3,15 @@
     <div class="home-section-subscribe__content">
       <h4>{{ content.eyebrow }}</h4>
       <h2>{{ content.headline }}</h2>
-      <form class="home-section-subscribe__content__form">
+      <form
+        class="home-section-subscribe__content__form"
+        name="Subscribe"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        @submit.prevent="handleFormSubmit"
+      >
         <input
-          v-model="input"
+          v-model="email"
           type="text"
           name="email"
           placeholder="Enter your email"
@@ -23,6 +29,7 @@
 <script>
 import arrowFilled from '@/assets/svg/arrow-filled.svg?inline'
 import halftoneAccent from '@/assets/images/halftone-2-accent.png'
+import { encode } from '@/core/utils'
 
 export default {
   name: 'HomeSectionSubscribe',
@@ -36,9 +43,21 @@ export default {
     }
   },
   data: () => ({
-    input: '',
+    email: '',
     halftoneAccent
-  })
+  }),
+  methods: {
+    handleFormSubmit(e) {
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode({ 'form-name': 'Subscribe', email: this.email })
+      })
+        .then(() => alert('Success!'))
+        .catch((error) => console.error(error))
+      e.preventDefault()
+    }
+  }
 }
 </script>
 

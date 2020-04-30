@@ -55,3 +55,9 @@ export const chunkItems = (items, itemsPer) => {
     (v, i) => items.slice(i * itemsPer, i * itemsPer + itemsPer)
   )
 }
+
+export const encode = (data) => {
+  return Object.keys(data)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .join('&')
+}

@@ -19,6 +19,7 @@
               v-for="event in activeEvents"
               :key="event.title"
               :event="event"
+              @loaded="eventImageLoaded"
             />
           </div>
         </transition>
@@ -34,6 +35,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import moment from 'moment'
 import { getEventsData, checkGlobalData, chunkItems } from '@/core/utils'
 import TornHero from '@/components/TornHero'
@@ -59,7 +61,8 @@ export default {
   },
   data: () => ({
     activeIndex: 0,
-    itemsPerPage: 6
+    itemsPerPage: 6,
+    loadedImages: 0
   }),
   computed: {
     pastEvents() {
@@ -94,6 +97,13 @@ export default {
       return this.chunkedEvents[this.activeIndex]
     }
   },
+  watch: {
+    loadedImages(val) {
+      if (val === this.itemsPerPage) {
+        this.setShowLoader(false)
+      }
+    }
+  },
   mounted() {
     this.$refs.eventContainer.classList.add('animate')
   },
@@ -103,7 +113,11 @@ export default {
     },
     handleUpdate(newIndex) {
       this.activeIndex = newIndex
-    }
+    },
+    eventImageLoaded() {
+      this.loadedImages += 1
+    },
+    ...mapActions(['setShowLoader'])
   }
 }
 </script>

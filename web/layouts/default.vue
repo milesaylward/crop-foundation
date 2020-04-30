@@ -5,19 +5,34 @@
     <nuxt />
     <Footer />
     <div class="noise"></div>
+    <transition name="fade" @after-leave="afterLeave">
+      <Loader v-if="showLoader" />
+    </transition>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Sidebar from '@/components/Sidebar'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import Loader from '@/components/Loader'
+import eventBus from '@/core/eventBus'
 
 export default {
   components: {
     Sidebar,
     Footer,
-    Header
+    Header,
+    Loader
+  },
+  computed: {
+    ...mapState(['showLoader'])
+  },
+  methods: {
+    afterLeave() {
+      eventBus.$emit('loaderDismissed')
+    }
   }
 }
 </script>

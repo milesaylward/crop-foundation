@@ -47,6 +47,7 @@ export default {
 .home-section-community {
   position: relative;
   padding-top: 3rem;
+  padding: 0 20px;
   overflow: hidden;
   @include bpMedium {
     overflow: visible;
@@ -67,7 +68,9 @@ export default {
     h2 {
       margin: 0 auto;
       color: $darkGrey;
-      max-width: 576px;
+      @include bpMedium {
+        max-width: 576px;
+      }
       margin-bottom: 40px;
     }
     &__flex-copy {

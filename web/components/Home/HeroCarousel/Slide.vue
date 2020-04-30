@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import arrowFilled from '@/assets/svg/arrow-filled.svg?inline'
 import WatercolorSlide from '@/core/watercolor'
 import eventBus from '@/core/eventBus'
@@ -49,6 +50,10 @@ export default {
     isFirstSlide: {
       type: Boolean,
       default: true
+    },
+    isFirstMount: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
@@ -72,12 +77,7 @@ export default {
       })
       this.waterColor.readyImage()
     }, 100)
-    eventBus.$on('slideReady', () => {
-      this.$nextTick(() => {
-        this.animate = true
-        this.waterColor.onAnimate()
-      })
-    })
+    eventBus.$on('slideReady', this.handleSlideReady)
     window.addEventListener('resize', this.handleResize)
     eventBus.$on('animateSlideContent', () => {
       this.animateContent = true
@@ -93,7 +93,23 @@ export default {
       if (!this.waterColor) return
       const rect = this.$refs.slide.getBoundingClientRect()
       this.waterColor.handleResize(rect)
-    }
+    },
+    animateSlide() {
+      this.$nextTick(() => {
+        this.animate = true
+        this.waterColor.onAnimate()
+      })
+    },
+    handleSlideReady() {
+      if (this.isFirstSlide && this.isFirstMount) {
+        this.setShowLoader(false)
+        eventBus.$on('loaderDismissed', this.animateSlide)
+        this.$emit('firstMountDone')
+      } else {
+        this.animateSlide()
+      }
+    },
+    ...mapActions(['setShowLoader'])
   }
 }
 </script>
@@ -112,7 +128,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     transition: opacity 500ms $easeOutQuad 100ms;
   }
@@ -150,16 +166,28 @@ export default {
     }
     &.animate {
       h1,
-      .button {
+      .button,
+      h3 {
         opacity: 1;
       }
     }
     h3 {
       color: white;
       margin-bottom: 20px;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 18px;
+      opacity: 0;
+      transition: opacity 500ms $easeOutMaterial;
+      @for $i from 1 through 2 {
+        &:nth-child(#{$i}) {
+          transition-delay: $i * 85ms;
+        }
+      }
       @include bpMedium {
+        font-size: 20px;
+        line-height: 24px;
+      }
+      @include bpLarge {
         font-size: 24px;
         line-height: 34px;
       }

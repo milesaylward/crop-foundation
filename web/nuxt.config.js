@@ -1,5 +1,8 @@
 export default {
   mode: 'universal',
+  router: {
+    middleware: 'loader'
+  },
   /*
    ** Headers of the page
    */
