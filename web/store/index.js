@@ -1,6 +1,7 @@
 export const state = () => ({
   events: [],
-  globalData: {}
+  globalData: {},
+  showLoader: true
 })
 
 export const mutations = {
@@ -9,6 +10,9 @@ export const mutations = {
   },
   setGlobal(state, data) {
     state.globalData = data
+  },
+  setShowLoader(state, val) {
+    state.showLoader = val
   }
 }
 
@@ -30,5 +34,8 @@ export const actions = {
       .then((res) => {
         commit('setGlobal', res[0])
       })
+  },
+  setShowLoader({ commit }, val) {
+    commit('setShowLoader', val)
   }
 }

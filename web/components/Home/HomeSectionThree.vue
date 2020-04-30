@@ -18,14 +18,9 @@
     <div class="home-section-three__content">
       <h4>{{ content.eyebrow }}</h4>
       <h2 class="light">{{ content.headline }}</h2>
-      <div class="home-section-three__content__flex-copy">
-        <p class="light">{{ content.copy.one }}</p>
-        <p class="light">{{ content.copy.two }}</p>
-      </div>
       <div class="home-section-three__content__copy">
         <p class="light">
           {{ content.copy.one }}
-          {{ content.copy.two }}
         </p>
       </div>
       <CropButton
@@ -81,6 +76,7 @@ export default {
   &__accent {
     position: absolute;
     width: 40%;
+    min-width: 250px;
     top: 0;
     left: 20px;
     @include bpMedium {
@@ -96,35 +92,23 @@ export default {
   &__content {
     max-width: 900px;
     padding: 0 20px;
+    padding-top: 70px;
     @include bpMedium {
       text-align: center;
+      padding-top: 0px;
     }
     h4 {
       margin-bottom: 2rem;
     }
     h2 {
       margin: 0 auto;
-      max-width: 576px;
       margin-bottom: 40px;
-    }
-    &__flex-copy {
-      width: 100%;
-      text-align: left;
-      justify-content: center;
-      display: none;
       @include bpMedium {
-        display: flex;
-      }
-      p {
-        max-width: 417px;
-        &:first-child {
-          margin-right: 40px;
-        }
+        max-width: 576px;
       }
     }
     &__copy {
       @include bpMedium {
-        display: none;
       }
     }
     .crop-button {

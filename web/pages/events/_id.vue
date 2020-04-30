@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { getEventsData, checkGlobalData } from '@/core/utils'
 import TornHero from '@/components/TornHero'
 import EventHero from '@/components/Events/EventHero'
@@ -90,6 +91,13 @@ export default {
         : ''
     }
   },
+  watch: {
+    itemsLoaded(val) {
+      if (val === this.galleryItemsPerPage) {
+        this.setShowLoader(false)
+      }
+    }
+  },
   mounted() {
     this.addGalleryItems()
   },
@@ -133,7 +141,8 @@ export default {
           }, 150)
         }
       }
-    }
+    },
+    ...mapActions(['setShowLoader'])
   }
 }
 </script>

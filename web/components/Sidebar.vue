@@ -7,7 +7,12 @@
       </nuxt-link>
       <div class="sidebar__content__bottom">
         <p class="source">copyright 2020 • the crop foundation</p>
-        <CropButton filled copy="donate" small link="" />
+        <CropButton
+          filled
+          copy="donate"
+          small
+          link="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F7N5FGUNWK2KN&source=url"
+        />
         <div class="social-buttons">
           <a href="https://www.facebook.com/thecropfoundation" target="_blank">
             <facebook class="facebook" />

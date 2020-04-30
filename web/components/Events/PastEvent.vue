@@ -1,7 +1,7 @@
 <template>
   <div class="past-event" @click="handleEventClick">
     <div class="past-event__image">
-      <img :src="event.hero_image" alt="event image" />
+      <img :src="event.hero_image" alt="event image" @load="$emit('loaded')" />
     </div>
     <div class="past-event__info">
       <h4>{{ eventDate }}</h4>

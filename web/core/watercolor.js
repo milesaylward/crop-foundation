@@ -91,7 +91,7 @@ class WatercolorSlide {
     this.renderer.setClearColor( 0xF2F1EF, 0)
     // eslint-disable-next-line
     this.scene.background = new THREE.Color(0xF2F1EF)
-    this.renderer.setSize(this.width, this.height)
+    this.handleResize(this)
     this.container.appendChild(this.renderer.domElement)
 
     setTimeout(() => {
@@ -101,7 +101,7 @@ class WatercolorSlide {
   }
 
   handleResize({ width, height }) {
-    let innerWidth = width < 767 ? MIN_WIDTH : width
+    let innerWidth = width < MIN_WIDTH ? MIN_WIDTH : width
     if (height === this.height && innerWidth < this.width) {
       innerWidth = this.width
     } else {
