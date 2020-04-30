@@ -10,7 +10,12 @@
         data-netlify-honeypot="bot-field"
         @submit.prevent="handleFormSubmit"
       >
-        <input v-model="email" type="text" name="email" placeholder="Enter your email">
+        <input
+          v-model="email"
+          type="text"
+          name="email"
+          placeholder="Enter your email"
+        />
         <button>
           Subscribe
           <arrowFilled />
