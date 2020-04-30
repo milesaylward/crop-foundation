@@ -6,16 +6,12 @@
       <form
         class="home-section-subscribe__content__form"
         name="Subscribe"
-        data-netlify="true"
+        netlify
         data-netlify-honeypot="bot-field"
         @submit.prevent="handleFormSubmit"
       >
-        <input
-          v-model="email"
-          type="text"
-          name="email"
-          placeholder="Enter your email"
-        />
+        <input type="hidden" name="form-name" value="Subscribe">
+        <input v-model="email" type="text" name="email" placeholder="Enter your email">
         <button>
           Subscribe
           <arrowFilled />
