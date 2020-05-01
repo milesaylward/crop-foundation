@@ -83,9 +83,6 @@ export default {
   }),
   computed: {
     slotWrapperComponent() {
-      if (this.debug) {
-        console.log(!this.noAppear, 'Intersect', this.isMounted)
-      }
       return !this.noAppear ? 'Intersect' : 'div'
     },
     slotHandleEnter() {
@@ -133,9 +130,6 @@ export default {
   },
   methods: {
     handleEnter(entries) {
-      if (this.debug) {
-        console.log(entries)
-      }
       if (entries && entries[0]) {
         const {
           isIntersecting,
@@ -143,40 +137,23 @@ export default {
           // rootBounds,
           // boundingClientRect
         } = entries[0]
-        // TODO add a better appear threshold seperate from halfway and full.
-        if (this.debug) {
-          console.log(intersectionRatio, entries[0])
-        }
         if (
           isIntersecting &&
           intersectionRatio >= this.parsedThreshold &&
           !this.halfwayReached
         ) {
-          if (this.debug) {
-            console.log('halfway-visible', this.$el)
-            console.log('can-appear', this.$el)
-          }
           this.halfwayReached = true
           this.$emit('halfway-visible', { el: this.$el })
           this.appearThresholdReached = true
           this.$emit('can-appear', { el: this.$el })
-        }
-        if (this.debug) {
-          console.log(this.parsedThreshold, 'appear thresh', intersectionRatio)
         }
         if (
           isIntersecting &&
           intersectionRatio >= this.parsedFullThreshold &&
           !this.fullyVisible
         ) {
-          if (this.debug) {
-            console.log('fully-visible', this.$el)
-          }
           this.fullyVisible = true
           this.$emit('fully-visible', { el: this.$el })
-          if (this.debug) {
-            console.log('fully appeared')
-          }
         }
       }
     },
