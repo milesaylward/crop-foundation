@@ -154,15 +154,14 @@ class WatercolorSlide {
   }
 
   animate() {
-    const currentTime = new Date().getTime()
-    const timeSinceLastUpdate = currentTime - this.lastUpdate
-    this.lastUpdate = currentTime
     this.animationFrame = requestAnimationFrame(this.animate)
-    this.render(timeSinceLastUpdate)
+    this.render()
   }
 
   render() {
-    this.renderer.render(this.scene, this.camera)
+    if (this.scene && this.camera) {
+      this.renderer.render(this.scene, this.camera)
+    }
   }
 
   stopRender() {
@@ -170,10 +169,14 @@ class WatercolorSlide {
   }
 
   destroy() {
+    this.stopRender()
     this.scene.dispose()
     this.geometry.dispose()
     this.material.dispose()
     this.renderer.dispose()
+    this.scene = null
+    this.camera = null
+    this.renderer = null
   }
 
   setShaders() {
