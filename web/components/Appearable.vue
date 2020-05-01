@@ -10,28 +10,15 @@
       }
     ]"
   >
-    <component
-      :is="slotWrapperComponent"
-      :threshold="appearThresholdArray"
-      :root-margin="rootMargin"
-      @enter="slotHandleEnter"
-      @leave="slotHandleLeave"
-    >
-      <div class="appearable__content">
-        <slot />
-      </div>
-    </component>
+    <div ref="container" class="appearable__content">
+      <slot />
+    </div>
   </div>
 </template>
 
 <script>
-import Intersect from 'vue-intersect'
-
 export default {
   name: 'Appearable',
-  components: {
-    Intersect
-  },
   props: {
     anim: {
       type: Boolean,
@@ -125,6 +112,13 @@ export default {
     for (let x = 0.0; x < 1; x += this.appearThresholdFrequency) {
       this.appearThresholdLocal.push(Math.round(x * 100) / 100)
     }
+  },
+  mounted() {
+    this.observer = new IntersectionObserver(this.slotHandleEnter, {
+      rootMargin: '0px',
+      threshold: this.appearThresholdLocal
+    })
+    this.observer.observe(this.$refs.container)
   },
   methods: {
     handleEnter(entries) {

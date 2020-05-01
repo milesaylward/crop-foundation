@@ -43,7 +43,7 @@ export default {
    */
   plugins: [
     '~/plugins/global',
-    { src: '~/plugins/appearable', ssr: false },
+    '~/plugins/appearable',
     { src: '~plugins/infinite-loading', ssr: false }
   ],
   /*

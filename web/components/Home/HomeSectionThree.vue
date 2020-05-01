@@ -116,6 +116,7 @@ export default {
     }
     .crop-button {
       margin: 5rem auto;
+      display: inline-flex;
     }
   }
 }
