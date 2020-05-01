@@ -1,6 +1,6 @@
 <template>
   <keep-alive>
-    <component :is="'div'"><slot /></component>
+    <div><slot /></div>
   </keep-alive>
 </template>
 
