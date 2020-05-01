@@ -5,86 +5,84 @@
       :background="content.hero_background"
       :copy="content.headline"
     />
-    <Appearable class="contact-us__content content" :threshold="0.2">
-      <div class="contact-us__content__info ap-child">
-        <p>{{ content.copy }}</p>
-        <div
-          v-for="item in content.info_items"
-          :key="item.contact_info"
-          class="contact-us__content__info__items"
-        >
-          <p>{{ item.copy }}</p>
-          <a :href="getLinkForType(item)" target="_blank">
-            {{ item.contact_info }}
-          </a>
+    <div class="contact-us__content__info ap-child">
+      <p>{{ content.copy }}</p>
+      <div
+        v-for="item in content.info_items"
+        :key="item.contact_info"
+        class="contact-us__content__info__items"
+      >
+        <p>{{ item.copy }}</p>
+        <a :href="getLinkForType(item)" target="_blank">
+          {{ item.contact_info }}
+        </a>
+      </div>
+    </div>
+    <div class="contact-us__content__form ap-child ap-child--1">
+      <form
+        name="Contact"
+        netlify
+        data-netlify-honeypot="bot-field"
+        @submit.prevent="handleFormSubmit"
+      >
+        <input type="hidden" name="form-name" value="Contact" />
+        <input
+          v-model="formData.first_name"
+          :class="{ error: formErrors.first_name }"
+          type="text"
+          name="first_name"
+          placeholder="First Name"
+        />
+        <input
+          v-model="formData.last_name"
+          :class="{ error: formErrors.last_name }"
+          type="text"
+          name="last_name"
+          placeholder="Last Name"
+        />
+        <input
+          v-model="formData.email"
+          :class="{ error: formErrors.email }"
+          type="text"
+          name="email"
+          placeholder="Email"
+        />
+        <input
+          v-model="formData.subject"
+          :class="{ error: formErrors.subject }"
+          type="text"
+          name="subject"
+          placeholder="Subject"
+        />
+        <textarea
+          v-model="formData.message"
+          :class="{ error: formErrors.message }"
+          name="message"
+          cols="10"
+          rows="5"
+          placeholder="Message"
+        />
+        <div class="contact-us__content__form__bottom">
+          <CropButton
+            copy="submit"
+            color="light-grey"
+            filled
+            arrow
+            @mousedown.native="preventFocus"
+          />
+          <transition name="fade">
+            <p v-if="showSuccess" class="form-message">
+              We'll be in touch soon!
+            </p>
+          </transition>
+          <transition name="fade">
+            <p v-if="showError" class="form-message">
+              {{ errorMessage }}
+            </p>
+          </transition>
         </div>
-      </div>
-      <div class="contact-us__content__form ap-child ap-child--1">
-        <form
-          name="Contact"
-          netlify
-          data-netlify-honeypot="bot-field"
-          @submit.prevent="handleFormSubmit"
-        >
-          <input type="hidden" name="form-name" value="Contact" />
-          <input
-            v-model="formData.first_name"
-            :class="{ error: formErrors.first_name }"
-            type="text"
-            name="first_name"
-            placeholder="First Name"
-          />
-          <input
-            v-model="formData.last_name"
-            :class="{ error: formErrors.last_name }"
-            type="text"
-            name="last_name"
-            placeholder="Last Name"
-          />
-          <input
-            v-model="formData.email"
-            :class="{ error: formErrors.email }"
-            type="text"
-            name="email"
-            placeholder="Email"
-          />
-          <input
-            v-model="formData.subject"
-            :class="{ error: formErrors.subject }"
-            type="text"
-            name="subject"
-            placeholder="Subject"
-          />
-          <textarea
-            v-model="formData.message"
-            :class="{ error: formErrors.message }"
-            name="message"
-            cols="10"
-            rows="5"
-            placeholder="Message"
-          />
-          <div class="contact-us__content__form__bottom">
-            <CropButton
-              copy="submit"
-              color="light-grey"
-              filled
-              arrow
-              @mousedown.native="preventFocus"
-            />
-            <transition name="fade">
-              <p v-if="showSuccess" class="form-message">
-                We'll be in touch soon!
-              </p>
-            </transition>
-            <transition name="fade">
-              <p v-if="showError" class="form-message">
-                {{ errorMessage }}
-              </p>
-            </transition>
-          </div>
-        </form>
-      </div>
-    </Appearable>
+      </form>
+    </div>
   </div>
 </template>
 

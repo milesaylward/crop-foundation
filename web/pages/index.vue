@@ -13,9 +13,7 @@
       :events="homeEvents"
     />
     <SectionCommunity v-else :content="content.community" />
-    <Appearable>
-      <SectionSubscribe :content="content.subscribe" />
-    </Appearable>
+    <SectionSubscribe :content="content.subscribe" />
   </div>
 </template>
 
