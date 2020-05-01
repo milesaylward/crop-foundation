@@ -13,7 +13,9 @@
       :events="homeEvents"
     />
     <SectionCommunity v-else :content="content.community" />
-    <SectionSubscribe :content="content.subscribe" />
+    <Appearable :threshold="0.3">
+      <SectionSubscribe :content="content.subscribe" />
+    </Appearable>
   </div>
 </template>
 
