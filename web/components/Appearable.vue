@@ -17,22 +17,20 @@
       @enter="slotHandleEnter"
       @leave="slotHandleLeave"
     >
-      <Keepable class="appearable__content">
+      <div class="appearable__content">
         <slot />
-      </Keepable>
+      </div>
     </component>
   </div>
 </template>
 
 <script>
 import Intersect from 'vue-intersect'
-import Keepable from '@/components/Keepable'
 
 export default {
   name: 'Appearable',
   components: {
-    Intersect,
-    Keepable
+    Intersect
   },
   props: {
     anim: {
