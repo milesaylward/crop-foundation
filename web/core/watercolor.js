@@ -22,6 +22,7 @@ class WatercolorSlide {
     this.container = opts.container
     this.animate = this.animate.bind(this)
     this.destroy = this.destroy.bind(this)
+    this.stopRender = this.stopRender.bind(this)
     this.onAnimate = this.onAnimate.bind(this)
     this.showContent = this.showContent.bind(this)
     this.handleResize = this.handleResize.bind(this)
@@ -55,13 +56,13 @@ class WatercolorSlide {
     this.setShaders()
     this.camera.position.z = 1
     this.scene = new THREE.Scene()
-    const geometry = new THREE.PlaneBufferGeometry(this.width, this.height)
-    const textureLoader = new THREE.TextureLoader()
-    textureLoader.crossOrigin = ''
-    const _texture = textureLoader.load(this.image.src)
+    this.geometry = new THREE.PlaneBufferGeometry(this.width, this.height)
+    this.textureLoader = new THREE.TextureLoader()
+    this.textureLoader.crossOrigin = ''
+    const _texture = this.textureLoader.load(this.image.src)
     _texture.minFilter = THREE.LinearFilter
 
-    const _drop = textureLoader.load(drop)
+    const _drop = this.textureLoader.load(drop)
     _drop.minFilter = THREE.LinearFilter
 
     this.uniforms = {
@@ -83,9 +84,9 @@ class WatercolorSlide {
 
     this.lastUpdate = new Date().getTime()
     // put it together for rendering
-    const mesh = new THREE.Mesh(geometry, this.material)
-    this.scene.add(mesh)
-    mesh.position.z = -1
+    this.mesh = new THREE.Mesh(this.geometry, this.material)
+    this.scene.add(this.mesh)
+    this.mesh.position.z = -1
 
     this.renderer = new THREE.WebGLRenderer({ alpha: true })
     this.renderer.setPixelRatio(window.devicePixelRatio)
@@ -136,7 +137,7 @@ class WatercolorSlide {
       delay: 0.4,
       ease: 'linear',
       onComplete: () => {
-        this.destroy()
+        this.stopRender()
         eventBus.$emit('animateSlideContent')
         if (this.showControls) {
           eventBus.$emit('animateSlideControls')
@@ -164,8 +165,15 @@ class WatercolorSlide {
     this.renderer.render(this.scene, this.camera)
   }
 
-  destroy() {
+  stopRender() {
     cancelAnimationFrame(this.animationFrame)
+  }
+
+  destroy() {
+    this.scene.dispose()
+    this.geometry.dispose()
+    this.material.dispose()
+    this.renderer.dispose()
   }
 
   setShaders() {
