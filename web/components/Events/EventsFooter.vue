@@ -357,6 +357,13 @@ export default {
     select {
       width: 48%;
     }
+    input[type='date'] {
+      &::-webkit-inner-spin-button,
+      &::-webkit-clear-button {
+        -webkit-appearance: none;
+        display: none;
+      }
+    }
     .form {
       &__bottom {
         position: relative;

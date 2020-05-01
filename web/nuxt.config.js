@@ -13,12 +13,18 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Welcome to The CROP Foundation - fostering educational and employment opportunities for innovative culinary sstudents through unique culinary events. Help us cultivate the next generation of culinary superstars.'
-      }
+      { hid: 'description', name: 'description', content: 'Welcome to The CROP Foundation - fostering educational and employment opportunities for innovative culinary students through unique culinary events. Help us cultivate the next generation of culinary superstars.' },
+      { hid: 'og:description', name: 'og:description', content: 'Welcome to The CROP Foundation - fostering educational and employment opportunities for innovative culinary students through unique culinary events. Help us cultivate the next generation of culinary superstars.' },
+      { hid: 'og:image', name: 'og:image', content: '/og-image.png' },
+      { hid: 'og:site_name', name: 'og:site_name', content: 'The Crop Foundation' },
+      { hid: 'og:title', name: 'og:title', content: 'The Crop Foundation' },
+      { hid: 'og:type', name: 'og:type', content: 'website' },
+      { hid: 'og:url', name: 'og:url', content: 'https://thecrop.org' },
+      { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
+      { hid: 'twitter:description', name: 'twitter:description', content: 'Welcome to The CROP Foundation - fostering educational and employment opportunities for innovative culinary students through unique culinary events. Help us cultivate the next generation of culinary superstars.' },
+      { hid: 'twitter:image', name: 'twitter:image', content: '/og-image.png' },
+      { hid: 'twitter:site', name: 'twitter:site', content: '@CropFoundation' },
+      { hid: 'twitter:title', name: 'twitter:title', content: 'The Crop Foundation' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

@@ -1,8 +1,8 @@
 <template>
   <div class="event-hero">
     <div class="event-hero__img ap-child">
-      <div class="event-hero__img__img">
-        <img :src="event.hero_image" alt="event image" />
+      <div ref="canvasContainer" class="event-hero__img__img canvas-container">
+        <img ref="image" :src="event.hero_image" alt="event image" />
       </div>
       <img
         class="accent accent__background"
@@ -22,6 +22,8 @@
 
 <script>
 import eventHeroAccent from '@/assets/images/event-hero-accent.png'
+import WatercolorSlide from '@/core/watercolor'
+import eventBus from '@/core/eventBus'
 
 export default {
   name: 'EventHero',
@@ -40,11 +42,51 @@ export default {
     }
   },
   data: () => ({
-    eventHeroAccent
+    eventHeroAccent,
+    waterColor: null
   }),
   computed: {
     headerCopy() {
       return this.isUpdcomingEvent ? 'upcoming event' : 'recent event'
+    }
+  },
+  mounted() {
+    this.initWaterColor()
+  },
+  beforeDestroy() {
+    if (this.waterColor) {
+      this.waterColor.destroy()
+    }
+    window.removeEventListener('resize', this.handleResize)
+    if (this.timeout) clearTimeout(this.timeout)
+  },
+  methods: {
+    initWaterColor() {
+      this.timeout = setTimeout(() => {
+        const rect = this.$refs.image.getBoundingClientRect()
+        this.waterColor = new WatercolorSlide({
+          container: this.$refs.canvasContainer,
+          image: this.event.hero_image,
+          width: rect.width,
+          height: rect.height,
+          useMin: false
+        })
+        this.waterColor.readyImage()
+      }, 100)
+      eventBus.$on('slideReady', () => {
+        this.$emit('heroReady')
+      })
+      eventBus.$on('loaderDismissed', () => {
+        if (this.waterColor) {
+          this.waterColor.onAnimate()
+        }
+      })
+      window.addEventListener('resize', this.handleResize)
+    },
+    handleResize() {
+      if (!this.waterColor) return
+      const rect = this.$refs.image.getBoundingClientRect()
+      this.waterColor.handleResize(rect)
     }
   }
 }
@@ -72,6 +114,18 @@ export default {
     flex-wrap: nowrap;
     top: 0;
     padding: 0;
+  }
+  .canvas-container {
+    position: relative;
+    z-index: 5;
+    img {
+      opacity: 0;
+    }
+    canvas {
+      top: 0;
+      left: 0;
+      position: absolute;
+    }
   }
   .accent {
     position: absolute;

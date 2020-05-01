@@ -23,8 +23,11 @@
         :key="`${winner.year}-${i}`"
         class="scholarship__photo-winners__winner"
         :threshold="0.5"
+        @can-appear="handleCanAppear(i)"
       >
-        <img class="ap-child" :src="winner.image" alt="scholarship winner" />
+        <div ref="canvasContainer" class="canvas-container">
+          <img ref="image" :src="winner.image" alt="scholarship winner" />
+        </div>
         <div
           class="scholarship__photo-winners__winner__info ap-child ap-child--1"
         >
@@ -60,6 +63,7 @@ import { getCopy, checkGlobalData } from '@/core/utils'
 import { KIP_LINK, GABY_LINK } from '@/core/constants'
 import PeelerAccent from '@/assets/svg/peeler.svg?inline'
 import halftoneAccent from '@/assets/images/accent-scholarship.png'
+import WatercolorSlide from '@/core/watercolor'
 
 export default {
   name: 'ScholarshipPage',
@@ -76,12 +80,25 @@ export default {
     return { content: copy }
   },
   data: () => ({
-    halftoneAccent
+    halftoneAccent,
+    waterColors: []
   }),
   computed: {
     computedWinners() {
       return this.content.scholarship_winners
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.initWaterColor()
+    })
+  },
+  beforeDestroy() {
+    this.waterColors.forEach((waterColor, i) => {
+      waterColor.destroy()
+    })
+    window.removeEventListener('resize', this.handleResize)
+    if (this.timeout) clearTimeout(this.timeout)
   },
   methods: {
     parseCopy(copy) {
@@ -94,6 +111,32 @@ export default {
           FileSaver.saveAs(blob, 'Crop Scholarship Application.pdf')
         })
       )
+    },
+    initWaterColor() {
+      this.timeout = setTimeout(() => {
+        this.computedWinners.forEach((winner, i) => {
+          const rect = this.$refs.image[i].getBoundingClientRect()
+          const waterColor = new WatercolorSlide({
+            container: this.$refs.canvasContainer[i],
+            image: winner.image,
+            width: rect.width,
+            height: rect.height,
+            useMin: false
+          })
+          waterColor.readyImage()
+          this.waterColors.push(waterColor)
+        })
+      }, 500)
+      window.addEventListener('resize', this.handleResize)
+    },
+    handleResize() {
+      this.waterColors.forEach((waterColor, i) => {
+        const rect = this.$refs.image[i].getBoundingClientRect()
+        waterColor.handleResize(rect)
+      })
+    },
+    handleCanAppear(i) {
+      this.waterColors[i].onAnimate()
     }
   }
 }
@@ -110,7 +153,10 @@ export default {
     }
     &__peeler {
       right: 5%;
-      top: -10%;
+      top: -5%;
+      @include bpLarge {
+        top: -10%;
+      }
     }
     &__halftone {
       height: 628px;
@@ -207,9 +253,23 @@ export default {
       .appearable__content {
         width: 100%;
       }
+      .canvas-container {
+        position: relative;
+        z-index: 5;
+        overflow: hidden;
+        img {
+          opacity: 0;
+        }
+        canvas {
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          position: absolute;
+        }
+      }
       margin-top: 60px;
-      @include bpMedium {
-        width: 48%;
+      @include bpLarge {
+        width: 47%;
         margin-top: 0;
         &:nth-child(odd) {
           margin-right: 20px;
@@ -222,10 +282,11 @@ export default {
       img {
         width: 100%;
         min-height: 296px;
-        object-fit: cover;
+        height: auto;
         display: block;
-        @include bpMedium {
+        @include bpLarge {
           height: 628px;
+          width: auto;
         }
       }
       &__info {
@@ -233,7 +294,7 @@ export default {
         display: inline-block;
         padding: 30px;
         width: 100%;
-        @include bpMedium {
+        @include bpLarge {
           width: auto;
         }
         p {

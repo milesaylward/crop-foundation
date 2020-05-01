@@ -2,7 +2,11 @@
   <div class="events page">
     <TornHero />
     <Appearable :threshold="0.3">
-      <EventHero :event="featuredEvent" :is-upcoming-event="isUpcomingEvent" />
+      <EventHero
+        :event="featuredEvent"
+        :is-upcoming-event="isUpcomingEvent"
+        @heroReady="heroReady = true"
+      />
       <div class="events__hero-copy">
         <div class="spacer" />
         <EventHeroCopy :event="content.events[0]" />
@@ -66,7 +70,8 @@ export default {
   data: () => ({
     activeIndex: 0,
     itemsPerPage: 6,
-    loadedImages: 0
+    loadedImages: 0,
+    heroReady: false
   }),
   computed: {
     pastEvents() {
@@ -99,13 +104,14 @@ export default {
     },
     activeEvents() {
       return this.chunkedEvents[this.activeIndex]
+    },
+    dismissLoader() {
+      return this.loadedImages === this.itemsPerPage && this.heroReady
     }
   },
   watch: {
-    loadedImages(val) {
-      if (val === this.itemsPerPage) {
-        this.setShowLoader(false)
-      }
+    dismissLoader(val) {
+      if (val) this.setShowLoader(false)
     }
   },
   mounted() {

@@ -19,8 +19,6 @@ class WatercolorSlide {
     this.renderer = null
     this.uniforms = null
     this.material = null
-    this.width = opts.width < 600 ? MIN_WIDTH : opts.width
-    this.height = opts.height || window.innerHeight
     this.container = opts.container
     this.animate = this.animate.bind(this)
     this.destroy = this.destroy.bind(this)
@@ -29,6 +27,10 @@ class WatercolorSlide {
     this.handleResize = this.handleResize.bind(this)
     this.image = opts.image
     this.showControls = opts.showControls
+    this.debug = opts.debug
+    this.useMin = opts.useMin !== undefined ? opts.useMin : true
+    this.width = opts.width < 600 && this.useMin ? MIN_WIDTH : opts.width
+    this.height = opts.height || window.innerHeight
   }
 
   readyImage() {
@@ -85,12 +87,10 @@ class WatercolorSlide {
     this.scene.add(mesh)
     mesh.position.z = -1
 
-    this.renderer = new THREE.WebGLRenderer()
+    this.renderer = new THREE.WebGLRenderer({ alpha: true })
     this.renderer.setPixelRatio(window.devicePixelRatio)
     // eslint-disable-next-line
     this.renderer.setClearColor( 0xF2F1EF, 0)
-    // eslint-disable-next-line
-    this.scene.background = new THREE.Color(0xF2F1EF)
     this.handleResize(this)
     this.container.appendChild(this.renderer.domElement)
 
@@ -101,7 +101,7 @@ class WatercolorSlide {
   }
 
   handleResize({ width, height }) {
-    let innerWidth = width < MIN_WIDTH ? MIN_WIDTH : width
+    let innerWidth = width < MIN_WIDTH && this.useMin ? MIN_WIDTH : width
     if (height === this.height && innerWidth < this.width) {
       innerWidth = this.width
     } else {
