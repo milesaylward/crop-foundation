@@ -71,6 +71,7 @@ export default {
     position: absolute;
     width: 100%;
     top: 0;
+    left: 0;
     transform: translateY(-99%);
     z-index: -1;
   }

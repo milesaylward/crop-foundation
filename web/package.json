@@ -19,7 +19,6 @@
     "@glidejs/glide": "^3.4.1",
     "@nuxtjs/axios": "^5.9.5",
     "@nuxtjs/svg": "^0.1.6",
-    "@thisisgrow/vue-appearable": "^1.0.0",
     "file-saver": "^2.0.2",
     "gsap": "^3.2.6",
     "lodash": "^4.17.15",
@@ -28,7 +27,8 @@
     "nuxt": "^2.0.0",
     "sass-loader": "^8.0.2",
     "three": "^0.115.0",
-    "vue-infinite-loading": "^2.4.5"
+    "vue-infinite-loading": "^2.4.5",
+    "vue-intersect": "^1.1.6"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.0",

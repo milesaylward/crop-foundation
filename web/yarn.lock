@@ -1138,26 +1138,6 @@
     mustache "^2.3.0"
     stack-trace "0.0.10"
 
-"@thisisgrow/vue-appearable@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@thisisgrow/vue-appearable/-/vue-appearable-1.0.0.tgz#11a2ee5b15c3888bbc053694e824f29e3bd2deff"
-  integrity sha512-FHv3VasGMwsQ1KlfPBX0pJ9I+Ms/EoqaAd4pyIZQ2nVcGr3nwh4Y6rUgy9KceP6BwzqmqStAGicuk7c/Hldolg==
-  dependencies:
-    "@thisisgrow/vue-intersect" "^1.0.1"
-    core-js "^2.6.5"
-    vue "^2.6.10"
-
-"@thisisgrow/vue-intersect@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@thisisgrow/vue-intersect/-/vue-intersect-1.0.1.tgz#3bc16b6439cd01f0b3a530c189506304fd7205dd"
-  integrity sha512-WtLZOjA3V/mvVq5GF1Dutsj87wxJhdyZMjLl9mSkz/fQDjn6IC2qRJMdoaaIWQTB3zB7mYN3jko48B0twAwaxg==
-  dependencies:
-    core-js "^2.6.5"
-    intersection-observer "^0.7.0"
-    lodash "^4.17.15"
-    lodash.kebabcase "^4.1.1"
-    vue "^2.6.10"
-
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -4654,11 +4634,6 @@ inquirer@^7.0.0:
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
     through "^2.3.6"
-
-intersection-observer@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.7.0.tgz#ee16bee978db53516ead2f0a8154b09b400bbdc9"
-  integrity sha512-Id0Fij0HsB/vKWGeBe9PxeY45ttRiBmhFyyt/geBdDHBYNctMRTE3dC1U3ujzz3lap+hVXlEcVaB56kZP/eEUg==
 
 invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
@@ -8856,6 +8831,11 @@ vue-infinite-loading@^2.4.5:
   resolved "https://registry.yarnpkg.com/vue-infinite-loading/-/vue-infinite-loading-2.4.5.tgz#cc20fd40af7f20188006443c99b60470cf1de1b3"
   integrity sha512-xhq95Mxun060bRnsOoLE2Be6BR7jYwuC89kDe18+GmCLVrRA/dU0jrGb12Xu6NjmKs+iTW0AA6saSEmEW4cR7g==
 
+vue-intersect@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/vue-intersect/-/vue-intersect-1.1.6.tgz#2c349354bcf9221a006636cbe3f657f8e1282c1d"
+  integrity sha512-m9K48wkti8K0no0F8QdiShukenLDg80JS246Lf7QWgI0XOHkBkzn921FCwLtb49Jj14KK8itVZw4iOVxPc/PsA==
+
 vue-loader@^15.9.1:
   version "15.9.1"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.9.1.tgz#bd2ab8f3d281e51d7b81d15390a58424d142243e"
@@ -8927,7 +8907,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.10, vue@^2.6.11:
+vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==

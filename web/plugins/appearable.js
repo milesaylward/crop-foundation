@@ -1,4 +1,4 @@
 import Vue from 'vue'
-import { Appearable } from '@thisisgrow/vue-appearable'
+import Appearable from '~/components/Appearable'
 
 Vue.component('Appearable', Appearable)

@@ -16,7 +16,8 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'Welcome to The CROP Foundation - fostering educational and employment opportunities for innovative culinary sstudents through unique culinary events. Help us cultivate the next generation of culinary superstars.'
+        content:
+          'Welcome to The CROP Foundation - fostering educational and employment opportunities for innovative culinary sstudents through unique culinary events. Help us cultivate the next generation of culinary superstars.'
       }
     ],
     link: [
@@ -42,7 +43,7 @@ export default {
    */
   plugins: [
     '~/plugins/global',
-    '~/plugins/appearable',
+    { src: '~/plugins/appearable', ssr: false },
     { src: '~plugins/infinite-loading', ssr: false }
   ],
   /*
