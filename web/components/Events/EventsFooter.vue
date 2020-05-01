@@ -223,7 +223,7 @@ export default {
       fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ 'form-name': 'Contact', ...this.formData })
+        body: encode({ 'form-name': 'HostEvent', ...this.formData })
       })
         .then(() => {
           Object.keys(this.formData).forEach((key) => {
