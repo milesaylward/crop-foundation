@@ -1,19 +1,19 @@
 <template>
   <div class="home-section-community container">
-    <div class="home-section-community__content">
-      <h4>{{ content.eyebrow }}</h4>
-      <h2>{{ content.headline }}</h2>
+    <Appearable class="home-section-community__content" :threshold="0.3">
+      <h4 class="ap-child">{{ content.eyebrow }}</h4>
+      <h2 class="ap-child ap-child--1">{{ content.headline }}</h2>
       <div class="home-section-one__content__flex-copy">
-        <p>{{ content.copy.left }}</p>
-        <p>{{ content.copy.right }}</p>
+        <p class="ap-child ap-child--2">{{ content.copy.left }}</p>
+        <p class="ap-child ap-child--3">{{ content.copy.right }}</p>
       </div>
       <div class="home-section-one__content__copy">
-        <p>
+        <p class="ap-child ap-child--2">
           {{ content.copy.left }}
           {{ content.copy.right }}
         </p>
       </div>
-      <div class="cta-support">
+      <div class="cta-support ap-child ap-child--4">
         <h3>Support us using:</h3>
         <a
           href="https://smile.amazon.com/ref=smi_ext_ch_83-2281354_dl?_encoding=UTF8&ein=83-2281354&ref_=smi_chpf_redirect&ref_=smi_ext_ch_83-2281354_cl"
@@ -22,7 +22,7 @@
           <img :src="SmileLogo" alt="Amazon Smile Logo" />
         </a>
       </div>
-    </div>
+    </Appearable>
   </div>
 </template>
 

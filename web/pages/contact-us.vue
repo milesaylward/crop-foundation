@@ -5,8 +5,8 @@
       :background="content.hero_background"
       :copy="content.headline"
     />
-    <div class="contact-us__content content">
-      <div class="contact-us__content__info">
+    <Appearable class="contact-us__content content" :threshold="0.2">
+      <div class="contact-us__content__info ap-child">
         <p>{{ content.copy }}</p>
         <div
           v-for="item in content.info_items"
@@ -19,22 +19,77 @@
           </a>
         </div>
       </div>
-      <div class="contact-us__content__form">
-        <form action="">
-          <input type="text" name="first_name" placeholder="First Name" />
-          <input type="text" name="last_name" placeholder="Last Name" />
-          <input type="text" name="email" placeholder="Email" />
-          <input type="text" name="subject" placeholder="Subject" />
-          <textarea name="message" cols="10" rows="5" placeholder="Message" />
-          <CropButton copy="submit" color="light-grey" filled arrow />
+      <div class="contact-us__content__form ap-child ap-child--1">
+        <form
+          name="Contact"
+          netlify
+          data-netlify-honeypot="bot-field"
+          @submit.prevent="handleFormSubmit"
+        >
+          <input type="hidden" name="form-name" value="Contact" />
+          <input
+            v-model="formData.first_name"
+            :class="{ error: formErrors.first_name }"
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+          />
+          <input
+            v-model="formData.last_name"
+            :class="{ error: formErrors.last_name }"
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+          />
+          <input
+            v-model="formData.email"
+            :class="{ error: formErrors.email }"
+            type="text"
+            name="email"
+            placeholder="Email"
+          />
+          <input
+            v-model="formData.subject"
+            :class="{ error: formErrors.subject }"
+            type="text"
+            name="subject"
+            placeholder="Subject"
+          />
+          <textarea
+            v-model="formData.message"
+            :class="{ error: formErrors.message }"
+            name="message"
+            cols="10"
+            rows="5"
+            placeholder="Message"
+          />
+          <div class="contact-us__content__form__bottom">
+            <CropButton
+              copy="submit"
+              color="light-grey"
+              filled
+              arrow
+              @mousedown.native="preventFocus"
+            />
+            <transition name="fade">
+              <p v-if="showSuccess" class="form-message">
+                We'll be in touch soon!
+              </p>
+            </transition>
+            <transition name="fade">
+              <p v-if="showError" class="form-message">
+                {{ errorMessage }}
+              </p>
+            </transition>
+          </div>
         </form>
       </div>
-    </div>
+    </Appearable>
   </div>
 </template>
 
 <script>
-import { checkGlobalData, getCopy } from '@/core/utils'
+import { checkGlobalData, getCopy, encode, preventFocus } from '@/core/utils'
 import TornHero from '@/components/TornHero'
 
 export default {
@@ -48,6 +103,48 @@ export default {
       'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-contact.json'
     )
     return { content: JSON.parse(JSON.stringify(getCopy(content[0]))).contact }
+  },
+  data: () => ({
+    formData: {
+      first_name: '',
+      last_name: '',
+      email: '',
+      subject: '',
+      message: ''
+    },
+    formInvalid: false,
+    formErrors: {
+      first_name: false,
+      last_name: false,
+      email: false,
+      subject: false,
+      message: false
+    },
+    errorMessage: '',
+    showError: false,
+    showSuccess: false,
+    preventFocus
+  }),
+  watch: {
+    formData: {
+      handler(val) {
+        Object.keys(val).forEach((key) => {
+          if (val[key] !== '') {
+            this.formErrors[key] = false
+          }
+        })
+      },
+      deep: true
+    },
+    formErrors: {
+      handler(val) {
+        const allClear = Object.keys(val).every((key) => {
+          return !val[key]
+        })
+        if (allClear) this.showError = false
+      },
+      deep: true
+    }
   },
   methods: {
     getLinkForType(item) {
@@ -67,6 +164,38 @@ export default {
           break
       }
       return link
+    },
+    handleFormSubmit(e) {
+      this.formInvalid = false
+      Object.keys(this.formData).forEach((key) => {
+        this.formErrors[key] = false
+        if (this.formData[key] === '') {
+          this.formErrors[key] = true
+          this.formInvalid = true
+        }
+      })
+      if (this.formInvalid) {
+        this.showError = true
+        this.errorMessage = 'Please fill out the highlighted fields'
+        return
+      }
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode({ 'form-name': 'Subscribe', ...this.formData })
+      })
+        .then(() => {
+          Object.keys(this.formData).forEach((key) => {
+            this.formData[key] = ''
+          })
+          this.showSuccess = true
+        })
+        .catch((error) => {
+          this.showError = true
+          this.error = error
+          this.errorMessage = 'Something Went wrong please try again'
+        })
+      e.preventDefault()
     }
   }
 }
@@ -75,12 +204,14 @@ export default {
 <style lang="scss">
 .contact-us {
   &__content {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding: {
-      top: 40px;
-      bottom: 80px;
+    .appearable__content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: {
+        top: 40px;
+        bottom: 80px;
+      }
     }
     &__info {
       padding-right: 20px;
@@ -146,6 +277,9 @@ export default {
           border-radius: 6px;
           padding: 15px;
           transition: border-color 300ms $easeOutQuad;
+          &.error {
+            border-color: $gold;
+          }
           &::placeholder {
             color: $lightGrey;
           }
@@ -171,10 +305,13 @@ export default {
           -webkit-box-shadow: 0 0 0px 1000px $offWhite inset;
           transition: background-color 50000s ease-in-out 0s;
         }
-
-        .crop-button {
-          margin-top: auto;
-        }
+      }
+      &__bottom {
+        width: 100%;
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
     }
   }

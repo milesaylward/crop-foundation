@@ -1,6 +1,6 @@
 <template>
   <div class="event-hero-copy">
-    <p class="date">
+    <p class="date ap-child ap-child--2">
       <span class="date__day">
         {{ dayOfWeek }}
       </span>
@@ -14,11 +14,12 @@
         :is="i === 0 ? 'h3' : 'h4'"
         v-for="(line, i) in event.location"
         :key="line.location_line"
+        class="ap-child ap-child--2"
       >
         {{ line.location_line }}
       </component>
-      <p class="description">{{ event.description }}</p>
-      <div v-if="event.guest_chefs">
+      <p class="description ap-child ap-child--3">{{ event.description }}</p>
+      <div v-if="event.guest_chefs" class="ap-child ap-child--4">
         <p>Guest chefs include:</p>
         <p v-for="chef in event.guest_chefs" :key="chef.name">
           {{ chef.name }} - {{ chef.affiliation }}
@@ -26,13 +27,14 @@
       </div>
       <CropButton
         v-if="!detailPage"
+        class="ap-child ap-child--5"
         :copy="buttonCopy"
         :link="eventLink"
         :use-nuxt-link="!isUpcomingEvent"
         color="dark-grey"
         arrow
       />
-      <button v-else class="gallery-button">
+      <button v-else class="gallery-button ap-child ap-child--5">
         <span class="arrow">
           <DownArrow />
         </span>
@@ -95,6 +97,10 @@ export default {
   width: 100%;
   position: relative;
   margin-top: calc(60vw);
+  flex-wrap: wrap;
+  @include bpMedium {
+    flex-wrap: nowrap;
+  }
   @media screen and (min-width: 450px) {
     margin-top: 50vw;
   }
@@ -111,9 +117,12 @@ export default {
     padding-right: 10px;
     display: flex;
     flex-direction: column;
-    position: absolute;
+    margin-bottom: 20px;
+    text-align: left;
+    @include bpMedium {
+      text-align: right;
+    }
     color: $gold;
-    text-align: right;
     font-family: $fontHeadline;
     font-size: 14px;
     flex-shrink: 0;
@@ -137,13 +146,6 @@ export default {
   }
   .info {
     color: $darkGrey;
-    h4,
-    h3 {
-      padding-left: 65px;
-      @include bpLarge {
-        padding-left: 0;
-      }
-    }
     h4 {
       color: $lightGrey;
       letter-spacing: 1px;
@@ -155,6 +157,9 @@ export default {
       &.description {
         margin-top: 30px;
       }
+    }
+    .crop-button {
+      display: inline-flex;
     }
     .crop-button,
     .gallery-button {

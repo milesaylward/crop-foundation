@@ -3,18 +3,28 @@
     <img class="accent" :src="eventsFooterBorder" alt="border accent" />
     <div class="events-footer__content content">
       <div class="copy">
-        <h3>{{ content.left.headline }}</h3>
-        <p>{{ content.left.copy }}</p>
-        <CropButton arrow :copy="content.left.button" color="white" />
+        <h3 class="ap-child">{{ content.left.headline }}</h3>
+        <p class="ap-child ap-child--1">{{ content.left.copy }}</p>
+        <CropButton
+          class="ap-child ap-child--2"
+          arrow
+          :copy="content.left.button"
+          color="white"
+        />
       </div>
       <div class="divider">
-        <verticalBorder class="vertical" />
-        <horizontalBorder class="horizontal" />
+        <verticalBorder class="vertical ap-child ap-child--3" />
+        <horizontalBorder class="horizontal ap-child ap-child--3" />
       </div>
       <div class="copy">
-        <h3>{{ content.right.headline }}</h3>
-        <p>{{ content.right.copy }}</p>
-        <CropButton arrow :copy="content.right.button" color="white" />
+        <h3 class="ap-child ap-child--4">{{ content.right.headline }}</h3>
+        <p class="ap-child ap-child--5">{{ content.right.copy }}</p>
+        <CropButton
+          class="ap-child ap-child--6"
+          arrow
+          :copy="content.right.button"
+          color="white"
+        />
       </div>
     </div>
   </div>

@@ -1,29 +1,33 @@
 <template>
   <div class="page scholarship">
     <TornHero :background="content.hero_background" :copy="content.headline" />
-    <div class="scholarship__content">
+    <Appearable class="scholarship__content">
       <div class="flex-copy">
-        <p>{{ content.copy.one }}</p>
+        <p class="ap-child">{{ content.copy.one }}</p>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <p v-html="parseCopy(content.copy.two)" />
+        <p class="ap-child ap-child--1" v-html="parseCopy(content.copy.two)" />
       </div>
       <CropButton
+        class="ap-child ap-child--2"
         :copy="content.button"
         color="dark-grey"
         arrow
         @click="downloadPDF"
       />
-    </div>
+    </Appearable>
     <div class="scholarship__photo-winners content">
       <PeelerAccent class="accent accent__peeler" />
       <img class="accent accent__halftone" :src="halftoneAccent" alt="accent" />
-      <div
+      <Appearable
         v-for="(winner, i) in computedWinners"
         :key="`${winner.year}-${i}`"
         class="scholarship__photo-winners__winner"
+        :threshold="0.5"
       >
-        <img :src="winner.image" alt="scholarship winner" />
-        <div class="scholarship__photo-winners__winner__info">
+        <img class="ap-child" :src="winner.image" alt="scholarship winner" />
+        <div
+          class="scholarship__photo-winners__winner__info ap-child ap-child--1"
+        >
           <h4>{{ winner.year }} winners:</h4>
           <p
             v-for="student in winner.winners"
@@ -33,18 +37,19 @@
             {{ student.name }} <span>/</span> {{ student.amount }}
           </p>
         </div>
-      </div>
+      </Appearable>
     </div>
-    <div class="scholarship__other-winners content">
-      <h4>Other past winners (Not pictured)</h4>
+    <Appearable class="scholarship__other-winners content">
+      <h4 class="ap-child">Other past winners (Not pictured)</h4>
       <p
-        v-for="student in content.other_winners"
+        v-for="(student, i) in content.other_winners"
         :key="student.name"
-        class="winner-copy"
+        class="winner-copy ap-child"
+        :class="`ap-child--${i + 1}`"
       >
         {{ student.name }} <span>/</span> {{ student.amount }}
       </p>
-    </div>
+    </Appearable>
   </div>
 </template>
 
@@ -110,8 +115,8 @@ export default {
     &__halftone {
       height: 628px;
       right: 0;
-      top: 15%;
-      z-index: -1;
+      top: 0;
+      z-index: 1;
     }
   }
   &__content {
@@ -197,11 +202,15 @@ export default {
     }
     &__winner {
       width: 100%;
-      &:nth-child(even) {
-        margin-top: 60px;
+      position: relative;
+      z-index: 2;
+      .appearable__content {
+        width: 100%;
       }
+      margin-top: 60px;
       @include bpMedium {
         width: 48%;
+        margin-top: 0;
         &:nth-child(odd) {
           margin-right: 20px;
         }
@@ -223,6 +232,10 @@ export default {
         background: $darkGrey;
         display: inline-block;
         padding: 30px;
+        width: 100%;
+        @include bpMedium {
+          width: auto;
+        }
         p {
           color: $offWhite;
         }

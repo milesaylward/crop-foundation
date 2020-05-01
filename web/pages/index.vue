@@ -4,14 +4,18 @@
     <SectionOne :content="content.section.one" />
     <SectionTwo :content="content.section.two" />
     <SectionThree :content="content.section.three" />
-    <SectionImages :images="content.section.three.images" />
+    <Appearable>
+      <SectionImages :images="content.section.three.images" class="ap-child" />
+    </Appearable>
     <SectionEvents
       v-if="homeEvents.length"
       :content="content.events"
       :events="homeEvents"
     />
     <SectionCommunity v-else :content="content.community" />
-    <SectionSubscribe :content="content.subscribe" />
+    <Appearable>
+      <SectionSubscribe :content="content.subscribe" />
+    </Appearable>
   </div>
 </template>
 

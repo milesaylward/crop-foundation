@@ -1,14 +1,16 @@
 <template>
   <div class="events page">
     <TornHero />
-    <EventHero :event="featuredEvent" :is-upcoming-event="isUpcomingEvent" />
-    <div class="events__hero-copy">
-      <div class="spacer" />
-      <EventHeroCopy :event="content.events[0]" />
-    </div>
-    <div class="events__content">
-      <h2>Past Events</h2>
-      <div class="events__content__past-events">
+    <Appearable :threshold="0.3">
+      <EventHero :event="featuredEvent" :is-upcoming-event="isUpcomingEvent" />
+      <div class="events__hero-copy">
+        <div class="spacer" />
+        <EventHeroCopy :event="content.events[0]" />
+      </div>
+    </Appearable>
+    <Appearable class="events__content" :threshold="0.1">
+      <h2 class="ap-child">Past Events</h2>
+      <div class="events__content__past-events ap-child ap-child--1">
         <transition name="fade-event" mode="out-in" @after-enter="animEventsIn">
           <div
             :key="activeIndex"
@@ -29,8 +31,10 @@
           @upateIndex="handleUpdate"
         />
       </div>
-    </div>
-    <EventsFooter :content="content.footer" />
+    </Appearable>
+    <Appearable :threshold="0.3">
+      <EventsFooter :content="content.footer" />
+    </Appearable>
   </div>
 </template>
 

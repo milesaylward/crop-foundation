@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div id="app" class="main" :class="{ mounted: pageMounted }">
     <Sidebar />
     <Header />
     <nuxt />
@@ -26,12 +26,21 @@ export default {
     Header,
     Loader
   },
+  data: () => ({
+    pageMounted: false
+  }),
   computed: {
     ...mapState(['showLoader'])
+  },
+  watch: {
+    $route() {
+      this.pageMounted = false
+    }
   },
   methods: {
     afterLeave() {
       eventBus.$emit('loaderDismissed')
+      this.pageMounted = true
     }
   }
 }

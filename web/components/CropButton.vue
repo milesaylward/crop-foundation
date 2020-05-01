@@ -81,7 +81,7 @@ export default {
 
 <style lang="scss">
 .crop-button {
-  display: inline-flex;
+  display: block;
   align-items: center;
   justify-content: center;
   padding: 16px 40px;

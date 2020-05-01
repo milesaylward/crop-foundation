@@ -1,6 +1,6 @@
 <template>
   <div class="event-hero">
-    <div class="event-hero__img">
+    <div class="event-hero__img ap-child">
       <div class="event-hero__img__img">
         <img :src="event.hero_image" alt="event image" />
       </div>
@@ -12,7 +12,7 @@
       <div class="accent accent__block" />
     </div>
     <div class="event-hero__content">
-      <div class="headline">
+      <div class="headline ap-child ap-child--1">
         <h4 v-if="!detailPage">{{ headerCopy }}</h4>
         <h1>{{ event.title }}</h1>
       </div>

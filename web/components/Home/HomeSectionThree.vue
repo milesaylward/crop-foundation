@@ -1,5 +1,5 @@
 <template>
-  <div class="home-section-three container">
+  <Appearable class="home-section-three container" :threshold="0.3">
     <img
       class="home-section-three__border-top"
       :src="SectionThreeBorderTop"
@@ -12,26 +12,27 @@
     />
     <img
       :src="peelerAccent"
-      class="home-section-three__accent"
+      class="home-section-three__accent ap-child"
       alt="peeler accent image"
     />
     <div class="home-section-three__content">
-      <h4>{{ content.eyebrow }}</h4>
-      <h2 class="light">{{ content.headline }}</h2>
+      <h4 class="ap-child ap-child--1">{{ content.eyebrow }}</h4>
+      <h2 class="light ap-child ap-child--2">{{ content.headline }}</h2>
       <div class="home-section-three__content__copy">
-        <p class="light">
+        <p class="light ap-child ap-child--3">
           {{ content.copy.one }}
         </p>
       </div>
       <CropButton
         :copy="content.button"
+        class="ap-child ap-child--4"
         color="white"
         link="/scholarships"
         arrow
         use-nuxt-link
       />
     </div>
-  </div>
+  </Appearable>
 </template>
 
 <script>
@@ -93,6 +94,7 @@ export default {
     max-width: 900px;
     padding: 0 20px;
     padding-top: 70px;
+    margin: 0 auto;
     @include bpMedium {
       text-align: center;
       padding-top: 0px;

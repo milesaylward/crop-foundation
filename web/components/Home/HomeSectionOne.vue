@@ -1,13 +1,13 @@
 <template>
   <div class="home-section-one container">
-    <div class="home-section-one__content content">
-      <h4>{{ content.eyebrow }}</h4>
-      <h2>{{ content.headline }}</h2>
+    <Appearable class="home-section-one__content content" once :threshold="0.5">
+      <h4 class="ap-child">{{ content.eyebrow }}</h4>
+      <h2 class="ap-child ap-child--1">{{ content.headline }}</h2>
       <div class="home-section-one__content__flex-copy">
-        <p>{{ content.copy.one }}</p>
-        <p>{{ content.copy.two }}</p>
+        <p class="ap-child ap-child--2">{{ content.copy.one }}</p>
+        <p class="ap-child ap-child--3">{{ content.copy.two }}</p>
       </div>
-      <div class="home-section-one__content__copy">
+      <div class="home-section-one__content__copy ap-child ap-child--2">
         <p>
           {{ content.copy.one }}
           {{ content.copy.two }}
@@ -15,17 +15,19 @@
       </div>
       <div class="home-section-one__accents">
         <img
-          class="home-section-one__accents__grater"
+          class="home-section-one__accents__grater ap-child"
           :src="grater"
           alt="kitchen grater"
         />
-        <img
-          class="home-section-one__accents__halftone"
-          :src="halftone"
-          alt="accent image"
-        />
+        <span class="ap-child">
+          <img
+            class="home-section-one__accents__halftone"
+            :src="halftone"
+            alt="accent image"
+          />
+        </span>
       </div>
-    </div>
+    </Appearable>
   </div>
 </template>
 

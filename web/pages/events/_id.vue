@@ -1,41 +1,48 @@
 <template>
-  <div class="event-detail page">
-    <TornHero />
-    <EventHero :event="content" detail-page />
-    <div class="event-detail__content content">
-      <h2>Gallery</h2>
-      <div class="event-detail__content__gallery">
-        <div class="event-detail__content__gallery__items">
-          <GalleryItem
-            v-for="(item, i) in galleryItems"
-            :key="item.title"
-            :src="item.url"
-            :index="i"
-            @itemClick="handleGalleryClick"
-            @load="handleItemLoaded"
-          />
+  <client-only>
+    <div class="event-detail page">
+      <TornHero />
+      <Appearable>
+        <EventHero :event="content" detail-page />
+      </Appearable>
+      <Appearable class="event-detail__content content" :threshold="0.5">
+        <h2 class="ap-child">Gallery</h2>
+        <div class="event-detail__content__gallery">
+          <div class="event-detail__content__gallery__items">
+            <GalleryItem
+              v-for="(item, i) in galleryItems"
+              :key="item.title"
+              :class="`ap-child ap-child--${i + 1}`"
+              :src="item.url"
+              :index="i"
+              @itemClick="handleGalleryClick"
+              @load="handleItemLoaded"
+            />
+          </div>
+          <infinite-loading
+            ref="infiniteLoader"
+            spinner="spiral"
+            @infinite="addGalleryItems"
+          >
+            <div slot="no-more" />
+            <div slot="no-results" />
+          </infinite-loading>
         </div>
-        <infinite-loading
-          ref="infiniteLoader"
-          spinner="spiral"
-          @infinite="addGalleryItems"
-        >
-          <div slot="no-more" />
-          <div slot="no-results" />
-        </infinite-loading>
-      </div>
+      </Appearable>
+      <Appearable :threshold="0.5">
+        <EventsFooter :content="footer" />
+      </Appearable>
+      <transition name="fade">
+        <LightBox
+          v-if="showLightBox"
+          :image="lightBoxImage"
+          :disable="lightBoxDisable"
+          @close="handleCloseLightBox"
+          @increment="handleLightBoxIncrement"
+        />
+      </transition>
     </div>
-    <EventsFooter :content="footer" />
-    <transition name="fade">
-      <LightBox
-        v-if="showLightBox"
-        :image="lightBoxImage"
-        :disable="lightBoxDisable"
-        @close="handleCloseLightBox"
-        @increment="handleLightBoxIncrement"
-      />
-    </transition>
-  </div>
+  </client-only>
 </template>
 
 <script>
@@ -178,6 +185,13 @@ export default {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        .ap-child {
+          @for $i from 1 through 20 {
+            &:nth-child(#{$i}n) {
+              transition-delay: #{0 + (($i - 1) * 85ms)} !important;
+            }
+          }
+        }
       }
     }
   }

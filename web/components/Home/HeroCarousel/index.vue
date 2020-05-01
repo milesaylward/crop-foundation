@@ -117,11 +117,12 @@ export default {
 .hero-carousel {
   position: relative;
   max-height: 100vh;
-  overflow: hidden;
   z-index: 1;
   color: white;
   min-height: 600px;
+  padding-bottom: 20px;
   @include bpMedium {
+    overflow: hidden;
     min-height: 900px;
     height: 100vh;
   }
@@ -134,7 +135,10 @@ export default {
   }
   &__scroll-button {
     position: absolute;
-    bottom: 3%;
+    bottom: -20px;
+    @include bpMedium {
+      bottom: 3%;
+    }
     left: 10px;
     display: flex;
     align-items: center;

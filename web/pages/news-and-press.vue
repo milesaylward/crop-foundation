@@ -5,31 +5,33 @@
       :background="content.hero_background"
       :copy="content.headline"
     />
-    <div class="news-and-press__content content">
-      <transition name="fade-event" mode="out-in" @after-enter="animCardsIn">
-        <div
-          :key="activeIndex"
-          ref="container"
-          class="news-and-press__content__cards"
-        >
-          <ArticleCard
-            v-for="card in activeCards"
-            :key="card.title"
-            :content="card"
-          />
-        </div>
-      </transition>
-      <Paginate
-        :active-index="activeIndex"
-        :items="content.articles"
-        :copy="{
-          prev: 'Later',
-          next: 'Earlier'
-        }"
-        :visible-items="4"
-        @upateIndex="handleUpdate"
-      />
-    </div>
+    <Appearable :threshold="0.3">
+      <div class="news-and-press__content content ap-child">
+        <transition name="fade-event" mode="out-in" @after-enter="animCardsIn">
+          <div
+            :key="activeIndex"
+            ref="container"
+            class="news-and-press__content__cards"
+          >
+            <ArticleCard
+              v-for="card in activeCards"
+              :key="card.title"
+              :content="card"
+            />
+          </div>
+        </transition>
+        <Paginate
+          :active-index="activeIndex"
+          :items="content.articles"
+          :copy="{
+            prev: 'Later',
+            next: 'Earlier'
+          }"
+          :visible-items="4"
+          @upateIndex="handleUpdate"
+        />
+      </div>
+    </Appearable>
   </div>
 </template>
 

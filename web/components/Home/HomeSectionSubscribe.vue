@@ -1,31 +1,50 @@
 <template>
   <div class="home-section-subscribe container">
     <div class="home-section-subscribe__content">
-      <h4>{{ content.eyebrow }}</h4>
-      <h2>{{ content.headline }}</h2>
+      <h4 class="ap-child">{{ content.eyebrow }}</h4>
+      <h2 class="ap-child ap-child--1">{{ content.headline }}</h2>
       <form
-        class="home-section-subscribe__content__form"
+        class="home-section-subscribe__content__form ap-child ap-child--2"
         name="Subscribe"
         netlify
         data-netlify-honeypot="bot-field"
         @submit.prevent="handleFormSubmit"
       >
-        <input type="hidden" name="form-name" value="Subscribe">
-        <input v-model="email" type="text" name="email" placeholder="Enter your email">
-        <button>
+        <input type="hidden" name="form-name" value="Subscribe" />
+        <input
+          v-model="email"
+          type="text"
+          name="email"
+          placeholder="Enter your email"
+        />
+        <button @mousedown="preventFocus">
           Subscribe
           <arrowFilled />
         </button>
+        <transition name="fade">
+          <p v-if="showSuccess" class="form__message">
+            Thanks For Subscribing!
+          </p>
+        </transition>
+        <transition name="fade">
+          <p v-if="showError" class="form__message">
+            {{ errorMessage }}
+          </p>
+        </transition>
       </form>
     </div>
-    <img class="accent" :src="halftoneAccent" alt="accent image" />
+    <img
+      class="accent ap-child ap-child--3"
+      :src="halftoneAccent"
+      alt="accent image"
+    />
   </div>
 </template>
 
 <script>
 import arrowFilled from '@/assets/svg/arrow-filled.svg?inline'
 import halftoneAccent from '@/assets/images/halftone-2-accent.png'
-import { encode } from '@/core/utils'
+import { encode, preventFocus } from '@/core/utils'
 
 export default {
   name: 'HomeSectionSubscribe',
@@ -40,17 +59,39 @@ export default {
   },
   data: () => ({
     email: '',
-    halftoneAccent
+    halftoneAccent,
+    preventFocus,
+    showError: false,
+    showSuccess: false
   }),
+  watch: {
+    email(val) {
+      if (val) {
+        this.showError = false
+      }
+    }
+  },
   methods: {
     handleFormSubmit(e) {
+      if (!this.email) {
+        this.errorMessage = 'Email field is required'
+        this.showError = true
+        return
+      }
       fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: encode({ 'form-name': 'Subscribe', email: this.email })
       })
-        .then(() => alert('Success!'))
-        .catch((error) => console.error(error))
+        .then(() => {
+          this.email = ''
+          this.showSuccess = true
+        })
+        .catch((error) => {
+          this.showError = true
+          this.error = error
+          this.errorMessage = 'Something Went wrong please try again'
+        })
       e.preventDefault()
     }
   }
@@ -85,6 +126,12 @@ export default {
     }
     h4 {
       margin-bottom: 20px;
+    }
+    .form__message {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
     }
     &__form {
       margin: 30px 0;

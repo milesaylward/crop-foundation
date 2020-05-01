@@ -201,6 +201,7 @@ export default {
       margin-bottom: 30px;
     }
     .button {
+      display: inline-block;
       opacity: 0;
       transition: opacity 500ms $easeOutMaterial 255ms;
     }

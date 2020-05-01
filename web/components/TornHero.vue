@@ -62,6 +62,13 @@ export default {
   mounted() {
     if (this.background && !this.isVideo) this.initWaterColor()
   },
+  beforeDestroy() {
+    if (this.waterColor) {
+      this.waterColor.destroy()
+    }
+    window.removeEventListener('resize', this.handleResize)
+    if (this.timeout) clearTimeout(this.timeout)
+  },
   methods: {
     initWaterColor() {
       this.timeout = setTimeout(() => {
@@ -83,6 +90,12 @@ export default {
           this.waterColor.onAnimate()
         }
       })
+      window.addEventListener('resize', this.handleResize)
+    },
+    handleResize() {
+      if (!this.waterColor) return
+      const rect = this.$refs.image.getBoundingClientRect()
+      this.waterColor.handleResize(rect)
     },
     handleVideoLoaded() {
       this.setShowLoader(false)
@@ -119,9 +132,15 @@ export default {
     }
   }
   &.half-size {
-    min-height: 250px;
+    height: 250px;
     .background {
-      min-height: 250px;
+      height: 250px;
+    }
+    @include bpMedium {
+      height: auto;
+      .background {
+        height: auto;
+      }
     }
   }
   &.no-bg {
@@ -150,9 +169,10 @@ export default {
     canvas {
       position: absolute;
       top: 0;
-      left: 0;
+      left: 50%;
       width: 100%;
       height: 100%;
+      transform: translateX(-50%);
     }
   }
   &__border {

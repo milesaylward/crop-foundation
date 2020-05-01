@@ -1,3 +1,5 @@
+global.HTMLElement = typeof window === 'undefined' ? Object : window.HTMLElement
+
 export default {
   mode: 'universal',
   router: {
@@ -7,14 +9,14 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'The Crop Foundation',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: 'Welcome to The CROP Foundation - fostering educational and employment opportunities for innovative culinary sstudents through unique culinary events. Help us cultivate the next generation of culinary superstars.'
       }
     ],
     link: [
@@ -39,7 +41,8 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/global.js',
+    '~/plugins/global',
+    '~/plugins/appearable',
     { src: '~plugins/infinite-loading', ssr: false }
   ],
   /*
