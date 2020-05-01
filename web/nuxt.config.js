@@ -1,7 +1,7 @@
 global.HTMLElement = typeof window === 'undefined' ? Object : window.HTMLElement
 
 export default {
-  mode: 'spa',
+  mode: 'universal',
   router: {
     middleware: 'loader'
   },
