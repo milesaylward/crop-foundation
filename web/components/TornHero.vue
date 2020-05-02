@@ -30,9 +30,11 @@ import tornBorder from '@/assets/images/torn-hero-border.png'
 import halfTornBorder from '@/assets/images/half-torn-border.png'
 import WatercolorSlide from '@/core/watercolor'
 import eventBus from '@/core/eventBus'
+import resizeMixin from '@/mixins/resize'
 
 export default {
   name: 'TornHero',
+  mixins: [resizeMixin],
   props: {
     background: {
       type: String,
@@ -66,7 +68,6 @@ export default {
     if (this.waterColor) {
       this.waterColor.destroy()
     }
-    window.removeEventListener('resize', this.handleResize)
     if (this.timeout) clearTimeout(this.timeout)
   },
   methods: {
@@ -81,7 +82,7 @@ export default {
           showControls: this.isFirstSlide
         })
         this.waterColor.readyImage()
-      }, 100)
+      }, 350)
       eventBus.$on('slideReady', () => {
         this.setShowLoader(false)
       })
@@ -90,7 +91,6 @@ export default {
           this.waterColor.onAnimate()
         }
       })
-      window.addEventListener('resize', this.handleResize)
     },
     handleResize() {
       if (!this.waterColor) return

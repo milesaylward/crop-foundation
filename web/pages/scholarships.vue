@@ -64,6 +64,7 @@ import { KIP_LINK, GABY_LINK } from '@/core/constants'
 import PeelerAccent from '@/assets/svg/peeler.svg?inline'
 import halftoneAccent from '@/assets/images/accent-scholarship.png'
 import WatercolorSlide from '@/core/watercolor'
+import resizeMixin from '@/mixins/resize'
 
 export default {
   name: 'ScholarshipPage',
@@ -71,6 +72,7 @@ export default {
     TornHero,
     PeelerAccent
   },
+  mixins: [resizeMixin],
   async asyncData({ $axios, store }) {
     await checkGlobalData(store)
     const content = await $axios.$get(
@@ -97,7 +99,6 @@ export default {
     this.waterColors.forEach((waterColor, i) => {
       waterColor.destroy()
     })
-    window.removeEventListener('resize', this.handleResize)
     if (this.timeout) clearTimeout(this.timeout)
   },
   methods: {
@@ -127,7 +128,6 @@ export default {
           this.waterColors.push(waterColor)
         })
       }, 500)
-      window.addEventListener('resize', this.handleResize)
     },
     handleResize() {
       this.waterColors.forEach((waterColor, i) => {

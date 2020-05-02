@@ -1,7 +1,9 @@
 export const state = () => ({
   events: [],
   globalData: {},
-  showLoader: true
+  showLoader: true,
+  viewWidth: 0,
+  viewHeight: 0
 })
 
 export const mutations = {
@@ -13,6 +15,12 @@ export const mutations = {
   },
   setShowLoader(state, val) {
     state.showLoader = val
+  },
+  setWindowSize(state, { width, height }) {
+    state.viewWidth = width
+    if (Math.abs(height - state.viewHeight) > 114) {
+      state.viewHeight = height
+    }
   }
 }
 
@@ -37,5 +45,8 @@ export const actions = {
   },
   setShowLoader({ commit }, val) {
     commit('setShowLoader', val)
+  },
+  setWindowSize({ commit }, size) {
+    commit('setWindowSize', size)
   }
 }

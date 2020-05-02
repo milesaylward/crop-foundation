@@ -91,17 +91,18 @@ class WatercolorSlide {
     this.renderer = new THREE.WebGLRenderer({ alpha: true })
     this.renderer.setPixelRatio(window.devicePixelRatio)
     // eslint-disable-next-line
-    this.renderer.setClearColor( 0xF2F1EF, 0)
+    this.renderer.setClearColor( 0xFFFFFF, 0)
     this.handleResize(this)
     this.container.appendChild(this.renderer.domElement)
-
+    this.animate()
     setTimeout(() => {
-      this.renderer.render(this.scene, this.camera)
+      this.stopRender()
       eventBus.$emit('slideReady')
     }, 250)
   }
 
   handleResize({ width, height }) {
+    if (!this.renderer) return
     let innerWidth = width < MIN_WIDTH && this.useMin ? MIN_WIDTH : width
     if (height === this.height && innerWidth < this.width) {
       innerWidth = this.width

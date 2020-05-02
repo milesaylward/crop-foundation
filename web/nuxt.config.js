@@ -50,7 +50,8 @@ export default {
   plugins: [
     '~/plugins/global',
     '~/plugins/appearable',
-    { src: '~plugins/infinite-loading', ssr: false }
+    { src: '~/plugins/infinite-loading', ssr: false },
+    { src: '~/plugins/resize', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

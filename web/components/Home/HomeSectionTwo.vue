@@ -42,9 +42,11 @@ import halftoneTwo from '@/assets/images/halftone-background-accent.png'
 import circleAccent from '@/assets/images/circle-accent.png'
 import peelerAccent from '@/assets/images/peeler-accent.png'
 import WatercolorSlide from '@/core/watercolor'
+import resizeMixin from '@/mixins/resize'
 
 export default {
   name: 'SectionTwo',
+  mixins: [resizeMixin],
   props: {
     content: {
       type: Object,
@@ -66,7 +68,6 @@ export default {
     this.waterColors.forEach((waterColor, i) => {
       waterColor.destroy()
     })
-    window.removeEventListener('resize', this.handleResize)
     if (this.timeout) clearTimeout(this.timeout)
   },
   methods: {
@@ -79,13 +80,13 @@ export default {
             image: image.image,
             width: rect.width,
             height: rect.height,
-            useMin: false
+            useMin: false,
+            debug: true
           })
           waterColor.readyImage()
           this.waterColors.push(waterColor)
         })
       }, 500)
-      window.addEventListener('resize', this.handleResize)
     },
     handleResize() {
       this.waterColors.forEach((waterColor, i) => {

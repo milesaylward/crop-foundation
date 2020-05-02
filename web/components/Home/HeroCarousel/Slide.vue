@@ -37,11 +37,13 @@ import { mapActions } from 'vuex'
 import arrowFilled from '@/assets/svg/arrow-filled.svg?inline'
 import WatercolorSlide from '@/core/watercolor'
 import eventBus from '@/core/eventBus'
+import resizeMixin from '@/mixins/resize'
 
 export default {
   components: {
     arrowFilled
   },
+  mixins: [resizeMixin],
   props: {
     slide: {
       type: Object,
@@ -76,16 +78,14 @@ export default {
         showControls: this.isFirstSlide
       })
       this.waterColor.readyImage()
-    }, 100)
+    }, 350)
     eventBus.$on('slideReady', this.handleSlideReady)
-    window.addEventListener('resize', this.handleResize)
     eventBus.$on('animateSlideContent', () => {
       this.animateContent = true
     })
   },
   beforeDestroy() {
     this.waterColor.destroy()
-    window.removeEventListener('resize', this.handleResize)
     if (this.timeout) clearTimeout(this.timeout)
   },
   methods: {

@@ -24,9 +24,11 @@
 import eventHeroAccent from '@/assets/images/event-hero-accent.png'
 import WatercolorSlide from '@/core/watercolor'
 import eventBus from '@/core/eventBus'
+import resizeMixin from '@/mixins/resize'
 
 export default {
   name: 'EventHero',
+  mixins: [resizeMixin],
   props: {
     event: {
       type: Object,
@@ -57,7 +59,6 @@ export default {
     if (this.waterColor) {
       this.waterColor.destroy()
     }
-    window.removeEventListener('resize', this.handleResize)
     if (this.timeout) clearTimeout(this.timeout)
   },
   methods: {
@@ -81,7 +82,6 @@ export default {
           this.waterColor.onAnimate()
         }
       })
-      window.addEventListener('resize', this.handleResize)
     },
     handleResize() {
       if (!this.waterColor) return
