@@ -19,7 +19,7 @@ export default {
       { hid: 'og:site_name', property: 'og:site_name', content: 'The Crop Foundation' },
       { hid: 'og:title', property: 'og:title', content: 'The Crop Foundation' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:url', property: 'og:url', content: 'https://thecrop.org' },
+      { hid: 'og:url', property: 'og:url', content: 'http://thecrop.org' },
       { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
       { hid: 'twitter:description', name: 'twitter:description', content: 'Welcome to The CROP Foundation - fostering educational and employment opportunities for innovative culinary students through unique culinary events. Help us cultivate the next generation of culinary superstars.' },
       { hid: 'twitter:image', name: 'twitter:image', content: '/og-image.png' },
