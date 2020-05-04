@@ -24,22 +24,15 @@ export const getYearDate = (date) => {
   return momentDate.format('YYYY')
 }
 
-export async function getEventsData(axios, store) {
-  let content
-  if (!store.state.events.length) {
-    content = await axios.$get(
-      'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-events.json'
-    )
-    content = JSON.parse(JSON.stringify(getCopy(content[0])))
-  } else {
-    content = store.state
+export async function getEventsData(store, JSONBase) {
+  if (!store.state.events || store.state.events.length < 1) {
+    await store.dispatch('getData', { key: 'events', base: JSONBase })
   }
-  return content
 }
 
-export async function checkGlobalData(store) {
-  if (!Object.keys(store.state.globalData).length) {
-    await store.dispatch('getGlobal')
+export async function checkGlobalData(store, JSONBase) {
+  if (!store.state.global) {
+    await store.dispatch('getData', { key: 'global', base: JSONBase })
   }
 }
 

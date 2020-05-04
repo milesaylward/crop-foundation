@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import Sidebar from '@/components/Sidebar'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
@@ -37,11 +37,26 @@ export default {
       this.pageMounted = false
     }
   },
+  created() {
+    if (process.client) {
+      this.setUserAgent()
+    }
+  },
+  mounted() {
+    if (
+      'ontouchstart' in window ||
+      navigator.MaxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    ) {
+      document.body.classList.add('touch')
+    }
+  },
   methods: {
     afterLeave() {
       eventBus.$emit('loaderDismissed')
       this.pageMounted = true
-    }
+    },
+    ...mapActions(['setUserAgent'])
   }
 }
 </script>

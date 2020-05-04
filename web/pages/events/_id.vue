@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import { getEventsData, checkGlobalData } from '@/core/utils'
 import TornHero from '@/components/TornHero'
 import EventHero from '@/components/Events/EventHero'
@@ -63,17 +63,10 @@ export default {
     EventsFooter,
     LightBox
   },
-  async asyncData({ $axios, params, store }) {
-    const eventsData = await getEventsData($axios, store)
-    await checkGlobalData(store)
-    return {
-      content: eventsData.events.filter(
-        (event) =>
-          event.title.toLowerCase().replace(/-/g, ' ') ===
-          params.id.replace(/-/g, ' ')
-      )[0],
-      footer: eventsData.footer
-    }
+  async asyncData({ store, route }) {
+    const JSON_BASE = route.query.staging ? 'staging' : 'production'
+    await checkGlobalData(store, JSON_BASE)
+    await getEventsData(store, JSON_BASE)
   },
   data: () => ({
     galleryItems: [],
@@ -96,7 +89,21 @@ export default {
       return this.activeLightBoxIndex !== null
         ? this.content.event_gallery[this.activeLightBoxIndex]
         : ''
-    }
+    },
+    params() {
+      return this.$route.params
+    },
+    content() {
+      return this.events.events.filter(
+        (event) =>
+          event.title.toLowerCase().replace(/-/g, ' ') ===
+          this.params.id.replace(/-/g, ' ')
+      )[0]
+    },
+    footer() {
+      return this.events.footer
+    },
+    ...mapState(['events'])
   },
   watch: {
     itemsLoaded(val) {

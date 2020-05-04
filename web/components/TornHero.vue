@@ -17,7 +17,12 @@
       @loadeddata="handleVideoLoaded"
     />
     <div v-else-if="background" ref="canvasContainer" class="background">
-      <img ref="image" :src="background" />
+      <img
+        ref="image"
+        :src="background"
+        :class="{ animate, isIOS }"
+        @load="handleImageReady"
+      />
     </div>
     <h1>{{ copy }}</h1>
     <img class="torn-hero__border" :src="heroBorder" alt="torn border" />
@@ -25,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import tornBorder from '@/assets/images/torn-hero-border.png'
 import halfTornBorder from '@/assets/images/half-torn-border.png'
 import WatercolorSlide from '@/core/watercolor'
@@ -51,7 +56,8 @@ export default {
   },
   data: () => ({
     tornBorder,
-    halfTornBorder
+    halfTornBorder,
+    animate: false
   }),
   computed: {
     isVideo() {
@@ -59,10 +65,14 @@ export default {
     },
     heroBorder() {
       return !this.halfSize ? this.tornBorder : this.halfTornBorder
-    }
+    },
+    showWaterColor() {
+      return this.background && !this.isVideo && !this.isIOS
+    },
+    ...mapGetters(['isIOS'])
   },
   mounted() {
-    if (this.background && !this.isVideo) this.initWaterColor()
+    if (this.showWaterColor) this.initWaterColor()
   },
   beforeDestroy() {
     if (this.waterColor) {
@@ -97,6 +107,12 @@ export default {
       const rect = this.$refs.image.getBoundingClientRect()
       this.waterColor.handleResize(rect)
     },
+    handleImageReady() {
+      if (this.isIOS) {
+        this.setShowLoader(false)
+        this.animate = true
+      }
+    },
     handleVideoLoaded() {
       this.setShowLoader(false)
     },
@@ -109,10 +125,9 @@ export default {
 .torn-hero {
   width: 100%;
   max-height: 500px;
-  overflow: hidden;
   position: relative;
   @include bpMedium {
-    // min-height: 500px;
+    overflow: hidden;
   }
   h1 {
     position: absolute;
@@ -146,6 +161,7 @@ export default {
   &.no-bg {
     background: $darkGrey;
     min-height: 300px;
+    overflow: visible;
     @media screen and (min-width: 500px) {
       min-height: 400px;
     }
@@ -153,7 +169,7 @@ export default {
       min-height: 500px;
     }
     .torn-hero__border {
-      bottom: -5px;
+      bottom: -1px;
     }
   }
   .background {
@@ -162,9 +178,19 @@ export default {
     height: 100%;
     object-fit: cover;
     img {
+      position: relative;
       width: 100%;
       height: 100%;
       opacity: 0;
+      transition: opacity 300ms $easeOutMaterial;
+      &.isIOS {
+        width: auto;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &.animate {
+        opacity: 1;
+      }
     }
     canvas {
       position: absolute;
@@ -177,11 +203,11 @@ export default {
   }
   &__border {
     position: absolute;
-    bottom: 0px;
+    bottom: -1px;
     height: auto;
     width: 100%;
     @media screen and (min-width: 1000px) {
-      bottom: -5px;
+      bottom: -6px;
     }
   }
 }

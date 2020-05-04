@@ -89,7 +89,8 @@
 </template>
 
 <script>
-import { checkGlobalData, getCopy, encode, preventFocus } from '@/core/utils'
+import { mapState } from 'vuex'
+import { checkGlobalData, encode, preventFocus } from '@/core/utils'
 import TornHero from '@/components/TornHero'
 
 export default {
@@ -97,12 +98,10 @@ export default {
   components: {
     TornHero
   },
-  async asyncData({ $axios, store }) {
-    await checkGlobalData(store)
-    const content = await $axios.$get(
-      'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-contact.json'
-    )
-    return { content: JSON.parse(JSON.stringify(getCopy(content[0]))).contact }
+  async asyncData({ store, route }) {
+    const JSON_BASE = route.query.staging ? 'staging' : 'production'
+    await checkGlobalData(store, JSON_BASE)
+    await store.dispatch('getData', { key: 'contact', base: JSON_BASE })
   },
   data: () => ({
     formData: {
@@ -125,6 +124,12 @@ export default {
     showSuccess: false,
     preventFocus
   }),
+  computed: {
+    content() {
+      return this.contact.contact
+    },
+    ...mapState(['contact'])
+  },
   watch: {
     formData: {
       handler(val) {

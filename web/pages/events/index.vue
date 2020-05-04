@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import moment from 'moment'
 import { getEventsData, checkGlobalData, chunkItems } from '@/core/utils'
 import TornHero from '@/components/TornHero'
@@ -62,10 +62,10 @@ export default {
     EventsFooter,
     EventHeroCopy
   },
-  async asyncData({ $axios, store }) {
-    await checkGlobalData(store)
-    const eventsData = await getEventsData($axios, store)
-    return { content: eventsData }
+  async asyncData({ store, route }) {
+    const JSON_BASE = route.query.staging ? 'staging' : 'production'
+    await checkGlobalData(store, JSON_BASE)
+    await getEventsData(store, JSON_BASE)
   },
   data: () => ({
     activeIndex: 0,
@@ -81,6 +81,9 @@ export default {
         })
         .sort((a, b) => moment(b.date).diff(moment(a.date)))
       return pastEvents
+    },
+    content() {
+      return this.events
     },
     nextEvent() {
       const events = this.content.events.filter((event) => {
@@ -107,7 +110,8 @@ export default {
     },
     dismissLoader() {
       return this.loadedImages === this.itemsPerPage && this.heroReady
-    }
+    },
+    ...mapState(['events'])
   },
   watch: {
     dismissLoader(val) {

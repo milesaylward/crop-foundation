@@ -2,7 +2,7 @@
   <nav class="header">
     <div class="header__desktop">
       <nuxt-link
-        v-for="link in globalData.nav_items"
+        v-for="link in global.nav_items"
         :key="link.slug"
         class="link"
         :to="`/${link.slug !== '/' ? link.slug : ''}`"
@@ -18,7 +18,9 @@
         alt="mobileHeaderBackground"
       />
       <div class="header__mobile__content content">
-        <img class="logo" :src="mobileLogo" alt="crop foundation logo" />
+        <nuxt-link to="/">
+          <img class="logo" :src="mobileLogo" alt="crop foundation logo" />
+        </nuxt-link>
         <div class="links">
           <div class="social-buttons">
             <a
@@ -40,7 +42,7 @@
         <div class="overlay" @click="handleMenuClick" />
         <div class="mobile-menu">
           <nuxt-link
-            v-for="link in globalData.nav_items"
+            v-for="link in global.nav_items"
             :key="link.slug"
             class="link"
             :to="`/${link.slug !== '/' ? link.slug : ''}`"
@@ -80,7 +82,7 @@ export default {
     showMenu: false
   }),
   computed: {
-    ...mapState(['globalData'])
+    ...mapState(['global'])
   },
   methods: {
     handleMenuClick() {

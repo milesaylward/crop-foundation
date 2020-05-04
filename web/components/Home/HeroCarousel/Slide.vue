@@ -1,9 +1,9 @@
 <template>
   <div ref="slide" class="slide">
     <div ref="canvasContainer" class="canvas-container" :class="{ animate }">
-      <div v-if="slide.needs_overlay" class="slide__overlay" />
+      <div class="slide__overlay" />
+      <img v-if="isIOS" :src="slide.image" @load="handleImageReady" />
     </div>
-    <img :src="slide.image" alt="alt text" />
     <div
       class="content"
       :class="{ animate: animateContent, first: isFirstSlide }"
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import arrowFilled from '@/assets/svg/arrow-filled.svg?inline'
 import WatercolorSlide from '@/core/watercolor'
 import eventBus from '@/core/eventBus'
@@ -65,30 +65,36 @@ export default {
   computed: {
     trimmedQuotes() {
       return this.slide.quotes.slice(0, 2)
-    }
+    },
+    ...mapGetters(['isIOS'])
   },
   mounted() {
-    this.timeout = setTimeout(() => {
-      const rect = this.$refs.slide.getBoundingClientRect()
-      this.waterColor = new WatercolorSlide({
-        container: this.$refs.canvasContainer,
-        image: this.slide.image,
-        width: rect.width,
-        height: rect.height,
-        showControls: this.isFirstSlide
-      })
-      this.waterColor.readyImage()
-    }, 350)
-    eventBus.$on('slideReady', this.handleSlideReady)
-    eventBus.$on('animateSlideContent', () => {
-      this.animateContent = true
-    })
+    if (!this.isIOS) {
+      this.initSlide()
+    }
   },
   beforeDestroy() {
-    this.waterColor.destroy()
+    if (this.waterColor) this.waterColor.destroy()
     if (this.timeout) clearTimeout(this.timeout)
   },
   methods: {
+    initSlide() {
+      this.timeout = setTimeout(() => {
+        const rect = this.$refs.slide.getBoundingClientRect()
+        this.waterColor = new WatercolorSlide({
+          container: this.$refs.canvasContainer,
+          image: this.slide.image,
+          width: rect.width,
+          height: rect.height,
+          showControls: this.isFirstSlide
+        })
+        this.waterColor.readyImage()
+      }, 350)
+      eventBus.$on('slideReady', this.handleSlideReady)
+      eventBus.$on('animateSlideContent', () => {
+        this.animateContent = true
+      })
+    },
     handleResize() {
       if (!this.waterColor) return
       const rect = this.$refs.slide.getBoundingClientRect()
@@ -99,6 +105,22 @@ export default {
         this.animate = true
         this.waterColor.onAnimate()
       })
+    },
+    animateSlideContent() {
+      this.animate = true
+      this.animateContent = true
+      eventBus.$emit('animateSlideControls')
+    },
+    handleImageReady() {
+      if (this.isFirstSlide && this.isFirstMount) {
+        this.setShowLoader(false)
+        this.$emit('firstMountDone')
+        eventBus.$on('loaderDismissed', () => {
+          this.animateSlideContent()
+        })
+      } else {
+        this.animateSlideContent()
+      }
     },
     handleSlideReady() {
       if (this.isFirstSlide && this.isFirstMount) {
@@ -117,6 +139,7 @@ export default {
 <style lang="scss">
 .slide {
   position: relative;
+  height: 100vh;
   max-height: 600px;
   @include bpMedium {
     max-height: 100vh;
@@ -131,13 +154,18 @@ export default {
     background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     transition: opacity 500ms $easeOutQuad 100ms;
+    pointer-events: none;
   }
   img {
+    position: relative;
+    z-index: -1;
     height: 100%;
     width: auto;
     object-fit: cover;
     opacity: 0;
     pointer-events: none;
+    max-height: 600px;
+    transition: opacity 250ms $easeOutQuad 200ms;
   }
   canvas {
     opacity: 0;
@@ -147,6 +175,9 @@ export default {
       opacity: 1;
     }
     .slide__overlay {
+      opacity: 1;
+    }
+    img {
       opacity: 1;
     }
   }

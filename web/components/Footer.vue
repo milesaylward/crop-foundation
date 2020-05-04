@@ -3,7 +3,7 @@
     <div class="footer__content content">
       <div class="footer__nav-links">
         <a
-          v-for="link in globalData.nav_items"
+          v-for="link in global.nav_items"
           :key="link.slug"
           class="footer__nav-links__link"
           :href="link.slug"
@@ -13,7 +13,7 @@
       </div>
       <div class="footer__addresses">
         <div
-          v-for="address in globalData.addresses"
+          v-for="address in global.addresses"
           :key="address.title"
           class="footer__addresses__address"
         >
@@ -35,7 +35,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'Footer',
   computed: {
-    ...mapState(['globalData'])
+    ...mapState(['global'])
   },
   methods: {
     getLink(link) {

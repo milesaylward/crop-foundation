@@ -22,7 +22,7 @@
 <script>
 import moment from 'moment'
 import { mapState } from 'vuex'
-import { checkGlobalData, getCopy } from '@/core/utils'
+import { checkGlobalData, getEventsData } from '@/core/utils'
 import HeroCarousel from '@/components/Home/HeroCarousel'
 import SectionOne from '@/components/Home/HomeSectionOne'
 import SectionTwo from '@/components/Home/HomeSectionTwo'
@@ -43,16 +43,11 @@ export default {
     SectionCommunity,
     SectionSubscribe
   },
-  async fetch({ store }) {
-    await store.dispatch('getEvents')
-  },
-  async asyncData({ $axios, store }) {
-    await checkGlobalData(store)
-    const content = await $axios.$get(
-      'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-home.json'
-    )
-    const copy = JSON.parse(JSON.stringify(getCopy(content[0])))
-    return { content: copy }
+  async asyncData({ $axios, store, route }) {
+    const JSON_BASE = route.query.staging ? 'staging' : 'production'
+    await checkGlobalData(store, JSON_BASE)
+    await getEventsData(store, JSON_BASE)
+    await store.dispatch('getData', { key: 'home', base: JSON_BASE })
   },
   computed: {
     homeEvents() {
@@ -63,7 +58,10 @@ export default {
         .slice(0, 2)
       return events
     },
-    ...mapState(['events'])
+    content() {
+      return this.home
+    },
+    ...mapState(['events', 'home'])
   }
 }
 </script>

@@ -8,7 +8,12 @@
         @can-appear="handleCanAppear(i)"
       >
         <div ref="canvasContainer" class="canvas-container">
-          <img :src="image.image" alt="cooking image" class="main" />
+          <img
+            :src="image.image"
+            alt="cooking image"
+            class="main"
+            :class="{ 'ap-child': isIOS }"
+          />
         </div>
         <span class="ap-child ap-child--6">
           <img
@@ -38,6 +43,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import halftoneTwo from '@/assets/images/halftone-background-accent.png'
 import circleAccent from '@/assets/images/circle-accent.png'
 import peelerAccent from '@/assets/images/peeler-accent.png'
@@ -59,10 +65,15 @@ export default {
     peelerAccent,
     waterColors: []
   }),
+  computed: {
+    ...mapGetters(['isIOS'])
+  },
   mounted() {
-    this.$nextTick(() => {
-      this.initWaterColor()
-    })
+    if (!this.isIOS) {
+      this.$nextTick(() => {
+        this.initWaterColor()
+      })
+    }
   },
   beforeDestroy() {
     this.waterColors.forEach((waterColor, i) => {
@@ -95,7 +106,9 @@ export default {
       })
     },
     handleCanAppear(i) {
-      this.waterColors[i].onAnimate()
+      if (this.waterColor) {
+        this.waterColors[i].onAnimate()
+      }
     }
   }
 }

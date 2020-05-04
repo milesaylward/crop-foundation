@@ -208,7 +208,7 @@ export default {
             transition: fill 300ms $easeOutQuad, stroke 300ms $easeOutQuad;
           }
         }
-        &:hover {
+        @include on-hover {
           background: white;
           svg {
             path {

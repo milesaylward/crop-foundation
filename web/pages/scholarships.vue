@@ -26,7 +26,12 @@
         @can-appear="handleCanAppear(i)"
       >
         <div ref="canvasContainer" class="canvas-container">
-          <img ref="image" :src="winner.image" alt="scholarship winner" />
+          <img
+            ref="image"
+            :src="winner.image"
+            alt="scholarship winner"
+            :class="{ 'ap-child': isIOS }"
+          />
         </div>
         <div
           class="scholarship__photo-winners__winner__info ap-child ap-child--1"
@@ -58,8 +63,9 @@
 
 <script>
 import FileSaver from 'file-saver'
+import { mapState, mapGetters } from 'vuex'
 import TornHero from '@/components/TornHero'
-import { getCopy, checkGlobalData } from '@/core/utils'
+import { checkGlobalData } from '@/core/utils'
 import { KIP_LINK, GABY_LINK } from '@/core/constants'
 import PeelerAccent from '@/assets/svg/peeler.svg?inline'
 import halftoneAccent from '@/assets/images/accent-scholarship.png'
@@ -73,13 +79,10 @@ export default {
     PeelerAccent
   },
   mixins: [resizeMixin],
-  async asyncData({ $axios, store }) {
-    await checkGlobalData(store)
-    const content = await $axios.$get(
-      'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-scholarship.json'
-    )
-    const copy = JSON.parse(JSON.stringify(getCopy(content[0])))
-    return { content: copy }
+  async asyncData({ $axios, store, route }) {
+    const JSON_BASE = route.query.staging ? 'staging' : 'production'
+    await checkGlobalData(store, JSON_BASE)
+    await store.dispatch('getData', { key: 'scholarship', base: JSON_BASE })
   },
   data: () => ({
     halftoneAccent,
@@ -88,17 +91,26 @@ export default {
   computed: {
     computedWinners() {
       return this.content.scholarship_winners
-    }
+    },
+    content() {
+      return this.scholarship
+    },
+    ...mapState(['scholarship']),
+    ...mapGetters(['isIOS'])
   },
   mounted() {
-    this.$nextTick(() => {
-      this.initWaterColor()
-    })
+    if (!this.isIOS) {
+      this.$nextTick(() => {
+        this.initWaterColor()
+      })
+    }
   },
   beforeDestroy() {
-    this.waterColors.forEach((waterColor, i) => {
-      waterColor.destroy()
-    })
+    if (this.waterColors.length) {
+      this.waterColors.forEach((waterColor, i) => {
+        waterColor.destroy()
+      })
+    }
     if (this.timeout) clearTimeout(this.timeout)
   },
   methods: {
@@ -136,7 +148,7 @@ export default {
       })
     },
     handleCanAppear(i) {
-      this.waterColors[i].onAnimate()
+      if (this.waterColors.length) this.waterColors[i].onAnimate()
     }
   }
 }
@@ -201,7 +213,7 @@ export default {
             transform-origin: center center;
             transform: scaleX(0);
           }
-          &:hover {
+          @include on-hover {
             &::after {
               transform: scaleX(1);
             }

@@ -2,7 +2,13 @@
   <div class="event-hero">
     <div class="event-hero__img ap-child">
       <div ref="canvasContainer" class="event-hero__img__img canvas-container">
-        <img ref="image" :src="event.hero_image" alt="event image" />
+        <img
+          ref="image"
+          :src="event.hero_image"
+          alt="event image"
+          :class="{ 'ap-child': isIOS }"
+          @load="handleImageReady"
+        />
       </div>
       <img
         class="accent accent__background"
@@ -21,6 +27,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import eventHeroAccent from '@/assets/images/event-hero-accent.png'
 import WatercolorSlide from '@/core/watercolor'
 import eventBus from '@/core/eventBus'
@@ -50,10 +57,11 @@ export default {
   computed: {
     headerCopy() {
       return this.isUpdcomingEvent ? 'upcoming event' : 'recent event'
-    }
+    },
+    ...mapGetters(['isIOS'])
   },
   mounted() {
-    this.initWaterColor()
+    if (!this.isIOS) this.initWaterColor()
   },
   beforeDestroy() {
     if (this.waterColor) {
@@ -82,6 +90,11 @@ export default {
           this.waterColor.onAnimate()
         }
       })
+    },
+    handleImageReady() {
+      if (this.isIOS) {
+        this.$emit('heroReady')
+      }
     },
     handleResize() {
       if (!this.waterColor) return

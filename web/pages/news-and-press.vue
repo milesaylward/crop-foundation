@@ -37,7 +37,8 @@
 
 <script>
 import moment from 'moment'
-import { checkGlobalData, getCopy, chunkItems } from '@/core/utils'
+import { mapState } from 'vuex'
+import { checkGlobalData, chunkItems } from '@/core/utils'
 import TornHero from '@/components/TornHero'
 import ArticleCard from '@/components/ArticleCard'
 import Paginate from '@/components/Paginate'
@@ -49,12 +50,10 @@ export default {
     ArticleCard,
     Paginate
   },
-  async asyncData({ $axios, store }) {
-    await checkGlobalData(store)
-    const content = await $axios.$get(
-      'https://crop-new-bucket.s3.amazonaws.com/app-data/staging-news.json'
-    )
-    return { content: JSON.parse(JSON.stringify(getCopy(content[0]))).news }
+  async asyncData({ store, route }) {
+    const JSON_BASE = route.query.staging ? 'staging' : 'production'
+    await checkGlobalData(store, JSON_BASE)
+    await store.dispatch('getData', { key: 'news', base: JSON_BASE })
   },
   data: () => ({
     activeIndex: 0,
@@ -62,7 +61,7 @@ export default {
   }),
   computed: {
     sortedArticles() {
-      const articles = this.content.articles
+      const articles = [...this.content.articles]
       return articles.sort((a, b) => moment(b.date).diff(moment(a.date)))
     },
     chunkedCards() {
@@ -70,7 +69,11 @@ export default {
     },
     activeCards() {
       return this.chunkedCards[this.activeIndex]
-    }
+    },
+    content() {
+      return this.news.news
+    },
+    ...mapState(['news'])
   },
   methods: {
     handleUpdate(newIndex) {
