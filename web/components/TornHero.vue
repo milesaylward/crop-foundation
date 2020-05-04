@@ -168,9 +168,6 @@ export default {
     @include bpMedium {
       min-height: 500px;
     }
-    .torn-hero__border {
-      bottom: -1px;
-    }
   }
   .background {
     position: relative;
