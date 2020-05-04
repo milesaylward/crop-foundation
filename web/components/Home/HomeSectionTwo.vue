@@ -106,7 +106,7 @@ export default {
       })
     },
     handleCanAppear(i) {
-      if (this.waterColor) {
+      if (this.waterColors.length) {
         this.waterColors[i].onAnimate()
       }
     }
