@@ -51,6 +51,12 @@
             {{ link.label }}
             <navBorder class="nav-border" />
           </nuxt-link>
+          <CropButton
+            filled
+            copy="donate"
+            small
+            link="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F7N5FGUNWK2KN&source=url"
+          />
         </div>
       </div>
     </div>
@@ -202,7 +208,7 @@ export default {
       pointer-events: none;
     }
     .mobile-menu {
-      height: 100vh;
+      height: calc(100vh - 75px);
       background: $offWhite;
       position: absolute;
       display: flex;
@@ -214,6 +220,10 @@ export default {
       text-align: right;
       transition: transform 300ms $easeOutQuad;
       transform: translateX(100%);
+      .crop-button {
+        margin-top: auto;
+        width: 100%;
+      }
       .link {
         margin: 15px 0;
         color: $darkGrey;

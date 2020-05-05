@@ -117,7 +117,7 @@ export default {
         fill: $darkGrey;
       }
     }
-    &:hover {
+    @include on-hover {
       background: $darkGrey;
       color: white;
       svg {
@@ -136,7 +136,7 @@ export default {
         fill: white;
       }
     }
-    &:hover {
+    @include on-hover {
       background: $darkGrey;
       color: white;
       svg {
@@ -149,7 +149,7 @@ export default {
   &--white {
     border-color: $halfWhite;
     background: $noWhite;
-    &:hover {
+    @include on-hover {
       background: white;
       color: $darkGrey;
       svg {
@@ -172,7 +172,7 @@ export default {
         border-color: $gold;
         background: $gold;
         color: white;
-        &:hover {
+        @include on-hover {
           background: darken($gold, 10);
         }
       }
