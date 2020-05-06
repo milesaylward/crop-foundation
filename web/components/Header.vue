@@ -34,7 +34,11 @@
             </a>
           </div>
           <mobileDivider class="divider" />
-          <button class="menu-button" @click="handleMenuClick">
+          <button
+            class="menu-button"
+            @click="handleMenuClick"
+            @mousedown="preventFocus"
+          >
             Menu
             <downArrow />
           </button>
@@ -72,6 +76,7 @@ import mobileDivider from '@/assets/svg/mobile-divider.svg?inline'
 import facebook from '@/assets/svg/facebook.svg?inline'
 import instagram from '@/assets/svg/instagram.svg?inline'
 import downArrow from '@/assets/svg/down-arrow.svg?inline'
+import { preventFocus } from '@/core/utils'
 
 export default {
   name: 'Header',
@@ -85,10 +90,14 @@ export default {
   data: () => ({
     mobileHeaderBackground,
     mobileLogo,
+    preventFocus,
     showMenu: false
   }),
   computed: {
-    ...mapState(['global'])
+    menuStyle() {
+      return { height: `${this.viewHeight}px` }
+    },
+    ...mapState(['global', 'viewHeight'])
   },
   methods: {
     handleMenuClick() {
@@ -208,20 +217,22 @@ export default {
       pointer-events: none;
     }
     .mobile-menu {
-      height: calc(100vh - 75px);
+      height: calc(100vh);
       background: $offWhite;
       position: absolute;
       display: flex;
       flex-direction: column;
       right: 0;
-      top: 75px;
+      top: 0;
       z-index: -1;
       padding: 30px;
+      padding-top: 80px;
       text-align: right;
       transition: transform 300ms $easeOutQuad;
       transform: translateX(100%);
       .crop-button {
         margin-top: auto;
+        margin-bottom: 50px;
         width: 100%;
       }
       .link {
