@@ -5,7 +5,7 @@
       :background="content.hero_background"
       :copy="content.headline"
     />
-    <Appearable :threshold="0.3">
+    <Appearable :threshold="0.1">
       <div class="news-and-press__content content ap-child">
         <transition name="fade-event" mode="out-in" @after-enter="animCardsIn">
           <div
