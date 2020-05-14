@@ -55,12 +55,7 @@
             {{ link.label }}
             <navBorder class="nav-border" />
           </nuxt-link>
-          <CropButton
-            filled
-            copy="donate"
-            small
-            :link="content.paypal_link"
-          />
+          <CropButton filled copy="donate" small :link="global.paypal_link" />
         </div>
       </div>
     </div>
