@@ -59,7 +59,7 @@
             filled
             copy="donate"
             small
-            link="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F7N5FGUNWK2KN&source=url"
+            :link="content.paypal_link"
           />
         </div>
       </div>
