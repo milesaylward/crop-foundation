@@ -3,34 +3,41 @@
     <Appearable class="home-section-community__content" :threshold="0.3">
       <h4 class="ap-child">{{ content.eyebrow }}</h4>
       <h2 class="ap-child ap-child--1">{{ content.headline }}</h2>
-      <div class="home-section-one__content__flex-copy">
-        <p class="ap-child ap-child--2">{{ content.copy.left }}</p>
-        <p class="ap-child ap-child--3">{{ content.copy.right }}</p>
-      </div>
-      <div class="home-section-one__content__copy">
+      <div class="home-section-community__content__copy">
         <p class="ap-child ap-child--2">
           {{ content.copy.left }}
           {{ content.copy.right }}
         </p>
       </div>
-      <div class="cta-support ap-child ap-child--4">
-        <h3>Support us using:</h3>
-        <a
-          href="https://smile.amazon.com/ref=smi_ext_ch_83-2281354_dl?_encoding=UTF8&ein=83-2281354&ref_=smi_chpf_redirect&ref_=smi_ext_ch_83-2281354_cl"
-          target="_blank"
+      <div class="home-section-community__images">
+        <div
+          v-for="(image, i) in images"
+          :key="image.image"
+          class="home-section-community__images__image"
+          @click="handleGalleryClick(i)"
         >
-          <img :src="SmileLogo" alt="Amazon Smile Logo" />
-        </a>
+          <img :src="image.image" alt="CROP image" />
+        </div>
       </div>
     </Appearable>
+    <LightBox
+      v-if="showLightBox"
+      :image="lightBoxImage"
+      :disable="lightBoxDisable"
+      @close="handleCloseLightBox"
+      @increment="handleLightBoxIncrement"
+    />
   </div>
 </template>
 
 <script>
-import SmileLogo from '@/assets/images/amazon-smile.png'
+import LightBox from '@/components/Events/LightBox'
 
 export default {
   name: 'SectionCommunity',
+  components: {
+    LightBox
+  },
   props: {
     content: {
       type: Object,
@@ -38,8 +45,39 @@ export default {
     }
   },
   data: () => ({
-    SmileLogo
-  })
+    showLightBox: false,
+    activeLightBoxIndex: null
+  }),
+  computed: {
+    images() {
+      return this.content.images
+    },
+    lightBoxDisable() {
+      return {
+        prev: this.activeLightBoxIndex === 0,
+        next: this.activeLightBoxIndex === this.images.length - 1
+      }
+    },
+    lightBoxImage() {
+      return this.activeLightBoxIndex !== null
+        ? { url: this.images[this.activeLightBoxIndex].image }
+        : ''
+    }
+  },
+  methods: {
+    handleCloseLightBox() {
+      this.activeLightBoxIndex = null
+      this.showLightBox = false
+    },
+    handleGalleryClick(index) {
+      this.activeLightBoxIndex = index
+      this.showLightBox = true
+    },
+    handleLightBoxIncrement(dir) {
+      if (dir === 'prev') this.activeLightBoxIndex -= 1
+      else this.activeLightBoxIndex += 1
+    }
+  }
 }
 </script>
 
@@ -73,21 +111,6 @@ export default {
       }
       margin-bottom: 40px;
     }
-    &__flex-copy {
-      width: 100%;
-      text-align: left;
-      justify-content: center;
-      display: none;
-      @include bpMedium {
-        display: flex;
-      }
-      p {
-        max-width: 417px;
-        &:first-child {
-          margin-right: 40px;
-        }
-      }
-    }
     .cta-support {
       display: flex;
       align-items: center;
@@ -102,9 +125,26 @@ export default {
         width: 150px;
       }
     }
-    &__copy {
-      @include bpMedium {
-        display: none;
+  }
+  &__images {
+    margin-top: 50px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    &__image {
+      width: 33%;
+      overflow: hidden;
+      cursor: pointer;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 250ms $easeOutMaterial;
+      }
+      &:hover {
+        img {
+          transform: scale(1.1);
+        }
       }
     }
   }
