@@ -131,10 +131,24 @@ export default {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    flex-wrap: wrap;
+    @include bpLarge {
+      flex-wrap: nowrap;
+    }
     &__image {
-      width: 33%;
+      width: 48%;
+      margin: 10px 0;
       overflow: hidden;
       cursor: pointer;
+      @include bpLarge {
+        margin: 0 10px;
+        &:first-child {
+          margin-left: 0;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
       img {
         width: 100%;
         height: 100%;
