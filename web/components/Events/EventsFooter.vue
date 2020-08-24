@@ -42,7 +42,13 @@
           data-netlify-honeypot="bot-field"
           @submit.prevent="handleFormSubmit"
         >
-          <input type="hidden" name="form-name" value="HostEvent" />
+          <input
+            type="checkbox"
+            name="_honeypot"
+            style="display:none"
+            tabindex="-1"
+            autocomplete="off"
+          />
           <label for="event_first_name">First Name</label>
           <input
             id="event_first_name"
@@ -158,7 +164,7 @@ export default {
       last_name: '',
       email: '',
       eventType: 'popup',
-      date: '',
+      eventDate: '',
       message: '',
       other: ''
     },
@@ -220,10 +226,10 @@ export default {
         this.errorMessage = 'Please fill out the highlighted fields'
         return
       }
-      fetch('/', {
+      fetch('https://submit-form.com/GmttEdQTLKfvFKXXIrLH3', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ 'form-name': 'HostEvent', ...this.formData })
+        body: encode({ ...this.formData })
       })
         .then(() => {
           Object.keys(this.formData).forEach((key) => {

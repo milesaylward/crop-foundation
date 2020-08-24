@@ -6,11 +6,15 @@
       <form
         class="home-section-subscribe__content__form ap-child ap-child--2"
         name="Subscribe"
-        netlify
-        data-netlify-honeypot="bot-field"
         @submit.prevent="handleFormSubmit"
       >
-        <input type="hidden" name="form-name" value="Subscribe" />
+        <input
+          type="checkbox"
+          name="_honeypot"
+          style="display:none"
+          tabindex="-1"
+          autocomplete="off"
+        />
         <input
           v-model="email"
           type="text"
@@ -78,10 +82,10 @@ export default {
         this.showError = true
         return
       }
-      fetch('/', {
+      fetch('https://submit-form.com/g_DHqoGN3-dmxZSLIWBlL', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ 'form-name': 'Subscribe', email: this.email })
+        body: encode({ email: this.email })
       })
         .then(() => {
           this.email = ''

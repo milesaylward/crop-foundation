@@ -4,22 +4,6 @@
     {{ HEAD }}
   </head>
   <body {{ BODY_ATTRS }}>
-    <form name="HostEvent" netlify netlify-honeypot="bot-field" hidden>
-      <input type="hidden" name="form-name" value="HostEvent" />
-      <input type="text" name="first_name" />
-      <input type="text" name="last_name" />
-      <input type="text" name="email" />
-      <select id="eventType" name="eventType">
-        <option value="popup" selected>
-          Pop-Up Dinner (7 Person minimum)
-        </option>
-        <option value="fundraiser">Fundraising Event</option>
-        <option value="other">Other (Explain Below)</option>
-      </select>
-      <textarea name="other"></textarea>
-      <textarea name="message"></textarea>
-      <input type="date" name="eventDate">
-    </form>
     {{ APP }}
   </body>
 </html>

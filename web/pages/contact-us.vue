@@ -20,13 +20,14 @@
         </div>
       </div>
       <div class="contact-us__content__form ap-child ap-child--1">
-        <form
-          name="Contact"
-          netlify
-          data-netlify-honeypot="bot-field"
-          @submit.prevent="handleFormSubmit"
-        >
-          <input type="hidden" name="form-name" value="Contact" />
+        <form name="Contact" @submit.prevent="handleFormSubmit">
+          <input
+            type="checkbox"
+            name="_honeypot"
+            style="display:none"
+            tabindex="-1"
+            autocomplete="off"
+          />
           <input
             v-model="formData.first_name"
             :class="{ error: formErrors.first_name }"
@@ -184,10 +185,10 @@ export default {
         this.errorMessage = 'Please fill out the highlighted fields'
         return
       }
-      fetch('/', {
+      fetch('https://submit-form.com/ciqgidBx1G3BoRjjfoO5k', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ 'form-name': 'Contact', ...this.formData })
+        body: encode({ ...this.formData })
       })
         .then(() => {
           Object.keys(this.formData).forEach((key) => {
