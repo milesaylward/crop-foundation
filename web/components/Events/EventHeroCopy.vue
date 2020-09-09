@@ -26,7 +26,7 @@
         </p>
       </div>
       <CropButton
-        v-if="!detailPage"
+        v-if="!detailPage && eventLink"
         class="ap-child ap-child--5"
         :copy="buttonCopy"
         :link="eventLink"
@@ -34,7 +34,10 @@
         color="dark-grey"
         arrow
       />
-      <button v-else class="gallery-button ap-child ap-child--5">
+      <button
+        v-else-if="event.event_gallery"
+        class="gallery-button ap-child ap-child--5"
+      >
         <span class="arrow">
           <DownArrow />
         </span>

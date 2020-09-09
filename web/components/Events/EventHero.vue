@@ -45,7 +45,7 @@ export default {
       type: Boolean,
       default: false
     },
-    isUpdcomingEvent: {
+    isUpcomingEvent: {
       type: Boolean,
       default: false
     }
@@ -56,7 +56,7 @@ export default {
   }),
   computed: {
     headerCopy() {
-      return this.isUpdcomingEvent ? 'upcoming event' : 'recent event'
+      return this.isUpcomingEvent ? 'upcoming event' : 'recent event'
     },
     ...mapGetters(['isIOS'])
   },

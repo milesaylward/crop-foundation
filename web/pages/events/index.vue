@@ -9,7 +9,10 @@
       />
       <div class="events__hero-copy">
         <div class="spacer" />
-        <EventHeroCopy :event="content.events[0]" />
+        <EventHeroCopy
+          :event="featuredEvent"
+          :is-upcoming-event="isUpcomingEvent"
+        />
       </div>
     </Appearable>
     <Appearable class="events__content" :threshold="0.1">
@@ -87,7 +90,7 @@ export default {
     },
     nextEvent() {
       const events = this.content.events.filter((event) => {
-        return !moment(event.date).isBefore(moment()) && event.event_gallery
+        return !moment(event.date).isBefore(moment())
       })
       const sorted = events.sort((a, b) => moment(a.date).diff(moment(b.date)))
       return sorted[0]
