@@ -5,8 +5,10 @@
       <h2 class="ap-child ap-child--1">{{ content.headline }}</h2>
       <div class="home-section-community__content__copy">
         <p class="ap-child ap-child--2">
-          {{ content.copy.left }}
-          {{ content.copy.right }}
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-html="content.copy.left" />
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-html="content.copy.right" />
         </p>
       </div>
       <div class="home-section-community__images">
@@ -123,6 +125,29 @@ export default {
         margin-top: 5px;
         margin-left: 10px;
         width: 150px;
+      }
+    }
+    &__copy {
+      a {
+        color: $gold;
+        position: relative;
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: -3px;
+          background: $gold;
+          width: 100%;
+          height: 1px;
+          transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+          transform-origin: center center;
+          transform: scaleX(0);
+        }
+        @include on-hover {
+          &::after {
+            transform: scaleX(1);
+          }
+        }
       }
     }
   }
