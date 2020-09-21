@@ -145,6 +145,7 @@ export default {
   &__hero-copy {
     display: flex;
     justify-content: flex-end;
+    min-height: 250px;
     .spacer {
       width: 50%;
       display: none;

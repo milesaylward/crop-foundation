@@ -25,24 +25,23 @@
           {{ chef.name }} - {{ chef.affiliation }}
         </p>
       </div>
-      <CropButton
-        v-if="!detailPage && eventLink"
-        class="ap-child ap-child--5"
-        :copy="buttonCopy"
-        :link="eventLink"
-        :use-nuxt-link="!isUpcomingEvent"
-        color="dark-grey"
-        arrow
-      />
-      <button
-        v-else-if="event.event_gallery"
-        class="gallery-button ap-child ap-child--5"
-      >
-        <span class="arrow">
-          <DownArrow />
-        </span>
-        Scroll for gallery
-      </button>
+      <span v-if="!detailPage && eventLink" class="ap-child ap-child--5">
+        <CropButton
+          :copy="buttonCopy"
+          :link="eventLink"
+          :use-nuxt-link="!isUpcomingEvent"
+          color="dark-grey"
+          arrow
+        />
+      </span>
+      <span v-else-if="event.event_gallery" class="ap-child ap-child--5">
+        <button class="gallery-button">
+          <span class="arrow">
+            <DownArrow />
+          </span>
+          Scroll for gallery
+        </button>
+      </span>
     </div>
   </div>
 </template>
@@ -88,7 +87,7 @@ export default {
         this.event.title.replace(/ /g, '-')
       ).toLowerCase()
       const url = `/events/${eventURL}`
-      return this.isUpcomingEvent ? '' : url
+      return this.isUpcomingEvent ? this.event.ticket_link : url
     }
   }
 }
