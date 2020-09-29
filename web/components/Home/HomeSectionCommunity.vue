@@ -11,7 +11,7 @@
           <span v-html="content.copy.right" />
         </p>
       </div>
-      <div class="home-section-community__images">
+      <div class="home-section-community__images ap-child ap-child--3">
         <div
           v-for="(image, i) in images"
           :key="image.image"

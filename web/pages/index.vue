@@ -12,7 +12,7 @@
       :content="content.events"
       :events="homeEvents"
     />
-    <SectionCommunity v-else :content="content.community" />
+    <SectionCommunity :content="content.community" />
     <Appearable :threshold="0.3">
       <SectionSubscribe :content="content.subscribe" />
     </Appearable>
@@ -53,7 +53,7 @@ export default {
     homeEvents() {
       const events = this.events.events
         .filter((event) => {
-          return !moment(event.date).isBefore(moment()) && event.event_gallery
+          return !moment(event.date).isBefore(moment())
         })
         .slice(0, 2)
       return events

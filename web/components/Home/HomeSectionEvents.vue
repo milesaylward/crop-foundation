@@ -1,9 +1,9 @@
 <template>
   <div class="home-section-events container">
-    <div class="home-section-events__content">
-      <h4>{{ content.eyebrow }}</h4>
-      <h2>{{ content.headline }}</h2>
-      <div class="home-section-events__content__events">
+    <Appearable class="home-section-events__content" :threshold="0.3">
+      <h4 class="ap-child">{{ content.eyebrow }}</h4>
+      <h2 class="ap-child ap-child--1">{{ content.headline }}</h2>
+      <div class="home-section-events__content__events ap-child ap-child--2">
         <div v-for="(event, i) in events" :key="event.title" class="event">
           <eventBorderTop v-if="i === 0" class="border border--top" />
           <eventBorderInner v-if="i === 0" class="border " />
@@ -24,20 +24,22 @@
             <span class="event__info__location">
               {{ event.location[0].location_line }}
             </span>
-            <a class="event__link" href="">
+            <a class="event__link" target="_blank" :href="event.ticket_link">
               view more info
               <arrowFilled />
             </a>
           </p>
         </div>
       </div>
-      <CropButton
-        copy="SEE ALL OUR EVENTS"
-        link="/events"
-        use-nuxt-link
-        arrow
-      />
-    </div>
+      <span class="ap-child ap-child--3">
+        <CropButton
+          copy="SEE ALL OUR EVENTS"
+          link="/events"
+          use-nuxt-link
+          arrow
+        />
+      </span>
+    </Appearable>
   </div>
 </template>
 
@@ -83,7 +85,10 @@ export default {
 
 <style lang="scss">
 .home-section-events {
-  padding: 5rem 0;
+  padding-top: 12.5rem;
+  .ap-child {
+    display: block;
+  }
   &__content {
     width: 100%;
     max-width: 900px;
