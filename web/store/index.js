@@ -41,7 +41,7 @@ export const actions = {
     if (!state[key]) {
       await this.$axios
         .$get(
-          `https://crop-new-bucket.s3.amazonaws.com/app-data/${base}-${key}.json`
+          `https://crop-foundation.s3-us-west-2.amazonaws.com/app-data/${base}-${key}.json`
         )
         .then((res) => {
           commit('setData', {

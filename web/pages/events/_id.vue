@@ -13,7 +13,7 @@
               v-for="(item, i) in galleryItems"
               :key="item.title"
               :class="`ap-child ap-child--${i + 1}`"
-              :src="item.url"
+              :src="item.image"
               :index="i"
               @itemClick="handleGalleryClick"
               @load="handleItemLoaded"
@@ -77,7 +77,9 @@ export default {
   }),
   computed: {
     galleryItemsPerPage() {
-      return 12
+      return this.content.event_gallery.length < 12
+        ? this.content.event_gallery.length
+        : 12
     },
     lightBoxDisable() {
       return {
@@ -95,9 +97,7 @@ export default {
     },
     content() {
       return this.events.events.filter(
-        (event) =>
-          event.title.toLowerCase().replace(/-/g, ' ') ===
-          this.params.id.replace(/-/g, ' ')
+        (event) => event.slug === this.params.id
       )[0]
     },
     footer() {

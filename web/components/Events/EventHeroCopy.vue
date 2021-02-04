@@ -25,7 +25,7 @@
           {{ chef.name }} - {{ chef.affiliation }}
         </p>
       </div>
-      <span v-if="!detailPage && eventLink" class="ap-child ap-child--5">
+      <span v-if="!detailPage && showLink" class="ap-child ap-child--5">
         <CropButton
           :copy="buttonCopy"
           :link="eventLink"
@@ -81,6 +81,14 @@ export default {
     },
     buttonCopy() {
       return this.isUpcomingEvent ? 'buy tickets now' : 'view event gallery'
+    },
+    showLink() {
+      if (this.isUpcomingEvent && this.event.ticket_link) {
+        return true
+      } else if (!this.isUpcomingEvent && this.event.event_gallery) {
+        return true
+      }
+      return false
     },
     eventLink() {
       const eventURL = encodeURIComponent(

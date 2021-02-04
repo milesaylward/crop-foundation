@@ -80,7 +80,7 @@ export default {
     pastEvents() {
       const pastEvents = this.content.events
         .filter((event) => {
-          return moment(event.date).isBefore(moment()) && event.event_gallery
+          return moment(event.date).isBefore(moment())
         })
         .sort((a, b) => moment(b.date).diff(moment(a.date)))
       return pastEvents

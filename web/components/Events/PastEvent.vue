@@ -1,5 +1,11 @@
 <template>
-  <div class="past-event" @click="handleEventClick">
+  <div
+    class="past-event"
+    :class="{
+      noClick: !event.event_gallery
+    }"
+    @click="handleEventClick"
+  >
     <div class="past-event__image">
       <img :src="event.hero_image" alt="event image" @load="$emit('loaded')" />
     </div>
@@ -38,10 +44,7 @@ export default {
   },
   methods: {
     handleEventClick() {
-      const eventURL = encodeURIComponent(
-        this.event.title.replace(/ /g, '-')
-      ).toLowerCase()
-      this.$router.push(`/events/${eventURL}`)
+      this.$router.push(`/events/${this.event.slug}`)
     }
   }
 }
@@ -62,6 +65,10 @@ export default {
     max-width: 369px;
   }
   cursor: pointer;
+
+  &.noClick {
+    pointer-events: none;
+  }
   &:hover {
     img {
       transform: scale(1.05);
