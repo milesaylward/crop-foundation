@@ -3,6 +3,7 @@
     v-if="!link"
     class="crop-button"
     :class="buttonClasses"
+    @mousedown="preventFocus"
     @click="$emit('click')"
   >
     {{ copy }}
@@ -17,6 +18,7 @@
     :target="useNuxtLink || download ? '' : '_blank'"
     class="crop-button"
     :class="buttonClasses"
+    @mousedown="preventFocus"
   >
     {{ copy }}
     <ArrowFilled v-if="arrow" />
@@ -25,6 +27,7 @@
 
 <script>
 import ArrowFilled from '@/assets/svg/arrow-filled.svg?inline'
+import { preventFocus } from '@/core/utils'
 
 export default {
   name: 'CropButton',
@@ -65,6 +68,9 @@ export default {
       default: false
     }
   },
+  data: () => ({
+    preventFocus
+  }),
   computed: {
     buttonClasses() {
       let classes = `crop-button--${this.color}`

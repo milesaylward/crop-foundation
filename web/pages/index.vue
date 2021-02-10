@@ -51,11 +51,9 @@ export default {
   },
   computed: {
     homeEvents() {
-      const events = this.events.events
-        .filter((event) => {
-          return !moment(event.date).isBefore(moment())
-        })
-        .slice(0, 2)
+      const events = this.events.events.filter(
+        (event) => !moment(event.date).isBefore(moment())
+      )
       return events
     },
     content() {

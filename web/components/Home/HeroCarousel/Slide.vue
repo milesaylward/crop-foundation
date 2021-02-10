@@ -115,6 +115,7 @@ export default {
       if (this.isFirstSlide && this.isFirstMount) {
         this.setShowLoader(false)
         this.$emit('firstMountDone')
+        eventBus.$emit('firstSlideDone')
         eventBus.$on('loaderDismissed', () => {
           this.animateSlideContent()
         })
@@ -125,6 +126,7 @@ export default {
     handleSlideReady() {
       if (this.isFirstSlide && this.isFirstMount) {
         this.setShowLoader(false)
+        eventBus.$emit('firstSlideDone')
         eventBus.$on('loaderDismissed', this.animateSlide)
         this.$emit('firstMountDone')
       } else {

@@ -82,6 +82,7 @@ export default {
     }
   },
   mounted() {
+    document.body.classList.add('locked')
     eventBus.$on('animateSlideControls', () => {
       this.showControls = true
     })

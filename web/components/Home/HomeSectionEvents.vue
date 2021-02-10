@@ -4,46 +4,47 @@
       <h4 class="ap-child">{{ content.eyebrow }}</h4>
       <h2 class="ap-child ap-child--1">{{ content.headline }}</h2>
       <div class="home-section-events__content__events ap-child ap-child--2">
-        <div v-for="(event, i) in events" :key="event.title" class="event">
-          <eventBorderTop v-if="i === 0" class="border border--top" />
-          <eventBorderInner v-if="i === 0" class="border " />
-          <eventBorderBottom v-if="i === 1" class="border" />
-          <p class="event__date">
-            <span class="event__date__day">
-              {{ getDayOfWeek(event.date) }}
-            </span>
-            <span class="event__date__date">
-              {{ getMonthDate(event.date) }}
-            </span>
-            <eventDateBorder />
-          </p>
-          <p class="event__info">
-            <span class="event__info__title">
-              {{ event.title }}
-            </span>
-            <span class="event__info__location">
-              {{ event.location[0].location_line }}
-            </span>
-            <a class="event__link" target="_blank" :href="event.ticket_link">
-              view more info
-              <arrowFilled />
-            </a>
-          </p>
+        <div
+          class="home-section-events__content__events__wrapper"
+          :style="wrapperStyle"
+        >
+          <div v-for="(event, i) in events" :key="event.title" class="event">
+            <eventBorderTop v-if="i === 0" class="border border--top" />
+            <eventBorderInner v-if="i !== events.length - 1" class="border " />
+            <eventBorderBottom v-if="i === events.length - 1" class="border" />
+            <p class="event__date">
+              <span class="event__date__day">
+                {{ getDayOfWeek(event.date) }}
+              </span>
+              <span class="event__date__date">
+                {{ getMonthDate(event.date) }}
+              </span>
+              <eventDateBorder />
+            </p>
+            <p class="event__info">
+              <span class="event__info__title">
+                {{ event.title }}
+              </span>
+              <span class="event__info__location">
+                {{ event.location[0].location_line }}
+              </span>
+              <a class="event__link" target="_blank" :href="event.ticket_link">
+                view more info
+                <arrowFilled />
+              </a>
+            </p>
+          </div>
         </div>
       </div>
       <span class="ap-child ap-child--3">
-        <CropButton
-          copy="SEE ALL OUR EVENTS"
-          link="/events"
-          use-nuxt-link
-          arrow
-        />
+        <CropButton :copy="buttonCopy" arrow @click="expanded = !expanded" />
       </span>
     </Appearable>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import moment from 'moment'
 import eventDateBorder from '@/assets/svg/event-date-border.svg?inline'
 import eventBorderTop from '@/assets/svg/event-border-top.svg?inline'
@@ -69,6 +70,24 @@ export default {
       type: Array,
       required: true
     }
+  },
+  data: () => ({
+    expanded: false
+  }),
+  computed: {
+    buttonCopy() {
+      return this.expanded ? 'See Less Upcoming' : 'See All Upcoming'
+    },
+    wrapperStyle() {
+      return {
+        height: `${this.eventsHeight}px`
+      }
+    },
+    eventsHeight() {
+      const eventHeight = this.viewWidth < 768 ? 136 : 118
+      return !this.expanded ? eventHeight * 2 : eventHeight * this.events.length
+    },
+    ...mapState(['viewWidth'])
   },
   methods: {
     getDayOfWeek(date) {
@@ -105,12 +124,17 @@ export default {
       margin: 35px auto;
     }
     &__events {
+      &__wrapper {
+        transition: height 300ms $easeOutMaterial;
+        overflow: hidden;
+        padding: 0 1.5rem;
+      }
       .event {
         display: flex;
         align-items: center;
         position: relative;
         width: 100%;
-        padding: 1rem 1.5rem;
+        padding: 1rem 0;
         .border {
           position: absolute;
           width: 100%;

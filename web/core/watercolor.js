@@ -94,9 +94,7 @@ class WatercolorSlide {
     this.renderer.setClearColor( 0xFFFFFF, 0)
     this.handleResize(this)
     this.container.appendChild(this.renderer.domElement)
-    this.animate()
     setTimeout(() => {
-      this.stopRender()
       eventBus.$emit('slideReady')
     }, 250)
   }
@@ -114,6 +112,7 @@ class WatercolorSlide {
   }
 
   showContent() {
+    if (!this.material) return
     gsap.to(this.material.uniforms.dispFactor, 0.5, {
       value: 2.0,
       ease: 'linear'

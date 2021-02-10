@@ -9,6 +9,7 @@
       >
         <div ref="canvasContainer" class="canvas-container">
           <img
+            :key="image.image"
             :src="image.image"
             alt="cooking image"
             class="main"
@@ -49,6 +50,7 @@ import circleAccent from '@/assets/images/circle-accent.png'
 import peelerAccent from '@/assets/images/peeler-accent.png'
 import WatercolorSlide from '@/core/watercolor'
 import resizeMixin from '@/mixins/resize'
+import eventBus from '@/core/eventBus'
 
 export default {
   name: 'SectionTwo',
@@ -69,11 +71,12 @@ export default {
     ...mapGetters(['isIOS'])
   },
   mounted() {
-    if (!this.isIOS) {
+    eventBus.$on('firstSlideDone', () => {
+      document.body.classList.remove('locked')
       this.$nextTick(() => {
         this.initWaterColor()
       })
-    }
+    })
   },
   beforeDestroy() {
     this.waterColors.forEach((waterColor, i) => {
