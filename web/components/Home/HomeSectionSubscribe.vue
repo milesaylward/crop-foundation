@@ -48,7 +48,7 @@
 <script>
 import arrowFilled from '@/assets/svg/arrow-filled.svg?inline'
 import halftoneAccent from '@/assets/images/halftone-2-accent.png'
-import { encode, preventFocus } from '@/core/utils'
+import { preventFocus } from '@/core/utils'
 
 export default {
   name: 'HomeSectionSubscribe',
@@ -84,8 +84,11 @@ export default {
       }
       fetch('https://submit-form.com/g_DHqoGN3-dmxZSLIWBlL', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ email: this.email })
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({ email: this.email })
       })
         .then(() => {
           this.email = ''

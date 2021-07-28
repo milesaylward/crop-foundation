@@ -142,7 +142,7 @@
 import eventsFooterBorder from '@/assets/images/events-border.png'
 import verticalBorder from '@/assets/svg/events-footer-vertical.svg?inline'
 import horizontalBorder from '@/assets/svg/events-footer-horizontal.svg?inline'
-import { encode, preventFocus } from '@/core/utils'
+import { preventFocus } from '@/core/utils'
 
 export default {
   name: 'EventsFooter',
@@ -228,8 +228,11 @@ export default {
       }
       fetch('https://submit-form.com/GmttEdQTLKfvFKXXIrLH3', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ ...this.formData })
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify(this.formData)
       })
         .then(() => {
           Object.keys(this.formData).forEach((key) => {

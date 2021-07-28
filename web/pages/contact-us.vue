@@ -91,7 +91,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { checkGlobalData, encode, preventFocus } from '@/core/utils'
+import { checkGlobalData, preventFocus } from '@/core/utils'
 import TornHero from '@/components/TornHero'
 
 export default {
@@ -187,8 +187,11 @@ export default {
       }
       fetch('https://submit-form.com/ciqgidBx1G3BoRjjfoO5k', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ ...this.formData })
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify(this.formData)
       })
         .then(() => {
           Object.keys(this.formData).forEach((key) => {
