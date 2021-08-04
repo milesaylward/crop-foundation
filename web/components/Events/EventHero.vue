@@ -4,7 +4,7 @@
       <div ref="canvasContainer" class="event-hero__img__img canvas-container">
         <img
           ref="image"
-          :src="event.hero_image"
+          src="https://s3-us-west-2.amazonaws.com/crop-foundation/wp-content/uploads/2021/03/23132603/IMG_6105.png"
           alt="event image"
           :class="{ 'ap-child': isIOS }"
           @load="handleImageReady"
@@ -61,7 +61,11 @@ export default {
     ...mapGetters(['isIOS'])
   },
   mounted() {
-    if (!this.isIOS) this.initWaterColor()
+    if (!this.isIOS) {
+      this.$nextTick(() => {
+        this.initWaterColor()
+      })
+    }
   },
   beforeDestroy() {
     if (this.waterColor) {
@@ -81,7 +85,7 @@ export default {
           useMin: false
         })
         this.waterColor.readyImage()
-      }, 100)
+      }, 750)
       eventBus.$on('slideReady', () => {
         this.$emit('heroReady')
       })
@@ -111,6 +115,7 @@ export default {
   top: 300px;
   z-index: 5;
   display: flex;
+  pointer-events: none;
   margin-bottom: 100px;
   flex-wrap: wrap-reverse;
   padding: 0 20px;
@@ -164,6 +169,7 @@ export default {
     position: relative;
     width: 100%;
     max-height: 600px;
+    pointer-events: none;
     @include bpLarge {
       width: 50%;
     }

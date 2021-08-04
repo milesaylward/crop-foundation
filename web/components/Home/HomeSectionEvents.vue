@@ -8,7 +8,11 @@
           class="home-section-events__content__events__wrapper"
           :style="wrapperStyle"
         >
-          <div v-for="(event, i) in events" :key="event.title" class="event">
+          <div
+            v-for="(event, i) in sortedEvents"
+            :key="event.title"
+            class="event"
+          >
             <eventBorderTop v-if="i === 0" class="border border--top" />
             <eventBorderInner v-if="i !== events.length - 1" class="border " />
             <eventBorderBottom v-if="i === events.length - 1" class="border" />
@@ -77,6 +81,10 @@ export default {
   computed: {
     buttonCopy() {
       return this.expanded ? 'See Less Upcoming' : 'See All Upcoming'
+    },
+    sortedEvents() {
+      const events = [...this.events]
+      return events.sort((a, b) => moment(a.date).diff(moment(b.date)))
     },
     wrapperStyle() {
       return {
@@ -217,7 +225,7 @@ export default {
           svg {
             transition: transform 250ms $easeOutMaterial;
             margin: {
-              top: 4px;
+              top: 0px;
               left: 6px;
             }
 
