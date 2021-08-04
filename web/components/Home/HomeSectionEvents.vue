@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <span class="ap-child ap-child--3">
+      <span v-if="events.length > 2" class="ap-child ap-child--3">
         <CropButton :copy="buttonCopy" arrow @click="expanded = !expanded" />
       </span>
     </Appearable>
@@ -93,6 +93,7 @@ export default {
     },
     eventsHeight() {
       const eventHeight = this.viewWidth < 768 ? 136 : 118
+      if (this.events.length < 2) return eventHeight
       return !this.expanded ? eventHeight * 2 : eventHeight * this.events.length
     },
     ...mapState(['viewWidth'])
@@ -212,6 +213,7 @@ export default {
           font-size: 16px;
           margin-top: 10px;
           @include bpMedium {
+            margin-top: 0;
             position: absolute;
             right: 0;
             top: 50%;
