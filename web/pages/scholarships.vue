@@ -274,8 +274,7 @@ export default {
         }
         canvas {
           top: 0;
-          left: 50%;
-          transform: translateX(-50%);
+          left: 0;
           position: absolute;
         }
       }
