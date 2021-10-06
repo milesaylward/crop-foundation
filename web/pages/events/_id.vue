@@ -3,7 +3,11 @@
     <div class="event-detail page">
       <TornHero />
       <Appearable>
-        <EventHero :event="content" detail-page />
+        <EventHero
+          :event="content"
+          detail-page
+          @heroReady="slideReady = true"
+        />
       </Appearable>
       <Appearable class="event-detail__content content" :threshold="0.5">
         <h2 class="ap-child">Gallery</h2>
@@ -73,7 +77,9 @@ export default {
     currentPage: 0,
     itemsLoaded: 0,
     activeLightBoxIndex: null,
-    showLightBox: false
+    showLightBox: false,
+    imagesReady: false,
+    slideReady: false
   }),
   computed: {
     galleryItemsPerPage() {
@@ -87,9 +93,12 @@ export default {
         next: this.activeLightBoxIndex === this.content.event_gallery.length - 1
       }
     },
+    canAnimate() {
+      return this.slideReady && this.imagesReady
+    },
     lightBoxImage() {
       return this.activeLightBoxIndex !== null
-        ? this.content.event_gallery[this.activeLightBoxIndex]
+        ? { url: this.content.event_gallery[this.activeLightBoxIndex].image }
         : ''
     },
     params() {
@@ -108,8 +117,11 @@ export default {
   watch: {
     itemsLoaded(val) {
       if (val === this.galleryItemsPerPage) {
-        this.setShowLoader(false)
+        this.imagesReady = true
       }
+    },
+    canAnimate() {
+      this.setShowLoader(false)
     }
   },
   mounted() {

@@ -4,7 +4,7 @@
       <div ref="canvasContainer" class="event-hero__img__img canvas-container">
         <img
           ref="image"
-          src="https://s3-us-west-2.amazonaws.com/crop-foundation/wp-content/uploads/2021/03/23132603/IMG_6105.png"
+          :src="event.hero_image"
           alt="event image"
           :class="{ 'ap-child': isIOS }"
           @load="handleImageReady"
@@ -138,6 +138,8 @@ export default {
     z-index: 5;
     img {
       opacity: 0;
+      width: 627px;
+      height: 416px;
     }
     canvas {
       top: 0;
