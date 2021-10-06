@@ -1,6 +1,11 @@
 <template>
   <div class="page scholarship">
-    <TornHero :background="content.hero_background" :copy="content.headline" />
+    <TornHero
+      :background="content.hero_background"
+      :copy="content.headline"
+      :dismiss-loader="false"
+      @heroReady="heroReady = true"
+    />
     <Appearable class="scholarship__content">
       <div class="flex-copy">
         <p class="ap-child">{{ content.copy.one }}</p>
@@ -63,7 +68,7 @@
 
 <script>
 import FileSaver from 'file-saver'
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import TornHero from '@/components/TornHero'
 import { checkGlobalData } from '@/core/utils'
 import { KIP_LINK, GABY_LINK } from '@/core/constants'
@@ -71,6 +76,7 @@ import PeelerAccent from '@/assets/svg/peeler.svg?inline'
 import halftoneAccent from '@/assets/images/accent-scholarship.png'
 import WatercolorSlide from '@/core/watercolor'
 import resizeMixin from '@/mixins/resize'
+import eventBus from '@/core/eventBus'
 
 export default {
   name: 'ScholarshipPage',
@@ -86,11 +92,16 @@ export default {
   },
   data: () => ({
     halftoneAccent,
-    waterColors: []
+    waterColors: [],
+    heroReady: false,
+    slidesReady: 0
   }),
   computed: {
     computedWinners() {
       return this.content.scholarship_winners
+    },
+    canDismiss() {
+      return this.heroReady && this.slidesReady === this.waterColors.length
     },
     content() {
       return this.scholarship
@@ -98,10 +109,18 @@ export default {
     ...mapState(['scholarship']),
     ...mapGetters(['isIOS'])
   },
+  watch: {
+    canDismiss(val) {
+      if (val) this.setShowLoader(false)
+    }
+  },
   mounted() {
     if (!this.isIOS) {
       this.$nextTick(() => {
         this.initWaterColor()
+      })
+      eventBus.$on('slideReady', () => {
+        this.slidesReady += 1
       })
     }
   },
@@ -131,6 +150,7 @@ export default {
           const rect = this.$refs.image[i].getBoundingClientRect()
           const waterColor = new WatercolorSlide({
             container: this.$refs.canvasContainer[i],
+            imageRef: this.$refs.image[i],
             image: winner.image,
             width: rect.width,
             height: rect.height,
@@ -139,7 +159,7 @@ export default {
           waterColor.readyImage()
           this.waterColors.push(waterColor)
         })
-      }, 500)
+      }, 250)
     },
     handleResize() {
       this.waterColors.forEach((waterColor, i) => {
@@ -148,8 +168,11 @@ export default {
       })
     },
     handleCanAppear(i) {
-      if (this.waterColors.length) this.waterColors[i].onAnimate()
-    }
+      if (this.waterColors.length) {
+        this.waterColors[i].onAnimate()
+      }
+    },
+    ...mapActions(['setShowLoader'])
   }
 }
 </script>
@@ -269,12 +292,11 @@ export default {
         position: relative;
         z-index: 5;
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         img {
           opacity: 0;
-        }
-        canvas {
-          top: 0;
-          left: 0;
           position: absolute;
         }
       }

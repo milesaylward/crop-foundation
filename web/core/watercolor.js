@@ -26,6 +26,7 @@ class WatercolorSlide {
     this.onAnimate = this.onAnimate.bind(this)
     this.showContent = this.showContent.bind(this)
     this.handleResize = this.handleResize.bind(this)
+    this.imageRef = opts.imageRef
     this.image = opts.image
     this.showControls = opts.showControls
     this.debug = opts.debug
@@ -36,9 +37,12 @@ class WatercolorSlide {
 
   readyImage() {
     const image = new Image()
-    image.src = `${this.image}?cache="${Math.random()}"`
+    image.src = `${this.image}`
     image.crossOrigin = 'anonymous'
     image.onload = () => {
+      if (this.width === 0 && this.imageRef) {
+        this.width = this.imageRef.getBoundingClientRect().width
+      }
       this.init()
     }
     this.image = image
@@ -96,7 +100,7 @@ class WatercolorSlide {
     this.container.appendChild(this.renderer.domElement)
     setTimeout(() => {
       eventBus.$emit('slideReady')
-    }, 250)
+    }, 150)
   }
 
   handleResize({ width, height }) {

@@ -52,6 +52,10 @@ export default {
     copy: {
       type: String,
       default: ''
+    },
+    dismissLoader: {
+      type: Boolean,
+      default: true
     }
   },
   data: () => ({
@@ -114,6 +118,10 @@ export default {
       }
     },
     handleVideoLoaded() {
+      if (!this.dismissLoader) {
+        this.$emit('heroReady')
+        return
+      }
       this.setShowLoader(false)
     },
     ...mapActions(['setShowLoader'])
