@@ -27,7 +27,7 @@
 <script>
 import { mapState } from 'vuex'
 import sidebarBg from '~/assets/images/sidebar.png'
-import logo from '~/assets/images/logo.png'
+import logo from '~/assets/images/crop-new-logo.png'
 import facebook from '~/assets/svg/facebook.svg?inline'
 import instagram from '~/assets/svg/instagram.svg?inline'
 
@@ -78,8 +78,7 @@ export default {
     justify-content: space-between;
     &__logo {
       display: block;
-      width: 56px;
-      height: 125px;
+      width: 100%;
       height: auto;
     }
     &__bottom {

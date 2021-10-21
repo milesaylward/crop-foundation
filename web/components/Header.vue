@@ -18,7 +18,7 @@
         alt="mobileHeaderBackground"
       />
       <div class="header__mobile__content content">
-        <nuxt-link to="/">
+        <nuxt-link to="/" class="logo-link">
           <img class="logo" :src="mobileLogo" alt="crop foundation logo" />
         </nuxt-link>
         <div class="links">
@@ -66,7 +66,7 @@
 import { mapState } from 'vuex'
 import navBorder from '@/assets/svg/nav-border.svg?inline'
 import mobileHeaderBackground from '@/assets/images/mobile-header-background.png'
-import mobileLogo from '@/assets/images/mobile-crop-logo.png'
+import mobileLogo from '@/assets/images/crop-new-logo.png'
 import mobileDivider from '@/assets/svg/mobile-divider.svg?inline'
 import facebook from '@/assets/svg/facebook.svg?inline'
 import instagram from '@/assets/svg/instagram.svg?inline'
@@ -135,15 +135,22 @@ export default {
       z-index: -1;
       top: 0;
     }
+    .logo-link {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .logo {
-      width: 90px;
+      height: 100%;
     }
     &__content {
       align-items: center;
       display: flex;
       justify-content: space-between;
       &.content {
-        padding: 20px;
+        height: 70px;
+        padding-top: 10px;
       }
       .links {
         display: flex;
