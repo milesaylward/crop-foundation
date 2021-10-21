@@ -37,7 +37,7 @@ class WatercolorSlide {
 
   readyImage() {
     const image = new Image()
-    image.src = `${this.image}`
+    image.src = `${this.image}?cb=${Date.now()}`
     image.crossOrigin = 'anonymous'
     image.onload = () => {
       if (this.width === 0 && this.imageRef) {
