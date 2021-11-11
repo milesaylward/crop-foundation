@@ -66,7 +66,7 @@
 import { mapState } from 'vuex'
 import navBorder from '@/assets/svg/nav-border.svg?inline'
 import mobileHeaderBackground from '@/assets/images/mobile-header-background.png'
-import mobileLogo from '@/assets/images/crop-new-logo.png'
+import mobileLogo from '@/assets/images/no-word-logo.png'
 import mobileDivider from '@/assets/svg/mobile-divider.svg?inline'
 import facebook from '@/assets/svg/facebook.svg?inline'
 import instagram from '@/assets/svg/instagram.svg?inline'
@@ -142,7 +142,7 @@ export default {
       justify-content: center;
     }
     .logo {
-      height: 100%;
+      height: 80%;
     }
     &__content {
       align-items: center;
