@@ -6,7 +6,9 @@
         <img class="sidebar__content__logo" :src="logo" alt="crop logo" />
       </nuxt-link>
       <div class="sidebar__content__bottom">
-        <p class="source">copyright 2020 • the crop foundation</p>
+        <p class="source">
+          copyright {{ new Date().getFullYear() }} • the crop foundation
+        </p>
         <CropButton filled copy="donate" small :link="global.paypal_link" />
         <div class="social-buttons">
           <a href="https://www.facebook.com/thecropfoundation" target="_blank">
