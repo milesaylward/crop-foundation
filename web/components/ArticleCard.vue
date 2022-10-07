@@ -12,7 +12,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import moment from 'moment'
 import ArticleDivider from '@/assets/svg/article-divider.svg?inline'

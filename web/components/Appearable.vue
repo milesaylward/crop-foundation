@@ -31,12 +31,12 @@ export default {
     threshold: {
       type: Number,
       required: false,
-      default: 0.75 // percentage of thumbnail in viewport needed before its ready to animate in
+      default: 0.75
     },
     thresholdMobile: {
       type: Number,
       required: false,
-      default: 0.35 // percentage of thumbnail in viewport needed before its ready to animate in on Mobile
+      default: 0.35
     },
     debug: {
       type: Boolean,
