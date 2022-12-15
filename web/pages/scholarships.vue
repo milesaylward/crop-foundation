@@ -14,7 +14,7 @@
       </div>
       <CropButton
         class="ap-child ap-child--2"
-        :copy="content.button"
+        copy="APPLY FOR THE 2023 SCHOLARSHIP"
         color="dark-grey"
         arrow
         @click="downloadPDF"
@@ -138,7 +138,7 @@ export default {
       return innerCopy.replace('{{email-gaby}}', GABY_LINK)
     },
     downloadPDF() {
-      fetch(this.content.scholarship_pdf).then((response) =>
+      fetch('/scholarship.pdf').then((response) =>
         response.blob().then((blob) => {
           FileSaver.saveAs(blob, 'Crop Scholarship Application.pdf')
         })
