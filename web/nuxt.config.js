@@ -2,7 +2,6 @@ import axios from 'axios'
 global.HTMLElement = typeof window === 'undefined' ? Object : window.HTMLElement
 let dynamicRoutes = () => {
   return axios.get('https://crop-foundation.s3-us-west-2.amazonaws.com/app-data/production-events.json').then(res => {
-    console.log(res.data[0], 'testing res');
     return res.data[0].events.map(event => `/events/${event.slug}`)
   })
  }

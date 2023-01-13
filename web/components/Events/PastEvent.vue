@@ -7,7 +7,11 @@
     @click="handleEventClick"
   >
     <div class="past-event__image">
-      <img :src="event.hero_image" alt="event image" @load="$emit('loaded')" />
+      <img
+        :src="event.hero_image.url"
+        alt="event image"
+        @load="$emit('loaded')"
+      />
     </div>
     <div class="past-event__info">
       <h4>{{ eventDate }}</h4>

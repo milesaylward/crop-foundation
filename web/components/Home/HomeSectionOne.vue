@@ -4,13 +4,13 @@
       <h4 class="ap-child">{{ content.eyebrow }}</h4>
       <h2 class="ap-child ap-child--1">{{ content.headline }}</h2>
       <div class="home-section-one__content__flex-copy">
-        <p class="ap-child ap-child--2">{{ content.copy.one }}</p>
-        <p class="ap-child ap-child--3">{{ content.copy.two }}</p>
+        <p class="ap-child ap-child--2">{{ content.copy_one }}</p>
+        <p class="ap-child ap-child--3">{{ content.copy_two }}</p>
       </div>
       <div class="home-section-one__content__copy ap-child ap-child--2">
         <p>
-          {{ content.copy.one }}
-          {{ content.copy.two }}
+          {{ content.copy_one }}
+          {{ content.copy_two }}
         </p>
       </div>
       <div class="home-section-one__accents">

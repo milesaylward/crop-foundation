@@ -4,7 +4,7 @@
       <div ref="canvasContainer" class="event-hero__img__img canvas-container">
         <img
           ref="image"
-          :src="event.hero_image"
+          :src="event.hero_image.url"
           alt="event image"
           :class="{ 'ap-child': isIOS }"
           @load="handleImageReady"
@@ -79,7 +79,7 @@ export default {
         const rect = this.$refs.image.getBoundingClientRect()
         this.waterColor = new WatercolorSlide({
           container: this.$refs.canvasContainer,
-          image: this.event.hero_image,
+          image: this.event.hero_image.url,
           width: rect.width,
           height: rect.height,
           useMin: false

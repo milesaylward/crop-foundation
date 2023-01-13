@@ -1,6 +1,5 @@
 import UAParser from 'ua-parser-js'
 import { getCopy } from '@/core/utils'
-import Mighty from '@/assets/images/mighty-dream.jpg'
 
 export const state = () => ({
   events: null,
@@ -42,25 +41,14 @@ export const actions = {
     if (!state[key]) {
       await this.$axios
         .$get(
-          `https://crop-foundation.s3-us-west-2.amazonaws.com/app-data/${base}-${key}.json`
+          `https://new-crop-foundation.s3.amazonaws.com/app-data/${base}-${key}.json`
         )
         .then((res) => {
           const data = JSON.parse(JSON.stringify(getCopy(res[0])))
-          if (key === 'events') {
-            const tempEvent = {
-              date: '2022-11-01 18:00:00',
-              description: `Pharrell Williams launches MIGHTY DREAM, a multi-day forum in Norfolk, Virginia where matters of business,
-                opportunity and money intersect with people of color, set against a backdrop of community engagement and jaw-dropping entertainment.`,
-              event_gallery: false,
-              guest_chefs: false,
-              hero_image: Mighty,
-              location: [{ location_line: 'Norfolk, Va' }],
-              photo_credits: '',
-              slug: 'mighty-dream-forum',
-              ticket_link: 'https://registration.mightydreamforum.com/',
-              title: 'Mighty Dream Forum'
-            }
-            data.events = [tempEvent, ...data.events]
+          if (key === 'home') {
+            data.hero_carousel_items = res
+              .map((item, idx) => idx && item)
+              .filter((val) => val)
           }
           commit('setData', {
             key,

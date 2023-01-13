@@ -15,9 +15,9 @@
           <div class="event-detail__content__gallery__items">
             <GalleryItem
               v-for="(item, i) in galleryItems"
-              :key="item.title"
+              :key="item"
               :class="`ap-child ap-child--${i + 1}`"
-              :src="item.image"
+              :src="item"
               :index="i"
               @itemClick="handleGalleryClick"
               @load="handleItemLoaded"
@@ -34,7 +34,7 @@
         </div>
       </Appearable>
       <Appearable :threshold="0.5">
-        <EventsFooter :content="footer" />
+        <EventsFooter :content="footer[0]" />
       </Appearable>
       <transition name="fade">
         <LightBox
@@ -98,7 +98,7 @@ export default {
     },
     lightBoxImage() {
       return this.activeLightBoxIndex !== null
-        ? { url: this.content.event_gallery[this.activeLightBoxIndex].image }
+        ? { url: this.content.event_gallery[this.activeLightBoxIndex] }
         : ''
     },
     params() {

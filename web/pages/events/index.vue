@@ -40,7 +40,7 @@
       </div>
     </Appearable>
     <Appearable :threshold="0.3">
-      <EventsFooter :content="content.footer" />
+      <EventsFooter :content="content.footer[0]" />
     </Appearable>
   </div>
 </template>

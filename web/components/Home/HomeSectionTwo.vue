@@ -3,14 +3,14 @@
     <div class="home-section-two__images">
       <Appearable
         v-for="(image, i) in content.images"
-        :key="image.image"
+        :key="image.image.url"
         class="home-section-two__images__image"
         @can-appear="handleCanAppear(i)"
       >
         <div ref="canvasContainer" class="canvas-container">
           <img
-            :key="image.image"
-            :src="image.image"
+            :key="image.image.url"
+            :src="image.image.url"
             alt="cooking image"
             class="main"
             :class="{ 'ap-child': isIOS }"
@@ -91,7 +91,7 @@ export default {
           const rect = this.$refs.canvasContainer[i].getBoundingClientRect()
           const waterColor = new WatercolorSlide({
             container: this.$refs.canvasContainer[i],
-            image: image.image,
+            image: image.image.url,
             width: rect.width,
             height: rect.height,
             useMin: false,

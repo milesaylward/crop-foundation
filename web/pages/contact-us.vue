@@ -2,7 +2,7 @@
   <div class="contact-us page">
     <TornHero
       half-size
-      :background="content.hero_background"
+      :background="content.hero_background.url"
       :copy="content.headline"
     />
     <Appearable class="contact-us__content content" :threshold="0.2">

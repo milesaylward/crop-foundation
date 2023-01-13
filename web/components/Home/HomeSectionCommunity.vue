@@ -6,9 +6,9 @@
       <div class="home-section-community__content__copy">
         <p class="ap-child ap-child--2">
           <!-- eslint-disable-next-line vue/no-v-html -->
-          <span v-html="content.copy.left" />
+          <span v-html="content.copy_left" />
           <!-- eslint-disable-next-line vue/no-v-html -->
-          <span v-html="content.copy.right" />
+          <span v-html="content.copy_right" />
         </p>
       </div>
       <div class="home-section-community__images ap-child ap-child--3">

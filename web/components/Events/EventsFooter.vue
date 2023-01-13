@@ -5,12 +5,12 @@
       <div v-if="!showForm" key="content" class="content">
         <div class="events-footer__content content">
           <div class="copy">
-            <h3 class="ap-child">{{ content.left.headline }}</h3>
-            <p class="ap-child ap-child--1">{{ content.left.copy }}</p>
+            <h3 class="ap-child">{{ content.left_headline }}</h3>
+            <p class="ap-child ap-child--1">{{ content.left_copy }}</p>
             <span class="ap-child ap-child--2">
               <CropButton
                 arrow
-                :copy="content.left.button"
+                :copy="content.left_button"
                 color="white"
                 @click="showForm = true"
               />
@@ -21,13 +21,13 @@
             <horizontalBorder class="horizontal ap-child ap-child--3" />
           </div>
           <div class="copy">
-            <h3 class="ap-child ap-child--4">{{ content.right.headline }}</h3>
-            <p class="ap-child ap-child--5">{{ content.right.copy }}</p>
+            <h3 class="ap-child ap-child--4">{{ content.right_headline }}</h3>
+            <p class="ap-child ap-child--5">{{ content.right_copy }}</p>
             <span class="ap-child ap-child--6">
               <CropButton
                 arrow
                 link="mailto:info@thecrop.org?subject=Sponsor a Crop Foundation Event"
-                :copy="content.right.button"
+                :copy="content.right_button"
                 color="white"
               />
             </span>

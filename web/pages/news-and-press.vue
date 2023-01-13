@@ -71,7 +71,7 @@ export default {
       return this.chunkedCards[this.activeIndex]
     },
     content() {
-      return this.news.news
+      return this.news
     },
     ...mapState(['news'])
   },

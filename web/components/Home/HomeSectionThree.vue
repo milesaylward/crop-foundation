@@ -20,11 +20,11 @@
       <h2 class="light ap-child ap-child--2">{{ content.headline }}</h2>
       <div class="home-section-three__content__copy">
         <p class="light ap-child ap-child--3">
-          {{ content.copy.one }}
+          {{ content.copy_one }}
         </p>
       </div>
       <CropButton
-        :copy="content.button"
+        copy="LEARN MORE ABOUT OUR SCHOLARSHIPS"
         class="ap-child ap-child--4"
         color="white"
         link="/scholarships"

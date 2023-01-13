@@ -1,20 +1,23 @@
 <template>
   <div class="page">
     <HeroCarousel :items="content.hero_carousel_items" />
-    <SectionOne :content="content.section.one" />
-    <SectionTwo :content="content.section.two" />
-    <SectionThree :content="content.section.three" />
+    <SectionOne :content="content.section_one[0]" />
+    <SectionTwo :content="content.section_two[0]" />
+    <SectionThree :content="content.section_three[0]" />
     <Appearable>
-      <SectionImages :images="content.section.three.images" class="ap-child" />
+      <SectionImages
+        :images="content.section_three[0].images"
+        class="ap-child"
+      />
     </Appearable>
     <SectionEvents
       v-if="homeEvents.length"
       :content="content.events"
       :events="homeEvents"
     />
-    <SectionCommunity :content="content.community" />
+    <SectionCommunity :content="content.community[0]" />
     <Appearable :threshold="0.3">
-      <SectionSubscribe :content="content.subscribe" />
+      <SectionSubscribe :content="content.subscribe[0]" />
     </Appearable>
   </div>
 </template>
